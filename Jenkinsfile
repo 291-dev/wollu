@@ -1,6 +1,6 @@
 pipeline {
     tools {
-        nodejs "node14"
+        nodejs "nodejs-react"
     }
     stages {
         stage('Build') {
