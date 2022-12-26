@@ -37,11 +37,12 @@ def get_secret(setting):
         raise ImproperlyConfigured(error_msg)
 SECRET_KEY = get_secret("SECRET_KEY")
 DB_PASSWD = get_secret("DB_PASSWD")
+ALLOW_IP = get_secret("ALLOW_IP")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ALLOW_IP]
 
 
 # Application definition
