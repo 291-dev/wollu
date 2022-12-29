@@ -13,7 +13,7 @@ class User(models.Model):
 
 class Wollu(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    create_date = models.DateField()
+    create_date = models.DateField(auto_now_add=True)
     all_time = models.IntegerField()
     no_work = models.IntegerField(null=True)
     coffe = models.IntegerField(null=True)

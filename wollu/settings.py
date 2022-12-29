@@ -38,11 +38,12 @@ def get_secret(setting):
 SECRET_KEY = get_secret("SECRET_KEY")
 DB_PASSWD = get_secret("DB_PASSWD")
 ALLOW_IP = get_secret("ALLOW_IP")
+ALLOW_IP2 = get_secret("ALLOW_IP2")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ALLOW_IP]
+ALLOWED_HOSTS = [ALLOW_IP, ALLOW_IP2]
 
 
 # Application definition
