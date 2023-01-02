@@ -10,5 +10,10 @@ class UserSerializer(ModelSerializer):
 class WolluSerializer(ModelSerializer):
     class Meta:
         model = Wollu
-        fields = ('id', 'user', 'all_time', 'no_work', 'coffe',
+        fields = ('id', 'user', 'create_date', 'all_time', 'no_work', 'coffe',
         'toilet', 'wind', 'shopping', 'smoking', 'something', 'turnover')
+
+class WolluMonthSerializer(ModelSerializer):
+    class Meta:
+        model = Wollu
+        fields = ('create_date', 'all_time')
