@@ -1,0 +1,9 @@
+@import "../CssUtil/Color.css";
+
+.WalluBackground {
+    width : 100%;
+    height : 4060px;
+    text-align: center;
+    position: relative;
+    background-color: var(--main-background-color);
+}

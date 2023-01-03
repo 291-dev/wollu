@@ -1,0 +1,33 @@
+@import "../CssUtil/Color.css";
+@import "../CssUtil/Font.css";
+
+/*Classes*/
+.MainView {
+    width: 100%;
+    background-color: var(--main-background-color);
+    margin-left: auto;
+    margin-right: auto;
+    height: 873px;
+}
+
+/*Ids*/
+#detailText{
+    font-family : "puradack_mac";
+    font-size : 18.px;
+    font-weight : normal;
+    color : var(--main-text-color);
+}
+
+/*Spaces*/
+#mainSpace1 {
+    padding-top: 360px;
+}
+#mainSpace2 {
+    padding-top: 8px;
+}
+#mainSpace3 {
+    padding-top: 275.5px;
+}
+#mainSpace4 {
+    padding-top: 0px;
+}
