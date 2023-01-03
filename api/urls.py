@@ -1,11 +1,12 @@
 from django.conf.urls import include
 from django.urls import path
 from rest_framework import routers
-from .views import ConnectionCheck, UserViewSet, WolluViewSet, WolluMonthView
+from .views import ConnectionCheck, UserViewSet, WolluViewSet, WolluMonthView, StatsViewSet
 
 router = routers.DefaultRouter()
 router.register('users', UserViewSet)
 router.register('wollu', WolluViewSet)
+router.register('stats', StatsViewSet)
 
 urlpatterns = [
     path("test/", ConnectionCheck),

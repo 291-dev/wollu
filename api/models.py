@@ -23,3 +23,10 @@ class Wollu(models.Model):
     smoking = models.IntegerField(null=True)
     something = models.IntegerField(null=True)
     turnover = models.IntegerField(null=True)
+
+class Stats(models.Model):
+    category = models.CharField(max_length=30)
+    min_wollu = models.IntegerField()
+    max_wollu = models.IntegerField()
+    total_wollu = models.IntegerField()
+    user_num = models.IntegerField()
