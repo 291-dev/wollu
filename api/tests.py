@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from rest_framework.test import APITestCase
 from rest_framework.views import status
 
@@ -61,6 +62,20 @@ class WolluApiTest(APITestCase):
         response = self.client.post('/users/', user_data)
         response_json = json.loads(response.content)
         self.user_id = str(response_json["id"])
+
+        wollu_data = {
+            "user" : self.user_id,
+            "all_time" : 123,
+            "no_work" : 123,
+            "coffe" : 123,
+            "toilet" : 123,
+            "wind" : 123,
+            "shopping" : 123,
+            "smoking" : 123,
+            "something" : 123,
+            "turnover" : 123
+        }
+        response = self.client.post('/wollu/', wollu_data)
     
     def testWolluCreate(self):
         wollu_data = {
@@ -77,3 +92,9 @@ class WolluApiTest(APITestCase):
         }
         response = self.client.post('/wollu/', wollu_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    
+    def testGetWolluMonth(self):
+        response = self.client.get('/wollu/month/' + self.user_id + '/?year=' + str(datetime.now().year) + '&month=' + str(datetime.now().month))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        wollu_month_data = json.loads(response.content)
+        self.assertEqual(wollu_month_data[0]['all_time'], 123)
