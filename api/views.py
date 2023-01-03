@@ -5,6 +5,7 @@ from rest_framework import viewsets
 
 from .models import User, Wollu
 from .serializers import UserSerializer, WolluSerializer, WolluMonthSerializer
+from django.db.models import Sum
 
 # Create your views here.
 @api_view(['GET'])
@@ -26,5 +27,5 @@ class WolluMonthView(APIView):
         if None not in [user_id, year, month]:
             return Response(WolluMonthSerializer(Wollu.objects.filter(user__exact=user_id,
                         create_date__year=year, create_date__month=month).
-                        values('create_date', 'all_time'), many=True).data)
+                        values('create_date').annotate(all_time=Sum('all_time')), many=True).data)
         return Response(status=404)
