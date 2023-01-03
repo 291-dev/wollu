@@ -1,0 +1,48 @@
+@import "../CssUtil/Color.css";
+@import "../CssUtil/Font.css";
+@import "../CssUtil/InputField.css";
+
+/*Classes*/
+
+/*Ids*/
+#getSalaryViewTextStyles{
+    padding-left : 24px;
+    padding-right : 24px;
+    font-size: 24px;
+    color: var(--gray01-color);
+    text-align: left;
+}
+#getSalaryViewFrontText{
+    padding-right: 11px;
+}
+#getSalaryViewBackText{
+    padding-left: 11px;
+}
+  
+#getSalaryViewInputField1 {
+    width:83px;
+}
+
+#getSalaryViewInputField2 {
+    width:50px;
+}
+
+#getSalaryViewInputField3 {
+    width:20px;
+}
+
+/*Spaces*/
+
+#getSalarySpace1{
+    padding-top : 28px;
+}
+
+#getSalarySpace2{
+    padding-top : 11px;
+}
+
+#getSalarySpace3{
+    padding-top : 40px;
+}
+
+ 

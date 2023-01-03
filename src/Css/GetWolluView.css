@@ -1,0 +1,49 @@
+
+/*Ids*/
+#getWolluSpace1{
+    padding-top: 86px;
+}
+
+#getWolluSpace2{
+    padding-top: 43.19px;
+}
+
+#getWolluSpace3{
+    padding-top: 55.67px;
+}
+
+#getWolluSpace4{
+    padding-top: 10px;
+}
+
+#getWolluViewTextStyles{
+    padding-left : 28px;
+    padding-right : 32px;
+    font-size: 24px;
+    color: var(--gray01-color);
+    text-align: left;
+}
+
+#getWolluViewInputField1{
+    width : 100px;
+}
+
+#getWolluViewInputField2{
+    width : 50px;
+}
+
+#getWolluViewFrontText{
+    padding-right: 10px;
+}
+#getWolluViewBackText{
+    padding-left: 10px;
+}
+#getWolluViewBackText2{
+    padding-left: 11px;
+}
+
+/*Images*/
+#GetWolluView_WolluImage{
+    width: 292.2px;
+    height: 312.4px;
+}

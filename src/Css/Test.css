@@ -1,0 +1,8 @@
+@import "../CssUtil/Color.css";
+
+.Test {
+    width : 500px;
+    height : 500px;
+    text-align: center;
+    background-color: var(--black02-color);
+};
