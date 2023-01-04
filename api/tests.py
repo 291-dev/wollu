@@ -98,3 +98,8 @@ class WolluApiTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         wollu_month_data = json.loads(response.content)
         self.assertEqual(wollu_month_data[0]['all_time'], 123)
+
+class StatsApiTest(APITestCase):
+    def testGetStats(self):
+        response = self.client.get('/stats/?job=programming&annual=programming&sex=programming&sex=1&age=12')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
