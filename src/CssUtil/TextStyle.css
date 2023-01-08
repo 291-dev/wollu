@@ -1,8 +1,21 @@
 @import "./Color.css";
+@import "./Font.css";
 
 .PretendaredLight{
     font-family: "pretendard_light";
     font-weight: normal;
     line-height: 145%;
     font-size: 24px;
+}
+
+.InterRegular{
+    font-family: "inter_regular";
+    font-size: 24px;
+    line-height: 100%;
+}
+
+.Rebecca{
+    font-family: "rebecca";
+    font-size: 24px;
+    line-height: 100%;
 }

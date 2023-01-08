@@ -1,0 +1,85 @@
+
+@import "../CssUtil/Color.css";
+@import "../CssUtil/Font.css";
+/*Classes*/
+.CombineImages{
+    position: relative;
+}
+
+
+/*Ids*/
+#showWolluImageBorder{
+    margin-top: 16px;
+    width:308.8px;
+    height:668px;
+}
+
+#showWolluImageEffect{
+    margin-top: 16px;
+    position: absolute;
+    top:21px;
+    left:32px;
+    height: 629px;
+    opacity: 0.2;
+}
+
+#showWolluTextBoundary{
+    position: absolute;
+    top: 132px;
+    left: 47px;
+    width: 245px;
+    height: max-content;
+}
+
+
+#showWolluFactorText{
+    margin-left : auto;
+    margin-right : auto;
+    width: fit-content;
+    background-color: white;
+    color: var(--main-color);
+    height:fit-content;
+}
+
+
+#eatWolluImage{
+    position: absolute;
+    top: 258px;
+    left:50.67px;
+}
+
+#showWolluText1{
+    color: white;
+}
+
+#showWolluText2{
+    color: white;
+    margin-left: 5px;
+}
+
+#showWolluNameBox{
+    position: absolute;
+    top: 546px;
+    left: 59px;
+    width: 221px;
+    height: 49px;
+    background-color: var(--main-color);
+    border-radius: 12px;
+    box-shadow: 0 0 0 4px #FFFFFF inset;
+}
+
+#showWolluNameText{
+    font-family: "rebecca";
+    font-size:24px;
+    color: white;
+    padding-top: 15px;
+}
+
+/*Spaces*/
+#showWolluSpace1{
+    margin-top: 11px;
+}
+
+#showWolluSpace2{
+    margin-top: 11px;
+}

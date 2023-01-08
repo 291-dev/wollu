@@ -3,6 +3,7 @@ import Test from "./Test.js";
 import MainView from "./MainView.js";
 import GetSalaryView from './GetSalaryView';
 import GetWolluView from './GetWolluView';
+import ShowWolluAmountView from './ShowWolluAmountView';
 
 function Wollu() {
   return (
@@ -10,6 +11,7 @@ function Wollu() {
       <MainView/>
       <GetSalaryView/>
       <GetWolluView/>
+      <ShowWolluAmountView/>
     </div>
   );
 }

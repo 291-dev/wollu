@@ -8,3 +8,13 @@
     font-family : "pretendard_light";
     src : url("../Resources/Fonts/mac_otf/Pretendard-Light.otf");
 }
+
+@font-face{
+    font-family : "inter_regular";
+    src : url("../Resources/Fonts/mac_otf/Inter.otf");
+}
+
+@font-face{
+    font-family:"rebecca";
+    src : url("../Resources/Fonts/mac_otf/EF_Rebecc.otf");
+}
