@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/wollu.iml" filepath="$PROJECT_DIR$/wollu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/wollu_android.iml" filepath="$PROJECT_DIR$/android/wollu_android.iml" />
     </modules>
   </component>
 </project>
