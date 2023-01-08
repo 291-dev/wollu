@@ -9,6 +9,12 @@
     src : url("../Resources/Fonts/mac_otf/Pretendard-Light.otf");
 }
 
+
+@font-face{
+    font-family : "pretendard_semibold";
+    src : url("../Resources/Fonts/mac_otf/Pretendard-SemiBold.otf");
+}
+
 @font-face{
     font-family : "inter_regular";
     src : url("../Resources/Fonts/mac_otf/Inter.otf");

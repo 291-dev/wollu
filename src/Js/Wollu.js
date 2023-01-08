@@ -4,6 +4,7 @@ import MainView from "./MainView.js";
 import GetSalaryView from './GetSalaryView';
 import GetWolluView from './GetWolluView';
 import ShowWolluAmountView from './ShowWolluAmountView';
+import WolluAppAggroView from './WolluAppAggroView';
 
 function Wollu() {
   return (
@@ -12,18 +13,13 @@ function Wollu() {
       <GetSalaryView/>
       <GetWolluView/>
       <ShowWolluAmountView/>
-    </div>
+      <WolluAppAggroView/>
+      <div id="WolluAdSpace"/>
+      <div className="GoogleAd">
+        광고
+      </div>
+    </div>    
   );
 }
-/*    <Wollu>
-      <WolluViewEffects>
-        <MainView/>
-        <GetSalaryView/>
-        <GetWolluAmountView/>
-        <ShowWalluAmountView/>
-        <AggroWolluAppView/>
-        <DownloadWalluAppView/>
-      </WolluViewEffects>
-    </Wollu>
-*/
+
 export default Wollu;

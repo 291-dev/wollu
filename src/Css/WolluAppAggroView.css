@@ -1,0 +1,145 @@
+@import "../CssUtil/Color.css";
+@import "../CssUtil/Font.css";
+
+/*Classes*/
+.WolluAppAggroView{
+    align-content: center;
+    padding-left: 24px;
+    padding-right: 24px;
+    width:339px;
+    height:max-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.AggroTextSytle{
+    font-family: "pretendard_light";
+    font-weight: normal;
+    font-size: 14px;
+    text-align: left;
+}
+
+.ShowWolluAmountSlider{
+    width: 321px;
+    height: 4px;
+    background-color: #F3F3F3;
+}
+
+.WolluAppAggroCard{
+    width:327px;
+    height:135px;
+    background-color: var(--main-color);
+    border-radius: 8px;
+}
+
+.WolluAppDownloadButton{
+    width:327px;
+    height:43px;
+    background-color: var(--main-color);
+    border-radius: 8px;
+}
+
+/*Ids*/
+#shareFriendText{
+    font-family: "pretendard_light";
+    font-size: 14px;
+    font-weight:bold;
+    color: var(--main-color);
+}
+
+#showOtherFriendsWolluText{
+    text-align: left;
+    font-family: "pretendard_light";
+    font-size: 18px;
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+#blurText {
+    filter: blur(3px);
+}
+
+#showSameJobAmount {
+    height:4px;
+    width: 241px;
+    background-color: var(--main-color);
+}
+
+#showSameJobYearAmount {
+    height:4px;
+    width: 252px;
+    background-color: var(--main-color);
+}
+
+#showSameGenderAmount {
+    height:4px;
+    width: 191px;
+    background-color: var(--main-color);
+}
+
+#showSameAgeAmount {
+    height:4px;
+    width: 100px;
+    background-color: var(--main-color);
+}
+
+#wolluAppAggroText{
+    font-family: "pretendard_semibold";
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 150%;
+    color: white;
+    text-align: left;
+    padding-left:20px;
+    padding-top:21px;
+
+}
+
+#wolluAppDonwloadButtonText{
+    font-family: "pretendard_semibold";
+    font-size: 16px;
+    font-weight: bold;
+    color:#F2F3F6;
+    padding-top: 10px;
+}
+
+/*Spaces*/
+#wolluAppAggroSpace1{
+    margin-top: 62px;
+}
+
+#wolluAppAggroSpace2{
+    margin-top: 14px;
+}
+
+#wolluAppAggroShareIconSpace{
+    margin-left: 10px;
+}
+
+#wolluAppAggroSpace3{
+    margin-top: 82px;
+}
+
+#wolluAppAggroSpace4{
+    margin-top: 42px;
+}
+
+#wolluAppAggroSpace5{
+    margin-top: 19px;
+}
+
+#wolluAppAggroSpace6{
+    margin-top: 16px;
+}
+
+#wolluAppAggroSpace7{
+    margin-top: 54px;
+}
+
+#wolluAppAggroSpace8{
+    padding-top: 22px;
+}
+
+#wolluAppAggroSpace9{
+    margin-top: 24px;
+}

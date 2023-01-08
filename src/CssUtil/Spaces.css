@@ -4,3 +4,7 @@
 #cardTopSpaces{
     margin-top:132px;
 }
+
+#clearFloat{
+    clear:both;
+}
