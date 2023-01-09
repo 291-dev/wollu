@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from rest_framework import viewsets
 
 from .models import User, Wollu, Stats
-from .serializers import UserSerializer, WolluSerializer, WolluMonthSerializer, StatsSerializer
-from django.db.models import Sum
+from .serializers import *
+from django.db.models import Sum, Max
 from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
@@ -42,6 +42,19 @@ class WolluMonthView(APIView):
                         create_date__year=year, create_date__month=month).
                         values('create_date').annotate(all_time=Sum('all_time')), many=True).data)
         return Response(status=404)
+
+class WolluRankingView(APIView):
+    def get(self, request):
+        wollu_ranking = Wollu.objects.values('user').annotate(all_time=Max('all_time')).order_by('-all_time').values('user_id', 'all_time')
+        response = []
+        for wollu in wollu_ranking:
+            user_info = UserViewSet.get_user(wollu['user_id'])
+            data = {
+                'nickname': user_info['nickname'].value,
+                'all_time': wollu['all_time']
+            }
+            response.append(data)
+        return Response(response)
 
 class StatsViewSet(viewsets.ModelViewSet):
     queryset = Stats.objects.all()
