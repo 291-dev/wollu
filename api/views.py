@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from .models import User, Wollu, Stats
 from .serializers import UserSerializer, WolluSerializer, WolluMonthSerializer, StatsSerializer
 from django.db.models import Sum
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 @api_view(['GET'])
@@ -16,9 +17,21 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def get_user(user_id):
+        return UserSerializer(User.objects.get(id__exact=user_id))
+
 class WolluViewSet(viewsets.ModelViewSet):
     queryset = Wollu.objects.all()
     serializer_class = WolluSerializer
+
+    def create(self, request):
+        response = super().create(request)
+        user_id = request.POST['user']
+        all_time = request.POST['all_time']
+        user_info = UserViewSet.get_user(user_id)
+        for category in ['job', 'annual', 'sex', 'age']:
+            StatsViewSet.update_stats(user_info[category].value, all_time)
+        return response
 
 class WolluMonthView(APIView):
     def get(self, request, user_id):
@@ -43,3 +56,16 @@ class StatsViewSet(viewsets.ModelViewSet):
         if None not in [job, annual, sex, age]:
             response = response.filter(category__in=[job, annual, sex, age])
         return response
+    
+    def update_stats(category, time):
+        try:
+            stats = Stats.objects.get(category__exact=category)
+            stats.max_wollu = max(stats.max_wollu, int(time))
+            stats.min_wollu = min(stats.min_wollu, int(time))
+            stats.user_num += 1
+            stats.total_wollu += int(time)
+            stats.save()
+        except ObjectDoesNotExist:
+            stats = Stats(category=category, min_wollu=time, max_wollu=time,
+                total_wollu=time, user_num=1)
+            stats.save()
