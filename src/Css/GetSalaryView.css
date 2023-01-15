@@ -1,7 +1,7 @@
 @import "../CssUtil/Color.css";
 @import "../CssUtil/Font.css";
 @import "../CssUtil/InputField.css";
-
+@import "../CssUtil/Font.css";
 /*Classes*/
 
 /*Ids*/
@@ -28,7 +28,15 @@
 }
 
 #getSalaryViewInputField3 {
-    width:20px;
+    width:30px;
+}
+
+#getSalaryViewInputField1, #getSalaryViewInputField2, #getSalaryViewInputField3 {
+    font-family: "pretendard_light";
+    font-weight:bold;
+    font-size:15px;
+    color: var(--main-color);
+    text-align: center;
 }
 
 /*Spaces*/

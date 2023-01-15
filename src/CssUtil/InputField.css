@@ -13,7 +13,7 @@
     padding-top: 5px;
     padding-right : 11px;
     border-radius: 4px;
-    filter:drop-shadow(1px 1px 20px gray); /* TODO ?what color*/
+    filter:drop-shadow(1px 1px 4px gray); /* TODO ?what color*/
     border-color: #FFFFFF;
     height:25px;
     border:0px;

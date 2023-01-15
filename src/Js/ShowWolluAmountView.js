@@ -6,8 +6,21 @@ import '../CssUtil/Font.css';
 import ShowWolluImageBorder from "../Resources/Images/ShowWolluImageBorder.svg";
 import ShowWolluImageEffect from "../Resources/Images/ShowWolluImageEffect.svg";
 import EatWolluImage from "../Resources/Images/EatWolluImage.svg";
+import React, {useState} from 'react';
 
-function ShowWalluAmountView() {
+function ShowWolluAmountView(salaryText,workingTimeText,wolluMinuteText,wolluItem) {
+  var wolluAmount = "?";
+  if (!isNaN(wolluMinuteText) && "a" == "a"){
+    if(!isNaN(workingTimeText)){
+      if(!isNaN(salaryText)){
+        wolluAmount = parseInt(wolluMinuteText * (salaryText/20/workingTimeText/60 * 10000));
+      }
+    }
+  }
+  else {
+    wolluAmount = "?";
+  }
+      
   return (
     <div className="ShowWolluAmountView" id="ShowCard" >
         <div id="cardTopSpaces"/>
@@ -15,11 +28,11 @@ function ShowWalluAmountView() {
             <img src={ShowWolluImageBorder} id="showWolluImageBorder"/>
             <img src={ShowWolluImageEffect} id="showWolluImageEffect"/>
             <div className="InterRegular" id="showWolluTextBoundary">
-                <div className="Inline" id="showWolluFactorText">커피/간식먹기</div>
+                <div className="Inline" id="showWolluFactorText">{wolluItem}</div>
                 <div className="Inline" id="showWolluText1">로</div>
                 <br/>
                 <div id="showWolluSpace2"/>
-                <div className="Inline" id="showWolluFactorText">12500원</div>
+                <div className="Inline" id="showWolluFactorText">{wolluAmount}원</div>
                 <div className="Inline" id="showWolluText2">루팡중입니다!</div>               
             </div>
             <img src={EatWolluImage} id="eatWolluImage"/>
@@ -31,4 +44,4 @@ function ShowWalluAmountView() {
   );
 }
 
-export default ShowWalluAmountView;
+export default ShowWolluAmountView;
