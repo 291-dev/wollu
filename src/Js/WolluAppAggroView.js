@@ -56,6 +56,16 @@ function WolluAppAggroView() {
     }
   };
 
+  const deviceShareButtonClicked = () => {
+    alert("device share");
+    window.navigator.share({
+      title: "test", // 공유될 제목
+      text: "", // 공유될 설명
+      url: "", // 공유될 URL
+      files: [], // 공유할 파일 배열
+    })
+  };
+
   return (    
     <div className="WolluAppAggroView">
       <div id="wolluAppAggroSpace1"/>
@@ -66,7 +76,7 @@ function WolluAppAggroView() {
         <img src={FacebookShareIcon} id ="wolluAppAggroShareIconSpace"/>
         <img src={InstagramShareIcon} id ="wolluAppAggroShareIconSpace"/>
         <img src={TweeterShareIcon} id ="wolluAppAggroShareIconSpace"/>
-        <img src={DeviceShareIcon} id ="wolluAppAggroShareIconSpace"/>
+        <img src={DeviceShareIcon} id ="wolluAppAggroShareIconSpace" onClick={deviceShareButtonClicked}/>
       </div>
       <div id="wolluAppAggroSpace3" />
       <div id="showOtherFriendsWolluText">
