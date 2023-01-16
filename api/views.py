@@ -26,8 +26,8 @@ class WolluViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         response = super().create(request)
-        user_id = request.POST['user']
-        all_time = request.POST['all_time']
+        user_id = request.data.get('user')
+        all_time = request.data.get('all_time')
         user_info = UserViewSet.get_user(user_id)
         for category in ['job', 'annual', 'sex', 'age']:
             StatsViewSet.update_stats(user_info[category].value, all_time)
