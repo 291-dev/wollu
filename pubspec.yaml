@@ -38,6 +38,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   gap: ^2.0.0
   sliding_up_panel: ^2.0.0+1
+  currency_text_input_formatter: ^2.1.8
+  flutter_svg: ^1.1.6
+  shared_preferences: ^2.0.16
+  http: ^0.13.5
+  flutter_local_notifications: ^13.0.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +72,13 @@ flutter:
     - assets/logo.png
     - assets/team_logo.png
     - assets/error.png
+    - assets/statistics.svg
+    - assets/settings.svg
+    - assets/snacks.png
+    - assets/play.png
+    - assets/play.svg
+    - assets/stop.svg
+    - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

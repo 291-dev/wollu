@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wollu/screen/login_screen.dart';
+import 'package:wollu/screen/main_screen.dart';
 import 'package:wollu/util/app_styles.dart';
 
 void main() {
