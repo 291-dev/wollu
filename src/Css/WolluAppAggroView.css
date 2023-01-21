@@ -26,6 +26,8 @@
 }
 
 .WolluAppAggroCard{
+    margin-left: auto;
+    margin-right: auto;
     width:327px;
     height:135px;
     background-color: var(--main-color);
