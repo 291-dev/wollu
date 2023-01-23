@@ -3,13 +3,19 @@ import '../CssUtil/CardStyle.css';
 import '../CssUtil/TextStyle.css';
 import '../CssUtil/Spaces.css';
 import '../CssUtil/Utils.css';
+import '../Css/Wollu.css';
 import GetWolluView_ShowTextImage from "../Resources/Images/GetWolluView_ShowTextImage.svg";
 import GetWolluView_WolluImage from "../Resources/Images/GetWolluView_WolluImage.svg";
-import React, {useState} from 'react';
+import bottomSheetItemUnSelected from "../Resources/Images/bottomSheetItemUnSelected.svg";
+
+import React, {useState, FC} from 'react';
+import "../Css/WolluItemBottomSheet.css";
 
 //const [wolluMinuteText, setWolluMinuteText] = useState('');
 
-function GetWolluView(wolluMinuteText, setWolluMinuteText, workingTimeText) {
+function GetWolluView(wolluMinuteText, setWolluMinuteText, workingTimeText, wolluItemText) {
+    
+
     //const [wolluMinuteText, setWolluMinuteText] = useState('');
     const onWolluMinuteChange = (e) => {
         if (isNaN(e.target.value)) {
@@ -27,10 +33,17 @@ function GetWolluView(wolluMinuteText, setWolluMinuteText, workingTimeText) {
         }
     };
 
-    const onWolluCaseClick = (e) => {
-        alert("clicked");
-        e.target.value = "selected";
-    }
+    const showBottomSheet = () => {
+        let container = document.querySelector("#bottomSheetContainer");
+        let bottomSheet = document.querySelector("#bottomSheetContainer #bottomSheet");
+        container.classList.add("active");
+        setTimeout(() => {
+            bottomSheet.classList.add("active");
+        }, 1);
+        let bodyTag = document.getElementById("root");
+        bodyTag.classList.add("StopScroll");
+    };
+
   return (
     <div className="GetWolluView" id="Card">
         <div id="cardTopSpaces"/>
@@ -43,7 +56,7 @@ function GetWolluView(wolluMinuteText, setWolluMinuteText, workingTimeText) {
             <div>
                 <div className="Inline" id="getWolluViewFrontText">오늘</div>
                 <div className="Inline">
-                    <input className="UnFocusedInputText" id="getWolluViewInputField1" onClick={onWolluCaseClick} placeholder="항목 선택"></input>
+                    <input className="UnFocusedInputText" id="getWolluViewInputField1" onClick={showBottomSheet} placeholder="항목 선택" value={wolluItemText}></input>
                 </div>
                 <div className="Inline" id="getWolluViewBackText">으로</div>
             </div>
@@ -56,8 +69,6 @@ function GetWolluView(wolluMinuteText, setWolluMinuteText, workingTimeText) {
                 </div>
                 <div className="Inline" id="getWolluViewBackText">분 월루했습니다.</div>
             </div>
-            
-
         </div>
     </div>
     

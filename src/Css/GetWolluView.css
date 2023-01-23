@@ -1,4 +1,9 @@
 
+.StopScroll{
+    overflow: hidden;
+    touch-action: none;
+}
+
 /*Ids*/
 #getWolluSpace1{
     padding-top: 86px;
