@@ -1,0 +1,149 @@
+
+@import "../CssUtil/Color.css";
+@import "../CssUtil/Font.css";
+/*Classes*/
+.CombineImages{
+    position: relative;
+}
+
+
+/*Ids*/
+#showWolluImageBorder{
+    margin-top: 16px;
+    width:308.8px;
+    height:668px;
+}
+
+#showWolluImageEffect{
+    margin-top: 16px;
+    position: absolute;
+    top:21px;
+    left:32px;
+    height: 629px;
+    opacity: 0.2;
+}
+
+#showWolluTextBoundary{
+    position: absolute;
+    top: 132px;
+    left: 47px;
+    width: 245px;
+    height: max-content;
+}
+
+
+#showWolluFactorText{
+    margin-left : auto;
+    margin-right : auto;
+    width: fit-content;
+    background-color: white;
+    color: var(--main-color);
+    height:fit-content;
+}
+
+#showWolluFactorText2{
+    margin-left : auto;
+    margin-right : auto;
+    width: fit-content;
+    background-color: white;
+    color: var(--main-color);
+    height:fit-content;
+}
+
+
+#eatWolluImage{
+    position: absolute;
+    top: 258px;
+    left:50.67px;
+}
+
+#showWolluText1{
+    color: white;
+}
+
+#showWolluText2{
+    color: white;
+    margin-left: 5px;
+}
+
+#showWolluNameBox{
+    position: absolute;
+    top: 546px;
+    left: 59px;
+    width: 221px;
+    height: 49px;
+    background-color: var(--main-color);
+    border-radius: 12px;
+    box-shadow: 0 0 0 4px #FFFFFF inset;
+}
+
+
+#showWolluNameBox.Selection1{ 
+    background-color: #58D2DA;    
+}
+#showWolluFactorText.Selection1, #showWolluFactorText2.Selection1{
+    color:#58D2DA;
+}
+
+#showWolluNameBox.Selection2{ 
+    background-color: #0017B3;    
+}
+#showWolluFactorText.Selection2, #showWolluFactorText2.Selection2{
+    color: #0017B3;
+}
+#showWolluNameBox.Selection3{ 
+    background-color: #9CDC15;    
+}
+#showWolluFactorText.Selection3,#showWolluFactorText2.Selection3{
+    color: #9CDC15;
+}
+#showWolluNameBox.Selection4{ 
+    background-color: #F3BC1F;    
+}
+#showWolluFactorText.Selection4,#showWolluFactorText2.Selection4{
+    color: #F3BC1F;
+}
+#showWolluNameBox.Selection5{ 
+    background-color: #EE9492;    
+}
+#showWolluFactorText.Selection5,#showWolluFactorText2.Selection5{
+    color: #EE9492;
+}
+#showWolluNameBox.Selection6{ 
+    background-color: #935DDD;    
+}
+#showWolluFactorText.Selection6,#showWolluFactorText2.Selection6{
+    color: #935DDD;
+}
+#showWolluNameBox.Selection7{ 
+    background-color: #00D19F;    
+}
+#showWolluFactorText.Selection7,#showWolluFactorText2.Selection7{
+    color: #00D19F;
+}
+#showWolluNameBox.Selection8{ 
+    background-color: #D228D3;    
+}
+#showWolluFactorText.Selection8,#showWolluFactorText2.Selection8{
+    color: #D228D3;
+}
+
+#showWolluNameText{
+    font-family: "rebecca";
+    font-size:24px;
+    color: white;
+    padding-top: 15px;
+}
+
+#eatWolluImage.Selection1{
+    content:url("../Resources/Images/Nowork_Roopang.svg");
+}
+
+/*Spaces*/
+#showWolluSpace1{
+    margin-top: 11px;
+}
+
+#showWolluSpace2{
+    margin-top: 11px;
+}

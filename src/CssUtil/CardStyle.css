@@ -17,3 +17,29 @@
     border-radius: 12px;
 }
 
+#ShowCard.Selection1{ 
+    background-color: #58D2DA;    
+}
+
+#ShowCard.Selection2{
+    background-color: #0017B3;    
+}
+#ShowCard.Selection3{
+    background-color: #9CDC15;    
+}
+#ShowCard.Selection4{
+    background-color: #F3BC1F;    
+}
+#ShowCard.Selection5{
+    background-color: #EE9492;    
+}
+#ShowCard.Selection6{
+    background-color: #935DDD;    
+}
+#ShowCard.Selection7{
+    background-color: #00D19F;    
+}
+#ShowCard.Selection8{
+    background-color: #D228D3;    
+}
+

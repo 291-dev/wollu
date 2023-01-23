@@ -1,9 +1,10 @@
 import React, {FC} from 'react';
 import "../Css/WolluItemBottomSheet.css";
+import "../Css/ShowWolluAmountView.css";
 import bottomSheetItemUnSelected from "../Resources/Images/bottomSheetItemUnSelected.svg";
 
 
-function WolluItemBottomSheet(wolluItemSelected,setWolluItemSelected,wolluItemText,setWolluItemText) {
+function WolluItemBottomSheet(wolluItemSelected,setWolluItemSelected,wolluItemText,setWolluItemText,setShowWolluText,setRoopangText) {
     
     const hideBottomSheet = () => {     
         if (wolluItemSelected != -1) {
@@ -19,9 +20,25 @@ function WolluItemBottomSheet(wolluItemSelected,setWolluItemSelected,wolluItemTe
     };
 
     var selection_list = [0,0,0,0,0,0,0,0];
+    const remove_all_selection_id = () => {
+        let card_background = document.getElementById("ShowCard");
+        let showWolluNameBox = document.getElementById("showWolluNameBox");
+        let showWolluFactorText = document.getElementById("showWolluFactorText");         
+        let showWolluFactorText2 = document.getElementById("showWolluFactorText2");         
 
+        var card_id = 1;
+        for(card_id = 1; card_id < 9; card_id ++){
+            let id_text = "Selection" + card_id;
+            card_background.classList.remove(id_text);
+            showWolluNameBox.classList.remove(id_text);
+            showWolluFactorText.classList.remove(id_text);         
+            showWolluFactorText2.classList.remove(id_text);         
+
+        }
+    };
     const onButtonSheetItemClicked = (selected) => {
         let adjustButton = document.querySelector("#bottomSheetAdjustButton");
+
         if (selection_list[selected-1] == 1) {
             selection_list[selected-1] = 0;
             // off self event
@@ -47,35 +64,93 @@ function WolluItemBottomSheet(wolluItemSelected,setWolluItemSelected,wolluItemTe
             }
         }
 
+        let card_background = document.getElementById("ShowCard");
+        let showWolluNameBox = document.getElementById("showWolluNameBox");
+        let showWolluFactorText = document.getElementById("showWolluFactorText");
+        let showWolluFactorText2 = document.getElementById("showWolluFactorText2");
+        let eatWolluImage = document.getElementById("eatWolluImage");
+        remove_all_selection_id();
         // set text
-        console.log("selected : ", selected);
-        if (selected == -1)
+        if (selected == -1){
             setWolluItemText("");
+            setShowWolluText("");
+            setRoopangText("루팡");
+        }
         else if (selected == 1){
             setWolluItemText("업무 없음");
+            setShowWolluText("업무가 없어");
+            setRoopangText("찐루팡");
+            card_background.classList.add("Selection1");
+            showWolluNameBox.classList.add("Selection1");   
+            showWolluFactorText.classList.add("Selection1");         
+            showWolluFactorText2.classList.add("Selection1");
+            eatWolluImage.classList.add("Selection1"); 
         }
         else if (selected == 2){
             setWolluItemText("커피/간식 먹기");
+            setShowWolluText("커피/간식먹기");
+            setRoopangText("간식 루팡");
+            card_background.classList.add("Selection2");
+            showWolluNameBox.classList.add("Selection2");
+            showWolluFactorText.classList.add("Selection2");         
+            showWolluFactorText2.classList.add("Selection2");         
         }
         else if (selected == 3){
             setWolluItemText("화장실 가기");
+            setShowWolluText("화장실 가기");
+            setRoopangText("똥루");
+            card_background.classList.add("Selection3");
+            showWolluNameBox.classList.add("Selection3");
+            showWolluFactorText2.classList.add("Selection3");         
+            showWolluFactorText.classList.add("Selection3");         
         }
         else if (selected == 4){
             setWolluItemText("바람 쐬기");
+            setShowWolluText("바깥바람쐬며");
+            setRoopangText("바람루팡");
+            card_background.classList.add("Selection4");
+            showWolluNameBox.classList.add("Selection4");
+            showWolluFactorText2.classList.add("Selection4");         
+            showWolluFactorText.classList.add("Selection4");         
         }
         else if (selected == 5){
             setWolluItemText("인터넷 서핑하기");
+            setShowWolluText("인터넷 서핑하기");
+            setRoopangText("전기세 루팡");
+            card_background.classList.add("Selection5");
+            showWolluNameBox.classList.add("Selection5");
+            showWolluFactorText2.classList.add("Selection5");         
+            showWolluFactorText.classList.add("Selection5");         
         }
         else if (selected == 6){
             setWolluItemText("담배 피우기");
+            setShowWolluText("담배 피우기");
+            setRoopangText("흡연 루팡");
+            card_background.classList.add("Selection6");
+            showWolluNameBox.classList.add("Selection6");
+            showWolluFactorText2.classList.add("Selection6");         
+            showWolluFactorText.classList.add("Selection6");         
         }
         else if (selected == 7){
             setWolluItemText("딴 짓 하기");
+            setShowWolluText("딴짓하기");
+            setRoopangText("딴짓루팡");
+            card_background.classList.add("Selection7");
+            showWolluNameBox.classList.add("Selection7");
+            showWolluFactorText.classList.add("Selection7");         
+            showWolluFactorText2.classList.add("Selection7");         
         }
         else if (selected == 8){
             setWolluItemText("이직 준비");
+            setShowWolluText("이직 준비하기");
+            setRoopangText("이직 루팡");            
+            card_background.classList.add("Selection8");
+            showWolluNameBox.classList.add("Selection8");
+            showWolluFactorText.classList.add("Selection8");         
+            showWolluFactorText2.classList.add("Selection8");         
         } else {
             setWolluItemText("???");
+            setShowWolluText("???");
         }
         
 

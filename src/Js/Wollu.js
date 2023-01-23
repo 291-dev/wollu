@@ -15,13 +15,14 @@ function Wollu() {
   const [wolluMinuteText, setWolluMinuteText] = useState('');
   const [wolluItemSelected,setWolluItemSelected] = useState(-1);
   const [wolluItemText,setWolluItemText] = useState('');
+  const [showWolluText,setShowWolluText] = useState('');
+  const [roopangText,setRoopangText] = useState('');
 
   // views
-  var wolluItem = "커피마시기?";
-  const wolluItemBottomSheet = WolluItemBottomSheet(wolluItemSelected, setWolluItemSelected, wolluItemText, setWolluItemText);
+  const wolluItemBottomSheet = WolluItemBottomSheet(wolluItemSelected, setWolluItemSelected, wolluItemText, setWolluItemText,setShowWolluText,setRoopangText);
   const getSalaryView = GetSalaryView(nickNameText,setNickNameText, salaryText,setSalaryText, workingTimeText, setWorkingTimeText);
   const getWolluView = GetWolluView(wolluMinuteText, setWolluMinuteText , workingTimeText, wolluItemText);
-  const showWolluAmountView = ShowWolluAmountView(salaryText,workingTimeText,wolluMinuteText,wolluItemText);  
+  const showWolluAmountView = ShowWolluAmountView(salaryText,workingTimeText,wolluMinuteText,wolluItemText,showWolluText,roopangText,setRoopangText,wolluItemSelected);
 
   return (
     <div className='WalluBackground'>
@@ -33,7 +34,7 @@ function Wollu() {
       <WolluAppAggroView/>
       <div id="WolluAdSpace"/>
       <div className="GoogleAd">
-        광고
+        광고 
       </div>
       <div className="flip">  
         <div className="card">
