@@ -21,14 +21,17 @@
   
 #getSalaryViewInputField1 {
     width:83px;
+    padding-left: 10px;
 }
 
 #getSalaryViewInputField2 {
-    width:50px;
+    width:80px;
+    padding-left: 10px;
 }
 
 #getSalaryViewInputField3 {
-    width:30px;
+    width:40px;
+    padding-left: 10px;
 }
 
 #getSalaryViewInputField1, #getSalaryViewInputField2, #getSalaryViewInputField3 {

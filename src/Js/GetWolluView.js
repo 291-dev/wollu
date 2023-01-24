@@ -6,8 +6,9 @@ import '../CssUtil/Utils.css';
 import '../Css/Wollu.css';
 import GetWolluView_ShowTextImage from "../Resources/Images/GetWolluView_ShowTextImage.svg";
 import GetWolluView_WolluImage from "../Resources/Images/GetWolluView_WolluImage.svg";
+import FloatingMoney from "../Resources/Images/FloatingMoney.svg";
 import bottomSheetItemUnSelected from "../Resources/Images/bottomSheetItemUnSelected.svg";
-
+import RotatingCircle from "../Resources/Images/RotatingCircle.png"
 import React, {useState, FC} from 'react';
 import "../Css/WolluItemBottomSheet.css";
 
@@ -50,7 +51,12 @@ function GetWolluView(wolluMinuteText, setWolluMinuteText, workingTimeText, woll
         <div id="getWolluSpace1"/>
         <img src={GetWolluView_ShowTextImage} id="GetWolluView_ShowTextImage"/>
         <div id="getWolluSpace2"/>
-        <img src={GetWolluView_WolluImage} id = "GetWolluView_WolluImage"/>
+        <div id="rotatingWollu">
+            <img src={GetWolluView_WolluImage} id = "GetWolluView_WolluImage"/>
+            <img src={RotatingCircle} id="RotatingCircle"/>
+            <img src={FloatingMoney} id="FloatingMoney"/>
+        </div>
+
         <div id="getWolluSpace3"/>
         <div className="PretendaredLight" id="getWolluViewTextStyles" >
             <div>

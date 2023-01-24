@@ -1,9 +1,10 @@
 import '../Css/MainView.css';
 import MainView_WolluMainImage from "../Resources/Images/MainView_WolluMainImage.svg";
 import MainView_291LogoImage from "../Resources/Images/MainView_291LogoImage.svg";
-import React from 'react';
+import React, {useState} from 'react';
 
 function MainView() {
+
   return (
     <div className="MainView">
       <div id="mainSpace1"/>

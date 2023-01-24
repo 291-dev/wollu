@@ -14,7 +14,7 @@
 }
 
 #getWolluSpace3{
-    padding-top: 55.67px;
+    padding-top: 335.67px;
 }
 
 #getWolluSpace4{
@@ -31,10 +31,12 @@
 
 #getWolluViewInputField1{
     width : 100px;
+    padding-left: 10px;
 }
 
 #getWolluViewInputField2{
     width : 50px;
+    padding-left: 10px;
 }
 #getWolluViewInputField1, #getWolluViewInputField2 {
     font-family: "pretendard_light";
@@ -54,8 +56,52 @@
     padding-left: 11px;
 }
 
+#Test{
+    position: relative;
+}
+
+
 /*Images*/
+
+#rotatingWollu{
+    position: relative;
+}
 #GetWolluView_WolluImage{
-    width: 292.2px;
-    height: 312.4px;
+    position: absolute;
+    width: 247.56px;
+    height: 248.54px;
+    top:19.49px;
+    left:46.32px;
+}
+
+#RotatingCircle{
+    position: absolute;
+    top: 0px;
+    left:27.8px;
+    width: 282.65px;
+    height: 290.96px;
+    animation: rotateImage 2s linear infinite; transform-origin: 50% 50%;
+}
+
+@keyframes rotateImage{
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#FloatingMoney{
+    position: absolute;
+    top: 0px;
+    left:190px;
+    animation: moneyEffect 3s linear infinite; transform-origin: 50% 50%;
+}
+
+
+@keyframes moneyEffect{
+    50% {
+        transform: rotate(30deg);
+    }
+    50% {
+        transform: rotate(-30deg);
+    }
 }

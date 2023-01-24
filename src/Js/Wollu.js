@@ -8,7 +8,7 @@ import '../CssUtil/CardFlip.css';
 import React, {useState} from 'react';
 import WolluItemBottomSheet from './WolluItemBottomSheet';
 function Wollu() {
-  
+
   const [nickNameText, setNickNameText] = useState('');
   const [salaryText, setSalaryText] = useState('');
   const [workingTimeText, setWorkingTimeText] = useState('');

@@ -68,7 +68,6 @@ function WolluItemBottomSheet(wolluItemSelected,setWolluItemSelected,wolluItemTe
         let showWolluNameBox = document.getElementById("showWolluNameBox");
         let showWolluFactorText = document.getElementById("showWolluFactorText");
         let showWolluFactorText2 = document.getElementById("showWolluFactorText2");
-        let eatWolluImage = document.getElementById("eatWolluImage");
         remove_all_selection_id();
         // set text
         if (selected == -1){
@@ -84,7 +83,6 @@ function WolluItemBottomSheet(wolluItemSelected,setWolluItemSelected,wolluItemTe
             showWolluNameBox.classList.add("Selection1");   
             showWolluFactorText.classList.add("Selection1");         
             showWolluFactorText2.classList.add("Selection1");
-            eatWolluImage.classList.add("Selection1"); 
         }
         else if (selected == 2){
             setWolluItemText("커피/간식 먹기");
