@@ -8,7 +8,7 @@ import GetWolluView_ShowTextImage from "../Resources/Images/GetWolluView_ShowTex
 import GetWolluView_WolluImage from "../Resources/Images/GetWolluView_WolluImage.svg";
 import FloatingMoney from "../Resources/Images/FloatingMoney.svg";
 import bottomSheetItemUnSelected from "../Resources/Images/bottomSheetItemUnSelected.svg";
-import RotatingCircle from "../Resources/Images/RotatingCircle.png"
+import RotatingCircle from "../Resources/Images/RotatingCircle.png";
 import React, {useState, FC} from 'react';
 import "../Css/WolluItemBottomSheet.css";
 

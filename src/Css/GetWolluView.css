@@ -68,18 +68,18 @@
 }
 #GetWolluView_WolluImage{
     position: absolute;
-    width: 247.56px;
-    height: 248.54px;
-    top:19.49px;
-    left:46.32px;
+    width: 210.56px;
+    height: 247.56px;
+    top:3.48999999999px;
+    left:66.32px;
 }
 
 #RotatingCircle{
     position: absolute;
     top: 0px;
-    left:27.8px;
-    width: 282.65px;
-    height: 290.96px;
+    left:47.8px;
+    width: 247.56px;
+    height: 247.56px;
     animation: rotateImage 2s linear infinite; transform-origin: 50% 50%;
 }
 
