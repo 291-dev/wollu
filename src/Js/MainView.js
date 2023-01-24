@@ -9,7 +9,7 @@ function MainView() {
   return (
     <div className="MainView">
       <div id="mainSpace1"/>
-      <div id="typingEffect">
+      <div id="typingEffectCenter">
         <div id="detailText"> 사장님 돈은 제가 가져갑니다</div>
       </div>
       <div id="mainSpace2"/>
