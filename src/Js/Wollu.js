@@ -4,7 +4,6 @@ import GetSalaryView from './GetSalaryView';
 import GetWolluView from './GetWolluView';
 import ShowWolluAmountView from './ShowWolluAmountView';
 import WolluAppAggroView from './WolluAppAggroView';
-import '../CssUtil/CardFlip.css';
 import React, {useState} from 'react';
 import WolluItemBottomSheet from './WolluItemBottomSheet';
 function Wollu() {
@@ -35,16 +34,6 @@ function Wollu() {
       <div id="WolluAdSpace"/>
       <div className="GoogleAd">
         광고 
-      </div>
-      <div className="flip">  
-        <div className="card">
-          <div className="front">
-            <GetWolluView/>
-          </div>
-          <div className="back">
-            <GetSalaryView/>
-          </div>
-        </div>
       </div>
     </div>
   );

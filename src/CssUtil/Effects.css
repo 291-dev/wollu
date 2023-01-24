@@ -1,0 +1,85 @@
+@import "../CssUtil/Color.css";
+
+#typingEffectCenter {
+    width: 22ch;
+    /* ch : 25개의 문자열을 포함 */
+    animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #typingEffectLeft {
+    width: 22ch;
+    /* ch : 25개의 문자열을 포함 */
+    animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+  }
+
+  @keyframes typing {
+    from {
+      width: 0
+    }
+  }
+      
+  @keyframes blink {
+    50% {
+      border-color: transparent
+    }
+  }
+
+  /*flip effect*/
+
+
+  .container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+   perspective: 1000px;
+  }
+  
+  .card {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    transform-style: preserve-3d;
+  }
+  
+  .face {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.8rem;
+    background-size: cover;
+    background-position: center center;
+    backface-visibility: hidden;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .face--front {
+    background: #2c3e50;
+    font-size: 3rem;
+  }
+  
+  .face--back {
+    background: #2c3e50;
+    font-size: 1.5rem;
+    transform: rotateY(180deg);
+  }
+  
+  .card:hover .face--front {
+    transform: rotateY(-180deg);
+  }
+
+  .card:hover .face--back {
+    transform: rotateY(0deg);
+  }

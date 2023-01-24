@@ -2,13 +2,16 @@ import '../Css/MainView.css';
 import MainView_WolluMainImage from "../Resources/Images/MainView_WolluMainImage.svg";
 import MainView_291LogoImage from "../Resources/Images/MainView_291LogoImage.svg";
 import React, {useState} from 'react';
+import "../CssUtil/Effects.css";
 
 function MainView() {
 
   return (
     <div className="MainView">
       <div id="mainSpace1"/>
-      <div id="detailText"> 사장님 돈은 제가 가져갑니다</div>
+      <div id="typingEffect">
+        <div id="detailText"> 사장님 돈은 제가 가져갑니다</div>
+      </div>
       <div id="mainSpace2"/>
       <img src={MainView_WolluMainImage}/>
       <div id="mainSpace3"/>

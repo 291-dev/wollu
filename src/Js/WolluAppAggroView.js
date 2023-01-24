@@ -8,60 +8,6 @@ import TweeterShareIcon from "../Resources/Images/TweeterShareIcon.svg";
 import WolluAppAggroCardSelection2 from "../Resources/Images/WolluAppAggroCardSelection2.svg";
 import React, {useState, useEffect} from 'react';
 import WolluEnv from "../Environment.js";
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  HatenaShareButton,
-  InstapaperShareButton,
-  LineShareButton,
-  LinkedinShareButton,
-  LivejournalShareButton,
-  MailruShareButton,
-  OKShareButton,
-  PinterestShareButton,
-  PocketShareButton,
-  RedditShareButton,
-  TelegramShareButton,
-  TumblrShareButton,
-  TwitterShareButton,
-  ViberShareButton,
-  VKShareButton,
-  WhatsappShareButton,
-  WorkplaceShareButton
-} from "react-share";
-
-import {
-  FacebookShareCount,
-  HatenaShareCount,
-  OKShareCount,
-  PinterestShareCount,
-  RedditShareCount,
-  TumblrShareCount,
-  VKShareCount
-} from "react-share";
-import {
-  EmailIcon,
-  FacebookIcon,
-  FacebookMessengerIcon,
-  HatenaIcon,
-  InstapaperIcon,
-  LineIcon,
-  LinkedinIcon,
-  LivejournalIcon,
-  MailruIcon,
-  OKIcon,
-  PinterestIcon,
-  PocketIcon,
-  RedditIcon,
-  TelegramIcon,
-  TumblrIcon,
-  TwitterIcon,
-  ViberIcon,
-  VKIcon,
-  WeiboIcon,
-  WhatsappIcon,
-  WorkplaceIcon
-} from "react-share";
 
 const WOLLU_WEB_URL = "http://wollu.me";
 const WOLLU_KAKAO_JS_KEY = "851b19589ec25afcb0e69973ce38ef2e";
@@ -133,57 +79,61 @@ function WolluAppAggroView() {
         <img src={DeviceShareIcon} id ="wolluAppAggroShareIconSpace" onClick={deviceShareButtonClicked}/>
       </div>
       <div id="wolluAppAggroSpace3" />
-      <div id="showOtherFriendsWolluText">
-        나와 비슷한 사람들은
-        <br/>
-        얼마나 루팡하는 지 알고 싶다면?
+      <div id="wolluAppAggroTextBoxes">
+          <div id="showOtherFriendsWolluText">
+            나와 비슷한 사람들은
+            <br/>
+            얼마나 루팡하는 지 알고 싶다면?
+          </div>
+          <div id="wolluAppAggroSpace4" />
+          <div className="AggroTextSytle">
+          
+            <div id="sameJobAggroText">
+              나와 같은 직종 사람들은 &nbsp;
+              <div className="Inline" id="blurText">12000</div>
+              원 루팡해요
+            </div>        
+            <div id="wolluAppAggroSpace5"/>
+            <div className="ShowWolluAmountSlider">
+              <div id="showSameJobAmount"/>
+            </div>
+            <div id="wolluAppAggroSpace6"/>
+
+            <div id="sameJobYearAggroText">
+              나와 같은 연차 사람들은 &nbsp;
+              <div className="Inline" id="blurText">2000</div>
+              원 루팡해요
+            </div>        
+            <div id="wolluAppAggroSpace5"/>
+            <div className="ShowWolluAmountSlider">
+              <div id="showSameJobYearAmount"/>
+            </div>
+            <div id="wolluAppAggroSpace6"/>
+
+            <div id="sameGenderAggroText">
+              나와 같은 성별 사람들은 &nbsp;
+              <div className="Inline" id="blurText">2000</div>
+              원 루팡해요
+            </div>        
+            <div id="wolluAppAggroSpace5"/>
+            <div className="ShowWolluAmountSlider">
+              <div id="showSameGenderAmount"/>
+            </div>
+            <div id="wolluAppAggroSpace6"/>
+
+            <div id="sameAgeAggroText">
+              나와 같은 나이 사람들은 &nbsp;
+              <div className="Inline" id="blurText">112000</div>
+              원 루팡해요
+            </div>        
+            <div id="wolluAppAggroSpace5"/>
+            <div className="ShowWolluAmountSlider">
+              <div id="showSameAgeAmount"/>
+            </div>
+          </div>
       </div>
-      <div id="wolluAppAggroSpace4" />
-      <div className="AggroTextSytle">
-      
-        <div id="sameJobAggroText">
-          나와 같은 직종 사람들은 &nbsp;
-          <div className="Inline" id="blurText">12000</div>
-          원 루팡해요
-        </div>        
-        <div id="wolluAppAggroSpace5"/>
-        <div className="ShowWolluAmountSlider">
-          <div id="showSameJobAmount"/>
-        </div>
-        <div id="wolluAppAggroSpace6"/>
 
-        <div id="sameJobYearAggroText">
-          나와 같은 연차 사람들은 &nbsp;
-          <div className="Inline" id="blurText">2000</div>
-          원 루팡해요
-        </div>        
-        <div id="wolluAppAggroSpace5"/>
-        <div className="ShowWolluAmountSlider">
-          <div id="showSameJobYearAmount"/>
-        </div>
-        <div id="wolluAppAggroSpace6"/>
 
-        <div id="sameGenderAggroText">
-          나와 같은 성별 사람들은 &nbsp;
-          <div className="Inline" id="blurText">2000</div>
-          원 루팡해요
-        </div>        
-        <div id="wolluAppAggroSpace5"/>
-        <div className="ShowWolluAmountSlider">
-          <div id="showSameGenderAmount"/>
-        </div>
-        <div id="wolluAppAggroSpace6"/>
-
-        <div id="sameAgeAggroText">
-          나와 같은 나이 사람들은 &nbsp;
-          <div className="Inline" id="blurText">112000</div>
-          원 루팡해요
-        </div>        
-        <div id="wolluAppAggroSpace5"/>
-        <div className="ShowWolluAmountSlider">
-          <div id="showSameAgeAmount"/>
-        </div>
-      </div>
 
       <div id="wolluAppAggroSpace7" />
 
@@ -196,7 +146,6 @@ function WolluAppAggroView() {
         <div id="wolluAppAggroSpace8"/>
         <img src={WolluAppAggroCardSelection2}/>
       </div>
-
       <div id="wolluAppAggroSpace9" />
       <div className="WolluAppDownloadButton">
         <div id="wolluAppDonwloadButtonText">어플 다운받기</div>
