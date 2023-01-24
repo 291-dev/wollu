@@ -27,7 +27,7 @@ function ShowWolluAmountView(salaryText,workingTimeText,wolluMinuteText,wolluIte
         <div id="cardTopSpaces"/>
 
       <div class="face face--front">
-        <div className="ShowWolluAmountView" id="ShowCard" ></div>
+        <div className="ShowWolluAmountView" id="ShowCardEmpty" ></div>
       </div>
       <div class="face face--back">
 

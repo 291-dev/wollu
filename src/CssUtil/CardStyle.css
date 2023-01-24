@@ -17,6 +17,14 @@
     border-radius: 12px;
 }
 
+#ShowCardEmpty{
+    width : 339px;
+    height : 700px;
+    margin : auto;
+    background-color: var(--main-color);
+    border-radius: 12px;
+}
+
 #ShowCard.Selection1{ 
     background-color: #58D2DA;    
 }
@@ -43,3 +51,29 @@
     background-color: #D228D3;    
 }
 
+
+#ShowCardEmpty.Selection1{ 
+    background-color: #58D2DA;    
+}
+
+#ShowCardEmpty.Selection2{
+    background-color: #0017B3;    
+}
+#ShowCardEmpty.Selection3{
+    background-color: #9CDC15;    
+}
+#ShowCardEmpty.Selection4{
+    background-color: #F3BC1F;    
+}
+#ShowCardEmpty.Selection5{
+    background-color: #EE9492;    
+}
+#ShowCardEmpty.Selection6{
+    background-color: #935DDD;    
+}
+#ShowCardEmpty.Selection7{
+    background-color: #00D19F;    
+}
+#ShowCardEmpty.Selection8{
+    background-color: #D228D3;    
+}

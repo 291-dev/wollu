@@ -136,7 +136,28 @@
 }
 
 #eatWolluImage.Selection1{
-    content:url("../Resources/Images/Nowork_Roopang.svg");
+    content:url("../Resources/Images/SelectionImage1.svg");
+}
+#eatWolluImage.Selection2{
+    content:url("../Resources/Images/SelectionImage2.svg");
+}
+#eatWolluImage.Selection3{
+    content:url("../Resources/Images/SelectionImage3.svg");
+}
+#eatWolluImage.Selection4{
+    content:url("../Resources/Images/SelectionImage4.svg");
+}
+#eatWolluImage.Selection5{
+    content:url("../Resources/Images/SelectionImage5.svg");
+}
+#eatWolluImage.Selection6{
+    content:url("../Resources/Images/SelectionImage6.svg");
+}
+#eatWolluImage.Selection7{
+    content:url("../Resources/Images/SelectionImage7.svg");
+}
+#eatWolluImage.Selection8{
+    content:url("../Resources/Images/SelectionImage8.svg");
 }
 
 /*Spaces*/

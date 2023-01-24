@@ -22,9 +22,11 @@ function WolluItemBottomSheet(wolluItemSelected,setWolluItemSelected,wolluItemTe
     var selection_list = [0,0,0,0,0,0,0,0];
     const remove_all_selection_id = () => {
         let card_background = document.getElementById("ShowCard");
+        let empty_card_background = document.getElementById("ShowCardEmpty");
         let showWolluNameBox = document.getElementById("showWolluNameBox");
         let showWolluFactorText = document.getElementById("showWolluFactorText");         
         let showWolluFactorText2 = document.getElementById("showWolluFactorText2");         
+        let showWolluImage = document.getElementById("eatWolluImage");
 
         var card_id = 1;
         for(card_id = 1; card_id < 9; card_id ++){
@@ -33,7 +35,8 @@ function WolluItemBottomSheet(wolluItemSelected,setWolluItemSelected,wolluItemTe
             showWolluNameBox.classList.remove(id_text);
             showWolluFactorText.classList.remove(id_text);         
             showWolluFactorText2.classList.remove(id_text);         
-
+            empty_card_background.classList.remove(id_text);
+            showWolluImage.classList.remove(id_text);
         }
     };
     const onButtonSheetItemClicked = (selected) => {
@@ -68,6 +71,8 @@ function WolluItemBottomSheet(wolluItemSelected,setWolluItemSelected,wolluItemTe
         let showWolluNameBox = document.getElementById("showWolluNameBox");
         let showWolluFactorText = document.getElementById("showWolluFactorText");
         let showWolluFactorText2 = document.getElementById("showWolluFactorText2");
+        let empty_card_background = document.getElementById("ShowCardEmpty");
+        let showWolluImage = document.getElementById("eatWolluImage");
         remove_all_selection_id();
         // set text
         if (selected == -1){
@@ -79,73 +84,90 @@ function WolluItemBottomSheet(wolluItemSelected,setWolluItemSelected,wolluItemTe
             setWolluItemText("업무 없음");
             setShowWolluText("업무가 없어");
             setRoopangText("찐루팡");
-            card_background.classList.add("Selection1");
-            showWolluNameBox.classList.add("Selection1");   
-            showWolluFactorText.classList.add("Selection1");         
-            showWolluFactorText2.classList.add("Selection1");
+            card_background.classList.add("Selection"+selected);
+            empty_card_background.classList.add("Selection"+selected);
+            showWolluNameBox.classList.add("Selection"+selected);
+            showWolluFactorText2.classList.add("Selection"+selected);         
+            showWolluFactorText.classList.add("Selection"+selected);      
+            showWolluImage.classList.add("Selection"+selected); 
         }
         else if (selected == 2){
             setWolluItemText("커피/간식 먹기");
             setShowWolluText("커피/간식먹기");
             setRoopangText("간식 루팡");
-            card_background.classList.add("Selection2");
-            showWolluNameBox.classList.add("Selection2");
-            showWolluFactorText.classList.add("Selection2");         
-            showWolluFactorText2.classList.add("Selection2");         
+            card_background.classList.add("Selection"+selected);
+            empty_card_background.classList.add("Selection"+selected);
+            showWolluNameBox.classList.add("Selection"+selected);
+            showWolluFactorText2.classList.add("Selection"+selected);         
+            showWolluFactorText.classList.add("Selection"+selected);      
+            showWolluImage.classList.add("Selection"+selected);         
         }
         else if (selected == 3){
             setWolluItemText("화장실 가기");
             setShowWolluText("화장실 가기");
             setRoopangText("똥루");
-            card_background.classList.add("Selection3");
-            showWolluNameBox.classList.add("Selection3");
-            showWolluFactorText2.classList.add("Selection3");         
-            showWolluFactorText.classList.add("Selection3");         
+            card_background.classList.add("Selection"+selected);
+            empty_card_background.classList.add("Selection"+selected);
+            showWolluNameBox.classList.add("Selection"+selected);
+            showWolluFactorText2.classList.add("Selection"+selected);         
+            showWolluFactorText.classList.add("Selection"+selected);      
+            showWolluImage.classList.add("Selection"+selected);         
         }
         else if (selected == 4){
             setWolluItemText("바람 쐬기");
             setShowWolluText("바깥바람쐬며");
             setRoopangText("바람루팡");
-            card_background.classList.add("Selection4");
-            showWolluNameBox.classList.add("Selection4");
-            showWolluFactorText2.classList.add("Selection4");         
-            showWolluFactorText.classList.add("Selection4");         
+            card_background.classList.add("Selection"+selected);
+            empty_card_background.classList.add("Selection"+selected);
+            showWolluNameBox.classList.add("Selection"+selected);
+            showWolluFactorText2.classList.add("Selection"+selected);         
+            showWolluFactorText.classList.add("Selection"+selected);      
+            showWolluImage.classList.add("Selection"+selected);         
         }
         else if (selected == 5){
             setWolluItemText("인터넷 서핑하기");
             setShowWolluText("인터넷 서핑하기");
             setRoopangText("전기세 루팡");
-            card_background.classList.add("Selection5");
-            showWolluNameBox.classList.add("Selection5");
-            showWolluFactorText2.classList.add("Selection5");         
-            showWolluFactorText.classList.add("Selection5");         
+            card_background.classList.add("Selection"+selected);
+            empty_card_background.classList.add("Selection"+selected);
+            showWolluNameBox.classList.add("Selection"+selected);
+            showWolluFactorText2.classList.add("Selection"+selected);         
+            showWolluFactorText.classList.add("Selection"+selected);      
+            showWolluImage.classList.add("Selection"+selected);         
         }
         else if (selected == 6){
+            
             setWolluItemText("담배 피우기");
             setShowWolluText("담배 피우기");
             setRoopangText("흡연 루팡");
-            card_background.classList.add("Selection6");
-            showWolluNameBox.classList.add("Selection6");
-            showWolluFactorText2.classList.add("Selection6");         
-            showWolluFactorText.classList.add("Selection6");         
+            card_background.classList.add("Selection"+selected);
+            empty_card_background.classList.add("Selection"+selected);
+            showWolluNameBox.classList.add("Selection"+selected);
+            showWolluFactorText2.classList.add("Selection"+selected);         
+            showWolluFactorText.classList.add("Selection"+selected);      
+            showWolluImage.classList.add("Selection"+selected);   
         }
         else if (selected == 7){
             setWolluItemText("딴 짓 하기");
             setShowWolluText("딴짓하기");
             setRoopangText("딴짓루팡");
-            card_background.classList.add("Selection7");
-            showWolluNameBox.classList.add("Selection7");
-            showWolluFactorText.classList.add("Selection7");         
-            showWolluFactorText2.classList.add("Selection7");         
+            card_background.classList.add("Selection"+selected);
+            empty_card_background.classList.add("Selection"+selected);
+            showWolluNameBox.classList.add("Selection"+selected);
+            showWolluFactorText2.classList.add("Selection"+selected);         
+            showWolluFactorText.classList.add("Selection"+selected);      
+            showWolluImage.classList.add("Selection"+selected);         
         }
         else if (selected == 8){
             setWolluItemText("이직 준비");
             setShowWolluText("이직 준비하기");
             setRoopangText("이직 루팡");            
-            card_background.classList.add("Selection8");
-            showWolluNameBox.classList.add("Selection8");
-            showWolluFactorText.classList.add("Selection8");         
-            showWolluFactorText2.classList.add("Selection8");         
+            card_background.classList.add("Selection"+selected);
+            empty_card_background.classList.add("Selection"+selected);
+            showWolluNameBox.classList.add("Selection"+selected);
+            showWolluFactorText2.classList.add("Selection"+selected);         
+            showWolluFactorText.classList.add("Selection"+selected);      
+            showWolluImage.classList.add("Selection"+selected);       
         } else {
             setWolluItemText("???");
             setShowWolluText("???");
