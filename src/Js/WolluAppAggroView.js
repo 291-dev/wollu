@@ -9,6 +9,8 @@ import WolluAppAggroCardSelection2 from "../Resources/Images/WolluAppAggroCardSe
 import React, {useState, useEffect} from 'react';
 import WolluEnv from "../Environment.js";
 
+import testImage from "../Resources/Images/WolluFabicon192.png";
+
 const WOLLU_WEB_URL = "http://wollu.me";
 const WOLLU_KAKAO_JS_KEY = "851b19589ec25afcb0e69973ce38ef2e";
 const TEAM_URL = "http://wollu.me/project_info";
@@ -31,13 +33,13 @@ function WolluAppAggroView() {
       if (!kakao.isInitialized()) {
         kakao.init(WOLLU_KAKAO_JS_KEY); // 카카오에서 제공받은 javascript key를 넣어줌 -> .env파일에서 호출시킴
       }
-  
+            
       kakao.Link.sendDefault({
         objectType: "feed",
         content: {
           title: title,
           description: "월급 루팡 내역을 공유해보세요!\n월급 루팡 함께 해보기 : http://wollu.me",
-          imageUrl: "../Resources/Images/WolluFabicon512.png",
+          imageUrl: "../Resource/",//"http://wollu.me/static/media/GetWolluView_WolluImage.bed8b581.svg",
           link: {
             mobileWebUrl: TEAM_URL, // 인자값으로 받은 route(uri 형태)
             webUrl: TEAM_URL // TODO 
@@ -45,7 +47,7 @@ function WolluAppAggroView() {
         },
         buttons: [
           {
-            title: "나의 월루 금액 확인하기",
+            title: "나는 얼마를 루팡할까?",
             link: {
               mobileWebUrl: WOLLU_WEB_URL,
               webUrl: WOLLU_WEB_URL
@@ -53,6 +55,7 @@ function WolluAppAggroView() {
           }
         ]
       });
+
     }
   };
 
