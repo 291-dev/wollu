@@ -96,6 +96,12 @@ function WolluAppAggroView() {
     window.open(shareURL, '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
   }
 
+  const faceBookShareButtonClicked = (e) => {
+    const navUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + 'https://wollu.me';
+    window.open(navUrl);
+    return;
+  }
+
   return (    
     <div className="WolluAppAggroView">
       <div id="wolluAppAggroSpace1"/>
@@ -103,7 +109,7 @@ function WolluAppAggroView() {
       <div id="wolluAppAggroSpace2"/>
       <div className="ShareIconButtons">
         <img src={KakaoShareIcon} onClick={onKaKaoShareButtonClicked}/>
-        <img src={FacebookShareIcon} id ="wolluAppAggroShareIconSpace"/>
+        <img src={FacebookShareIcon} id ="wolluAppAggroShareIconSpace" onClick={faceBookShareButtonClicked}/>
         <img src={InstagramShareIcon} id ="wolluAppAggroShareIconSpace"/>
         <img src={TweeterShareIcon} id ="wolluAppAggroShareIconSpace" onClick={twitterShareButtonClicked}/>
         <img src={DeviceShareIcon} id ="wolluAppAggroShareIconSpace" onClick={deviceShareButtonClicked}/>
