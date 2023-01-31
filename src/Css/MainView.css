@@ -4,10 +4,10 @@
 /*Classes*/
 .MainView {
     width: 100%;
-    background-color: var(--main-background-color);
+    background-color: black/*var(--main-background-color)*/;
     margin-left: auto;
     margin-right: auto;
-    height: 873px;
+    height: 100%/*873px*/;
 }
 
 /*Ids*/

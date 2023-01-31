@@ -4,8 +4,8 @@ import MainView_291LogoImage from "../Resources/Images/MainView_291LogoImage.svg
 import React, {useState} from 'react';
 import "../CssUtil/Effects.css";
 
-function MainView() {
 
+function MainView() {
   return (
     <div className="MainView">
       <div id="mainSpace1"/>

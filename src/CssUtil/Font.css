@@ -1,12 +1,35 @@
 
 @font-face{
     font-family : "puradack_mac";
-    src : url("../Resources/Fonts/mac_otf/puradak_gentle_gothic.otf");
+    src : url("../Resources/Fonts/mac_otf/puradak_gentle_gothic.otf") format('opentype'),
+    url("../Resources/Fonts/window_ttf/puradak_gentle_gothic.ttf") format('ttf');
+}
+
+@font-face{
+    font-family : "puradack";
+    src : 
+    url("../Resources/Fonts/window_ttf/puradak_gentle_gothic.ttf") format('ttf'),
+    url("../Resources/Fonts/mac_otf/puradak_gentle_gothic.otf") format('opentype')        
 }
 
 @font-face{
     font-family : "pretendard_light";
-    src : url("../Resources/Fonts/mac_otf/Pretendard-Light.otf");
+    src : 
+    url("../Resources/Fonts/mac_otf/Pretendard-Light.otf") format('opentype'),
+    url("../Resources/Fonts/window_ttf/Pretendard-Light.ttf") format('ttf');
+}
+
+@font-face{
+    font-family : "pretendard_regular";
+    src : 
+    url("../Resources/Fonts/mac_otf/Pretendard-Regular.otf") format('opentype'),
+    url("../Resources/Fonts/window_ttf/Pretendard-Regular.ttf") format('ttf');
+    ;
+}
+
+@font-face{
+    font-family : "pretendard_regular_android";
+    src : url("../Resources/Fonts/window_ttf/Pretendard-Regular.ttf");
 }
 
 

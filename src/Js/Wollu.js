@@ -7,7 +7,10 @@ import WolluAppAggroView from './WolluAppAggroView';
 import React, {useState} from 'react';
 import WolluItemBottomSheet from './WolluItemBottomSheet';
 import Slider from "./Slider";
+import WolluAggroCardSlider from "./WolluAggroCardSlider";
 
+import AppDownloadView from "./AppDownloadView";
+import ScrollTest from "./ScrollTest";
 function Wollu() {
 
   const [nickNameText, setNickNameText] = useState('');
@@ -26,7 +29,12 @@ function Wollu() {
   const showWolluAmountView = ShowWolluAmountView(salaryText,workingTimeText,wolluMinuteText,wolluItemText,showWolluText,roopangText,setRoopangText,wolluItemSelected);
 
   return (
+    <>
+          <AppDownloadView/>
+    </>
+    /*
     <div className='WalluBackground'>
+      <AppDownloadView/>
       {wolluItemBottomSheet}
       <MainView/>
       {getSalaryView}
@@ -35,10 +43,12 @@ function Wollu() {
       <WolluAppAggroView/>
       <div id="WolluAdSpace"/>
       <Slider/>
+      <WolluAggroCardSlider/>
       <div className="GoogleAd">
         광고 
       </div> 
     </div>
+    */
   );
 }
 

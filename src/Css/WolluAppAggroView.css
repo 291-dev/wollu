@@ -174,12 +174,11 @@
 
 
 .WolluAppAggroCard{
-    margin-left: auto;
-    margin-right: auto;
     width:327px;
-    height:135px;
+    height:135px; /*135*/
     background-color: var(--main-color);
     border-radius: 8px;
+    margin:auto;
 }
 
 .WolluAppDownloadButton{
@@ -262,9 +261,13 @@
 
 }
 
+#WolluAppAggroCardSelection2{
+    display:block;
+    margin:auto;
+}
+
 #wolluAppAggroTextBoxes{
     padding-left:10px;
-
 }
 
 #wolluAppDonwloadButtonText{

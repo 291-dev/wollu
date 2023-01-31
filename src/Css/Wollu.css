@@ -9,7 +9,8 @@
 }
 
 .GoogleAd{
-    width : 100%;
+    margin:auto;
+    width : 327px;
     height:84px;
     background-color: gray;
     text-align: center;
