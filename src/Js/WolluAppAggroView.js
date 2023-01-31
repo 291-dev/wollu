@@ -10,10 +10,14 @@ import React, {useState, useEffect} from 'react';
 import WolluEnv from "../Environment.js";
 
 import testImage from "../Resources/Images/WolluFabicon192.png";
+import AppAggroCard from "../Components/AppAggroCard";
+
+import styled from 'styled-components';
 
 const WOLLU_WEB_URL = "http://wollu.me";
 const WOLLU_KAKAO_JS_KEY = "851b19589ec25afcb0e69973ce38ef2e";
 const TEAM_URL = "http://wollu.me/project_info";
+
 function WolluAppAggroView() {
   useEffect(() => {
     const script = document.createElement("script");
@@ -102,6 +106,63 @@ function WolluAppAggroView() {
     return;
   }
 
+  const Container = styled.div`
+    position: relative;
+    transition: transform 0.5s;
+    overflow: hidden;
+  `;
+
+    // Slider Effects
+    var currentEffect1 = "";
+    var currentEffect2 = "";
+    var currentEffect3 = "";
+    var currentEffect4 = "";
+    useEffect(() => {
+      let timer = setInterval(() => {
+        var index = 1;
+        for (index = 1 ; index < 5; index ++) {
+          var query = ".showSameJobAmount" + index;
+          var sliders = document.querySelector(query);
+          if (index == 1){
+            if (currentEffect1 != "")
+              sliders.classList.remove(currentEffect1);
+          }
+          else if (index == 2){
+            console.log(currentEffect2);
+            if (currentEffect2 != ""){
+              sliders.classList.remove(currentEffect2);
+            }
+          }
+          else if (index == 3){
+            if (currentEffect3 != "")
+              sliders.classList.remove(currentEffect3);
+          }
+          else if (index == 4){
+            if (currentEffect4 != "")
+              sliders.classList.remove(currentEffect4);
+          }
+              
+          const min = 2;
+          const max = 11;
+          const rand = min + parseInt( Math.random() * (max-min));
+          const effect = "ShowSliderEffect" + rand;
+          if (index == 1)
+            currentEffect1 = effect;
+          else if (index == 2)
+            currentEffect2 = effect;
+          else if (index == 3)
+            currentEffect3 = effect;
+          else if (index == 4)
+            currentEffect4 = effect;
+          
+          sliders.classList.add(effect);
+        }
+      }, 3000);
+      
+      return () => clearInterval(timer)
+    }, []);
+
+
   return (    
     <div className="WolluAppAggroView">
       <div id="wolluAppAggroSpace1"/>
@@ -130,8 +191,8 @@ function WolluAppAggroView() {
               원 루팡해요
             </div>        
             <div id="wolluAppAggroSpace5"/>
-            <div className="ShowWolluAmountSlider">
-              <div id="showSameJobAmount"/>
+            <div className="ShowWolluAmountSlider" id="ShowWolluAmountSlider1">
+              <div className="showSameJobAmount1"/>
             </div>
             <div id="wolluAppAggroSpace6"/>
 
@@ -141,8 +202,8 @@ function WolluAppAggroView() {
               원 루팡해요
             </div>        
             <div id="wolluAppAggroSpace5"/>
-            <div className="ShowWolluAmountSlider">
-              <div id="showSameJobYearAmount"/>
+            <div className="ShowWolluAmountSlider" id="ShowWolluAmountSlider2">
+              <div className="showSameJobAmount2"/>
             </div>
             <div id="wolluAppAggroSpace6"/>
 
@@ -152,8 +213,8 @@ function WolluAppAggroView() {
               원 루팡해요
             </div>        
             <div id="wolluAppAggroSpace5"/>
-            <div className="ShowWolluAmountSlider">
-              <div id="showSameGenderAmount"/>
+            <div className="ShowWolluAmountSlider" id="ShowWolluAmountSlider3">
+              <div className="showSameJobAmount3"/>
             </div>
             <div id="wolluAppAggroSpace6"/>
 
@@ -163,12 +224,11 @@ function WolluAppAggroView() {
               원 루팡해요
             </div>        
             <div id="wolluAppAggroSpace5"/>
-            <div className="ShowWolluAmountSlider">
-              <div id="showSameAgeAmount"/>
+            <div className="ShowWolluAmountSlider" id="ShowWolluAmountSlider4">
+              <div className="showSameJobAmount4"/>
             </div>
           </div>
       </div>
-
 
 
       <div id="wolluAppAggroSpace7" />
@@ -186,6 +246,13 @@ function WolluAppAggroView() {
       <div className="WolluAppDownloadButton">
         <div id="wolluAppDonwloadButtonText">어플 다운받기</div>
       </div>
+
+    <Container>
+      {AppAggroCard("what")}
+      {AppAggroCard("the")}
+      {AppAggroCard("fuck")}
+    </Container>
+
     </div> 
   );
 }

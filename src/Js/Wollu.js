@@ -6,6 +6,8 @@ import ShowWolluAmountView from './ShowWolluAmountView';
 import WolluAppAggroView from './WolluAppAggroView';
 import React, {useState} from 'react';
 import WolluItemBottomSheet from './WolluItemBottomSheet';
+import Slider from "./Slider";
+
 function Wollu() {
 
   const [nickNameText, setNickNameText] = useState('');
@@ -32,9 +34,10 @@ function Wollu() {
       {showWolluAmountView}
       <WolluAppAggroView/>
       <div id="WolluAdSpace"/>
+      <Slider/>
       <div className="GoogleAd">
         광고 
-      </div>
+      </div> 
     </div>
   );
 }

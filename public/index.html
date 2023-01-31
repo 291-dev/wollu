@@ -35,14 +35,29 @@
     <title>Wollu</title>
   </head>
   <body>
+ <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '714205313635654',
+          xfbml      : true,
+          version    : 'v15.0'
+        });
+        FB.AppEvents.logPageView();
+      };
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
     <div id="root"></div>
-    <div style="margin-left:auto; margin-right: auto;">
-      <ins class="kakao_ad_area" style="display:none;" 
+    <ins class="kakao_ad_area" style="display:none;" 
       data-ad-unit = "DAN-oR5y5Ly1zBql2L5U" 
       data-ad-width = "300" 
-      data-ad-height = "250"
-      ></ins> 
-    </div>
+      data-ad-height = "250"      
+    ></ins> 
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
   </body>
 </html>

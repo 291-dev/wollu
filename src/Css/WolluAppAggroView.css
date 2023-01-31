@@ -26,6 +26,153 @@
     background-color: #F3F3F3;
 }
 
+
+.showSameJobAmount1.ShowSliderEffect1{
+    width: 0px;
+}
+.showSameJobAmount1.ShowSliderEffect2{
+    width: 32.1px;
+}
+.showSameJobAmount1.ShowSliderEffect3{
+    width: 64.2px;
+}
+.showSameJobAmount1.ShowSliderEffect4{
+    width: 96.3px;
+}
+.showSameJobAmount1.ShowSliderEffect5{
+    width: 128.4px;
+}
+.showSameJobAmount1.ShowSliderEffect6{
+    width: 160.5px;
+}
+.showSameJobAmount1.ShowSliderEffect7{
+    width: 192.6px;
+}
+.showSameJobAmount1.ShowSliderEffect8{
+    width: 224.7px;
+}
+.showSameJobAmount1.ShowSliderEffect9{
+    width: 256.8px;
+}
+.showSameJobAmount1.ShowSliderEffect10{
+    width: 288.9px;
+}
+.showSameJobAmount1.ShowSliderEffect11{
+    width: 321px;
+}
+
+.showSameJobAmount2.ShowSliderEffect1{
+    width: 0px;
+}
+.showSameJobAmount2.ShowSliderEffect2{
+    width: 32.1px;
+}
+.showSameJobAmount2.ShowSliderEffect3{
+    width: 64.2px;
+}
+.showSameJobAmount2.ShowSliderEffect4{
+    width: 96.3px;
+}
+.showSameJobAmount2.ShowSliderEffect5{
+    width: 128.4px;
+}
+.showSameJobAmount2.ShowSliderEffect6{
+    width: 160.5px;
+}
+.showSameJobAmount2.ShowSliderEffect7{
+    width: 192.6px;
+}
+.showSameJobAmount2.ShowSliderEffect8{
+    width: 224.7px;
+}
+.showSameJobAmount2.ShowSliderEffect9{
+    width: 256.8px;
+}
+.showSameJobAmount2.ShowSliderEffect10{
+    width: 288.9px;
+}
+.showSameJobAmount2.ShowSliderEffect11{
+    width: 321px;
+}
+
+.showSameJobAmount3.ShowSliderEffect1{
+    width: 0px;
+}
+.showSameJobAmount3.ShowSliderEffect2{
+    width: 32.1px;
+}
+.showSameJobAmount3.ShowSliderEffect3{
+    width: 64.2px;
+}
+.showSameJobAmount3.ShowSliderEffect4{
+    width: 96.3px;
+}
+.showSameJobAmount3.ShowSliderEffect5{
+    width: 128.4px;
+}
+.showSameJobAmount3.ShowSliderEffect6{
+    width: 160.5px;
+}
+.showSameJobAmount3.ShowSliderEffect7{
+    width: 192.6px;
+}
+.showSameJobAmount3.ShowSliderEffect8{
+    width: 224.7px;
+}
+.showSameJobAmount3.ShowSliderEffect9{
+    width: 256.8px;
+}
+.showSameJobAmount3.ShowSliderEffect10{
+    width: 288.9px;
+}
+.showSameJobAmount3.ShowSliderEffect11{
+    width: 321px;
+}
+
+.showSameJobAmount4.ShowSliderEffect1{
+    width: 0px;
+}
+.showSameJobAmount4.ShowSliderEffect2{
+    width: 32.1px;
+}
+.showSameJobAmount4.ShowSliderEffect3{
+    width: 64.2px;
+}
+.showSameJobAmount4.ShowSliderEffect4{
+    width: 96.3px;
+}
+.showSameJobAmount4.ShowSliderEffect5{
+    width: 128.4px;
+}
+.showSameJobAmount4.ShowSliderEffect6{
+    width: 160.5px;
+}
+.showSameJobAmount4.ShowSliderEffect7{
+    width: 192.6px;
+}
+.showSameJobAmount4.ShowSliderEffect8{
+    width: 224.7px;
+}
+.showSameJobAmount4.ShowSliderEffect9{
+    width: 256.8px;
+}
+.showSameJobAmount4.ShowSliderEffect10{
+    width: 288.9px;
+}
+.showSameJobAmount4.ShowSliderEffect11{
+    width: 321px;
+}
+
+.WolluAppAggroCardSlider{
+    width: 327px;
+    height: 135px;
+    position: relative;
+    margin: 50px auto;
+    overflow: hidden;
+}
+
+
+
 .WolluAppAggroCard{
     margin-left: auto;
     margin-right: auto;
@@ -64,9 +211,24 @@
     filter: blur(3px);
 }
 
-#showSameJobAmount {
+.showSameJobAmount1 {
     height:4px;
-    width: 241px;
+    width: 0px;
+    background-color: var(--main-color);
+}
+.showSameJobAmount2 {
+    height:4px;
+    width: 0px;
+    background-color: var(--main-color);
+}
+.showSameJobAmount3 {
+    height:4px;
+    width: 0px;
+    background-color: var(--main-color);
+}
+.showSameJobAmount4 {
+    height:4px;
+    width: 0px;
     background-color: var(--main-color);
 }
 
@@ -153,3 +315,4 @@
 #wolluAppAggroSpace9{
     margin-top: 24px;
 }
+
