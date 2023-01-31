@@ -246,13 +246,6 @@ function WolluAppAggroView() {
       <div className="WolluAppDownloadButton">
         <div id="wolluAppDonwloadButtonText">어플 다운받기</div>
       </div>
-
-    <Container>
-      {AppAggroCard("what")}
-      {AppAggroCard("the")}
-      {AppAggroCard("fuck")}
-    </Container>
-
     </div> 
   );
 }
