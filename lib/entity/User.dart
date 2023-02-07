@@ -1,4 +1,5 @@
 class User {
+  int id = 0;
   late String nickname;
   int salary = 0;
   int week_work = 0;
@@ -9,6 +10,7 @@ class User {
   late String age;
 
   User({
+    required this.id,
     required this.nickname,
     required this.salary,
     required this.week_work,

@@ -16,7 +16,7 @@ class CirclePainter extends CustomPainter {
       ..moveTo(0, 0)
       ..lineTo(0, size.height + 0.8);
 
-    canvas.drawCircle(Offset(size.width/2,size.height/2), 145, paint);
+    canvas.drawCircle(Offset(size.width/2,size.height/2), 135, paint);
   }
 
   @override
@@ -29,19 +29,24 @@ class CirclePainter extends CustomPainter {
 }
 
 class ArcPainter extends CustomPainter {
-  final gradient = LinearGradient(
+  double arcAngle = 2 * pi * 0;
+
+  void setAngle(double angle) {
+    arcAngle = 2 * pi * angle;
+  }
+
+  final gradient = const LinearGradient(
       colors: [Color(0xFF616FEE), Color(0xFF9AE9CF), Color(0xFF9AE9CF), Color(0xFF9AE9CF),  Color(0xFFB2F02D),],
       begin: Alignment.bottomLeft,
       end: Alignment.topRight
       )
-      .createShader(Rect.fromCircle(center: Offset(150,150), radius: min(145 / 2 ,145/2)));
-  double arcAngle = 2 * pi * (100/ 100);
+      .createShader(Rect.fromCircle(center: Offset(135,135), radius: min(135 / 2 ,135/2)));
 
   @override
   void paint(Canvas canvas, Size size) {
     // TODO: implement paint
     final paint = Paint()
-      ..strokeWidth = 145.0
+      ..strokeWidth = 135.0
       ..shader = gradient
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.butt;
