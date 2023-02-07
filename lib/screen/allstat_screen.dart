@@ -452,7 +452,7 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                 Positioned(
                                   top: 3,
                                   child: AnimatedContainer(
-                                    curve: Curves.elasticInOut,
+                                    curve: Curves.easeInOut,
                                     width: _trigger ? size.width * (dumpData[2].total/dumpData[2].num)/dumpData[2].max : size.width * 0.8,
                                     height: 4,
                                     duration: const Duration(milliseconds: 1000),

@@ -103,15 +103,22 @@ class _MainState extends State<Main> {
         })
       })
     });
+    setState(() {
+      isLoading = false;
+    });
   }
   Future get() async {
     print('DB called');
     DBHelper helper = DBHelper();
     final result = await helper.getWollu(widget.currentUser.id);
-    setState(() {
-      times = result.sublist(2);
-    });
-    print('DB called, $times');
+    if (result.isEmpty) {
+
+    } else {
+      setState(() {
+        times = result.sublist(2);
+      });
+      print('DB called, $times');
+    }
   }
   Future setList() async {
     print('setList() called $selected');

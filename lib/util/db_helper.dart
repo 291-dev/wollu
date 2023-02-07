@@ -164,19 +164,26 @@ class DBHelper {
     final List<Map<String, dynamic>> maps = await db.query(
         'times'
     );
-    final lastMap = maps.last;
-    return [
-      lastMap['id'],
-      lastMap['alltime'],
-      lastMap['no'],
-      lastMap['coffee'],
-      lastMap['toilet'],
-      lastMap['wind'],
-      lastMap['shopping'],
-      lastMap['smoking'],
-      lastMap['something'],
-      lastMap['turnover'],
-    ];
+    try {
+      final lastMap = maps.last;
+      return [
+        lastMap['id'],
+        lastMap['alltime'],
+        lastMap['no'],
+        lastMap['coffee'],
+        lastMap['toilet'],
+        lastMap['wind'],
+        lastMap['shopping'],
+        lastMap['smoking'],
+        lastMap['something'],
+        lastMap['turnover'],
+      ];
+    } catch (e) {
+      return [
+
+      ];
+    }
+
   }
 
   Future<void> delete() async {
