@@ -28,6 +28,22 @@
 }
 
 @font-face{
+    font-family : "pretendard_medium";
+    src : 
+    url("../Resources/Fonts/mac_otf/Pretendard-Medium.otf") format('opentype'),
+    url("../Resources/Fonts/window_ttf/Pretendard-Medium.ttf") format('ttf');
+    ;
+}
+
+@font-face{
+    font-family : "pretendard_semibold";
+    src : 
+    url("../Resources/Fonts/mac_otf/Pretendard-SemiBold.otf") format('opentype'),
+    url("../Resources/Fonts/window_ttf/Pretendard-SemiBold.ttf") format('ttf');
+    ;
+}
+
+@font-face{
     font-family : "pretendard_regular_android";
     src : url("../Resources/Fonts/window_ttf/Pretendard-Regular.ttf");
 }

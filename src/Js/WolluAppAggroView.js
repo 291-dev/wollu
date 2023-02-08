@@ -13,7 +13,7 @@ import testImage from "../Resources/Images/WolluFabicon192.png";
 import AppAggroCard from "../Components/AppAggroCard";
 
 import styled from 'styled-components';
-
+import { useNavigate } from "react-router-dom";
 const WOLLU_WEB_URL = "http://wollu.me";
 const WOLLU_KAKAO_JS_KEY = "851b19589ec25afcb0e69973ce38ef2e";
 const TEAM_URL = "http://wollu.me/project_info";
@@ -161,6 +161,13 @@ function WolluAppAggroView() {
       return () => clearInterval(timer)
     }, []);
 
+    /* navigate
+    const movePage = useNavigate();
+    const goWebAppDownloadView = () => {
+        movePage("/download_app")
+    }
+    */
+
   const onAppDownloadButtonClicked = () => {
     var isMobile = false;
     if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
@@ -170,6 +177,7 @@ function WolluAppAggroView() {
 
     if (!isMobile) {
       alert("Web Detected.. go to web download page");
+      //goWebAppDownloadView();
     } else {
       var varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
       if ( varUA.indexOf('android') > -1) {

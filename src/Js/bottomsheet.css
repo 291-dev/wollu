@@ -1,0 +1,6 @@
+.SelectedImage {
+    content:url('../Resources/Images/bottomSheetItemSelected.svg');
+}
+.NotSelectedImage{
+    content:url('../Resources/Images/bottomSheetItemUnSelected.svg');
+}

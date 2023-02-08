@@ -21,11 +21,9 @@ function AppDownloadView() {
     window_height = 609;
   }
   
-    
   const AppDownloadViewBackground = styled.div`
     width: ${window_width}px;
     height:${window_height}px;
-    //background-color: var(--main-background-color);
     background-color: #E3E4EC;
     display:flex;
     justify-content: center;
