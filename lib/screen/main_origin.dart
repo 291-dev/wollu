@@ -34,8 +34,6 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  Size? size;
-
   // TotalTime
   var totalTime = 0;
   // Timer to gathering each category's time
@@ -67,7 +65,7 @@ class _MainState extends State<Main> {
     Category(image: 'assets/prepare.svg', name: '이직준비')
   ];
   // Main Pictures List
-  final mainPictures = ['assets/mainNot.png', 'assets/snacks.png', 'assets/mainToilet.png', 'assets/mainWind.png', 'assets/mainInternet.png', 'assets/mainSmoke.png', 'assets/mainSome.png', 'assets/mainPrepare.png'];
+  final mainPictures = ['assets/x4not.png', 'assets/x4snack.png', 'assets/x4toilet.png', 'assets/x4wind.png', 'assets/x4internet.png', 'assets/x4smoke.png', 'assets/x4do.png', 'assets/x4prepare.png'];
   // Category Views
   final List<CategoryView> _views = [];
   // GlobalKey List
@@ -301,10 +299,18 @@ class _MainState extends State<Main> {
   }
 
   Widget _body(BuildContext scaffold) {
-    return Center(
+    final size = AppLayout.getSize(scaffold);
+    return Container(
+      alignment: Alignment.center,
       child: Container(
         width: 375,
-        height: 811,
+        height: size.height,
+        decoration: BoxDecoration(
+            border: Border(
+                left: BorderSide(color: Styles.blueColor),
+                right: BorderSide(color: Styles.blueColor)
+            )
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: ListView(
           children: [
@@ -312,53 +318,70 @@ class _MainState extends State<Main> {
             Container(
               width: 327,
               height: 79,
+              decoration: BoxDecoration(
+                  border: Border(
+                      left: BorderSide(color: Styles.blueColor),
+                      right: BorderSide(color: Styles.blueColor)
+                  )
+              ),
               child: Stack(
                 children: [
                   Positioned(
+                    left: -10,
                     child: IconButton(
+                      iconSize: 39,
+                      alignment: Alignment.centerLeft,
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => StatScreen(currentUser: widget.currentUser)));
                       },
-                      icon: Image.asset('assets/stat.png'),
+                      icon: Image.asset('assets/x4stat.png'),
                     ),
                   ),
                   Positioned(
-                    left: 277,
+                    right: -10,
                     child: IconButton(
+                      iconSize: 39,
+                      alignment: Alignment.centerRight,
                       onPressed: () {
                         // Must be fixed Main passes user data to SetScreen
                         Navigator.push(context, MaterialPageRoute(builder: (context) => SetScreen(currentUser: widget.currentUser)));
                       },
-                      icon: SvgPicture.asset(
-                        'assets/settings.svg',
+                      icon: Image.asset(
+                        'assets/x4set.png',
                       ),
                     ),
                   ),
                   Positioned(
-                      left: 82.5,
-                      top: 24,
-                      child: Container(
-                        width: 162,
-                        height: 55,
-                        child: Center(
-                          child: Text(
-                            intToTimeLeft(totalTime), // _totalTime
-                            style: TextStyle(
-                                fontFamily: 'Pretendard',
-                                fontSize: 46,
-                                fontWeight: FontWeight.bold,
-                                color: Styles.blueColor
-                            ),
+                    left: 82.5,
+                    top: 32,
+                    child: Container(
+                      width: 162,
+                      height: 55,
+                      child: Center(
+                        child: Text(
+                          intToTimeLeft(totalTime), // _totalTime
+                          style: TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 46,
+                              fontWeight: FontWeight.bold,
+                              color: Styles.blueColor
                           ),
                         ),
                       ),
+                    ),
                   )
                 ],
               ),
             ),
-            const Gap(15),
+            const Gap(25),
             // Center Image and ArcPainter
             Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        left: BorderSide(color: Styles.blueColor),
+                        right: BorderSide(color: Styles.blueColor)
+                    )
+                ),
                 width: 275,
                 height: 275,
                 child: Stack(
@@ -376,7 +399,7 @@ class _MainState extends State<Main> {
                     ),
                     Positioned(
                       child: Image.asset(
-                        mainPictures[latest],
+                        isRunOnce ? mainPictures[latest] : 'assets/default.png',
                         width: 220,
                         height: 220,
                       ),
@@ -402,7 +425,7 @@ class _MainState extends State<Main> {
                               }
                             });
                           } :
-                          () {
+                              () {
                             setState(() {
                               isRun = true;
                               _keys[latest].currentState!.run();
@@ -422,6 +445,12 @@ class _MainState extends State<Main> {
             const Gap(30),
             // Category List
             Container(
+              decoration: BoxDecoration(
+                  border: Border(
+                      left: BorderSide(color: Styles.blueColor),
+                      right: BorderSide(color: Styles.blueColor)
+                  )
+              ),
               width: 312,
               height: 146,
               child: DragAndDropLists(
@@ -540,24 +569,36 @@ class _MainState extends State<Main> {
             const Gap(40),
             // End Button
             Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Styles.blueColor
+              height: size.height - 597,
+              child: Column(
+                children: [
+                  Expanded(
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Styles.blueColor
+                          ),
+                          width: size.width,
+                          height: 43,
+                          child: TextButton(
+                            onPressed: () {
+                              save().then((success) => {
+                                if (success) {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ResultScreen(currentUser: widget.currentUser,)))
+                                }
+                              });
+                            },
+                            child: Text('계산하기', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white)),
+                          ),
+                        ),
+                      )
+                  ),
+                  const Gap(40),
+                ],
               ),
-              width: 312,
-              height: 43,
-              child: TextButton(
-                onPressed: () {
-                  save().then((success) => {
-                    if (success) {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ResultScreen(currentUser: widget.currentUser,)))
-                    }
-                  });
-                },
-                child: Text('계산하기', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white)),
-              ),
-            ),
-            const Gap(40)
+            )
           ],
         ),
       ),

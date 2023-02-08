@@ -37,7 +37,7 @@ class CategoryViewState extends State<CategoryView> {
     setState(() {
       widget.category.togglePlay();
       played = true;
-      timer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         setState(() {
           time++;
           widget.category.setTime(time);
@@ -88,8 +88,8 @@ class CategoryViewState extends State<CategoryView> {
                   ),
                   const Gap(45),
                   Container(
-                    width: 43,
-                      alignment: Alignment.center,
+                      width: 43,
+                      alignment: Alignment.centerRight,
                       child: Text(
                         intToTimeLeft(time),
                         style: played ? Styles.fEnableStyle.copyWith(color: Styles.blueColor) : Styles.fEnableStyle.copyWith(color: const Color(0xFFAAAAAA)),
@@ -106,7 +106,7 @@ class CategoryViewState extends State<CategoryView> {
                           played = widget.category.played;
 
                           if (played) {
-                            timer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+                            timer = Timer.periodic(const Duration(seconds: 1), (timer) {
                               setState(() {
                                 time++;
                                 widget.category.setTime(time);
