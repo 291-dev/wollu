@@ -155,12 +155,14 @@ export default function FifthPage(){
         margin-right:auto;
         width:max-content;
     `;
+
     const ShareText = styled.div`
         font-family: "pretendard_semibold";
         font-size: ${14/700*card_height}px;
         color: var(--main-color);
         text-align: center;
     `;
+
     const ShareButtonBox = styled.div`
         margin-top: ${14/700*card_height}px;
     `;
@@ -172,19 +174,21 @@ export default function FifthPage(){
         height:${34/700*card_height}px;
         margin-left: ${10/339*card_width}px;
     `;
+
     const ShowTextField = styled.div`
         margin-top: ${82.59/700*card_height}px;
-        margin-left: ${20.07/700*card_height}px;
     `;
+
     const ShowText = styled.div`
         font-family: "pretendard_semibold";
         font-size: ${18/700*card_height}px;
         line-height: 150%;
         color:var(--main-color);
     `;
+
     const ShowWolluCases = styled.div`
         margin-top: ${42.3/700*card_height}px;
-        margin-left: ${20.07/700*card_height}px;
+        width: ${334.85/339 *card_width}px;
         text-align: left;
         font-family: "pretendard_regular";
         font-size: ${14/700*card_height}px;
@@ -196,11 +200,11 @@ export default function FifthPage(){
         filter: blur(3px);
     `;    
     const WolluAmountSlider = styled.div`
-        margin-right: ${20.07/700*card_height}px;
-
-        //width: ${332.78/339*card_width}px;
         height: ${4/700*card_height}px;
         background-color: #F3F3F3;
+        box-shadow: inset 0px ${1.63333/700*card_height}px ${1.63333/700*card_height}px rgba(0, 0, 0, 0.05);
+        border-radius: 2px;
+        width: ${card_width}px;
         margin-top:${19.24/700*card_height}px;
     `;
     const WolluAmountInnerSlider = styled.div`
@@ -217,28 +221,44 @@ export default function FifthPage(){
     `;
     const AggroTextButton = styled.div`
         margin-top:${54.39/700*card_height}px;
-        margin-left: ${20.07/700*card_height}px;
-        margin-right: ${20.07/700*card_height}px;
-        //width:${339/339*card_width}px;
         width:${card_width}px;
         height:${135.97/700*card_height}px;
         background-color: var(--main-color);
-        color: white;
         border-radius: 8px;
+        display: flex;
+        justify-content: center;
+    `;
+    const AggroTextField = styled.div`
+        padding-top: ${21.15/700*card_height}px;
+    `;
+    const AggroTextInner = styled.div`
         font-family: "pretendard_semibold";
         font-size: ${18/700*card_height}px;
         line-height: 150%;
-        padding-left: ${20.73/339*card_width}px;
+        color: white;
     `;
-
     const SliderDotImage = styled.img`
         margin-top:${42.3/700*card_height}px;
-        margin-left:${100.44/339*card_width}px;
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        //background-color: red;
     `;
-    const AggroTextInner = styled.div`
-    width:100px;
-    height:100px;
-    background-color: red;
+
+    const AppDownloadButton = styled.div`
+        margin-top: ${24.17/700*card_height}px;
+        height:${43.31/700*card_height}px;
+        border-radius: 8px;
+        background-color: var(--main-color);        display: flex;
+        justify-content: center;
+        align-items: center;
+    `;
+
+    const AppDownloadText = styled.div`
+        color: #F2F3F6;
+        font-family: "pretendard_semibold";
+        font-size: ${16/700*card_height}px;
+
     `;
     return (
         <Background>
@@ -252,6 +272,7 @@ export default function FifthPage(){
                         <ShareButton2 src={DeviceShareIcon} onClick={deviceShareButtonClicked}/>
                     </ShareButtonBox>
                 </ShareBox>
+                
                 <ShowTextField>
                     <ShowText>나랑 비슷한 사람들은</ShowText>
                     <ShowText>얼마나 루팡하는지 알고싶다면?</ShowText>                    
@@ -277,11 +298,18 @@ export default function FifthPage(){
                     <WolluAmountSlider><WolluAmountInnerSlider/></WolluAmountSlider>
                 </ShowWolluCases>
                 <AggroTextButton>
-                    <AggroTextInner>
-
-                    </AggroTextInner>
+                    <AggroTextField>
+                        <AggroTextInner>
+                            직장인 하루 평균 담배로 월루하는 시간
+                            <br/>
+                            확인하러 가기
+                        </AggroTextInner>
+                        <SliderDotImage src={WolluAppAggroCardSelection2}/>
+                    </AggroTextField>
                 </AggroTextButton>
-
+                <AppDownloadButton>
+                    <AppDownloadText>어플 다운받기</AppDownloadText>
+                </AppDownloadButton>
             </MainContent>
         </Background>
     );
