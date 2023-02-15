@@ -7,8 +7,9 @@ import 'package:wollu/screen/result_screen.dart';
 import 'package:wollu/screen/stat_screen.dart';
 import 'package:wollu/util/app_layout.dart';
 import 'package:wollu/util/app_styles.dart';
+import 'package:wollu/util/shareManager.dart';
 
-import 'main_screen.dart';
+import 'main_origin.dart';
 
 class FinishScreen extends StatefulWidget {
   List<CategoryData> data;
@@ -21,6 +22,7 @@ class FinishScreen extends StatefulWidget {
 }
 
 class _FinishScreenState extends State<FinishScreen> {
+  ShareManager share = ShareManager();
   String transform(String s) {
     var newStr = '';
     for (int i=0;i<s.length;i++) {
@@ -33,14 +35,15 @@ class _FinishScreenState extends State<FinishScreen> {
   }
   var total = 0;
   final newImages = {
-    '없무 없음': 'assets/finNot.png',
-    '커피/간식 먹기': 'assets/finSnack.png',
-    '화장실 가기': 'assets/finToilet.png',
-    '바깥바람쐬기': 'assets/finWind.png',
-    '인터넷 서핑하기': 'assets/finInternet.png',
-    '담배 피우기': 'assets/finSmoke.png',
-    '딴짓하기': 'assets/finDo.png',
-    '이직준비': 'assets/finPre'
+    '없무 없음': 'assets/x4notres.png',
+    '커피/간식 먹기': 'assets/x4snackres.png',
+    '화장실 가기': 'assets/x4toiletres.png',
+    '바깥바람쐬기': 'assets/x4windres.png',
+    '인터넷 서핑하기': 'assets/x4internetres.png',
+    '담배 피우기': 'assets/x4smokeres.png',
+    '딴짓하기': 'assets/x4dores.png',
+    '이직준비': 'assets/x4prepareres.png',
+    '노예': 'assets/x4zerores.png'
   };
 
   @override
@@ -61,35 +64,41 @@ class _FinishScreenState extends State<FinishScreen> {
         body: ListView(
           children: [
             Container(
-              width: size.width,
-              padding: const EdgeInsets.only(top: 42, bottom: 42, left: 24, right: 24),
+              width: size.width > 430 ? 430 : size.width,
+              padding: const EdgeInsets.only(top: 42, bottom: 39, left: 24, right: 24),
               color: Styles.blueGrey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    width: size.width > 430 ? 430 : size.width,
+                    height: 36,
+                    child: Stack(
                       children: [
-                        IconButton(
+                        Positioned(
+                          left: -12,
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => StatScreen(currentUser: widget.currentUser)));
+                              },
+                              icon: Image.asset(
+                                'assets/chart.png',
+                                width: 24,
+                                height: 24,
+                              )
+                          ),
+                        ),
+                        Positioned(
+                          right: -12,
+                          child: IconButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => StatScreen(currentUser: widget.currentUser)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Main(currentUser: widget.currentUser)));
                             },
                             icon: Image.asset(
-                              'assets/chart.png',
+                              'assets/home.png',
                               width: 24,
                               height: 24,
-                            )
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(currentUser: widget.currentUser)));
-                          },
-                          icon: Image.asset(
-                            'assets/home.png',
-                            width: 24,
-                            height: 24,
+                            ),
                           ),
                         ),
                       ],
@@ -97,7 +106,7 @@ class _FinishScreenState extends State<FinishScreen> {
                   ),
                   const Gap(6),
                   Container(
-                    width: size.width,
+                    width: size.width > 430 ? 430 : size.width,
                     height: 387,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
@@ -108,6 +117,8 @@ class _FinishScreenState extends State<FinishScreen> {
                       children: [
                         Image.asset(
                           newImages[widget.data[0].name]!,
+                          width: 200,
+                          height: 250,
                         ),
                         const Gap(13),
                         Row(
@@ -138,7 +149,7 @@ class _FinishScreenState extends State<FinishScreen> {
                   ),
                   const Gap(12),
                   Container(
-                    width: size.width,
+                    width: size.width > 430 ? 430 : size.width,
                     height: 136,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
@@ -173,7 +184,7 @@ class _FinishScreenState extends State<FinishScreen> {
                                   ),
                                   const Gap(4),
                                   Text(
-                                    '${(widget.data[index].time/total*100).floor()}%',
+                                    '${((widget.data[index].time/total*100).isInfinite || (widget.data[index].time/total*100).isNaN) ? 0 : (widget.data[index].time/total*100).floor()}%',
                                     style: const TextStyle(
                                         color: Colors.grey,
                                         fontSize: 10
@@ -200,39 +211,72 @@ class _FinishScreenState extends State<FinishScreen> {
                       }),
                     ),
                   ),
-                  const Gap(28),
-                  Text('친구에게 테스트 공유하기'),
-                  const Gap(14),
                   Container(
-                    width: 210,
-                    height: 34,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    width: size.width > 430 ? 430 : size.width,
+                    height: 180,
+                    child: Stack(
+                      alignment: Alignment.center,
                       children: [
-                        Image.asset('assets/chart.png'),
-                        Image.asset('assets/chart.png'),
-                        Image.asset('assets/chart.png'),
-                        Image.asset('assets/chart.png'),
-                        Image.asset('assets/chart.png')
+                        Positioned(
+                          bottom: 128,
+                          child: Container(
+                            height: 17,
+                            child: Text(
+                              '친구에게 테스트 공유하기',
+                              style: Styles.fEnableStyle.copyWith(color: Styles.blueColor, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 48,
+                            child: Container(
+                          height: 86,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(onPressed: () {
+                                share.shareOnKakao();
+                              }, icon: Image.asset('assets/kakao.png')),
+                              IconButton(onPressed: () {
+                                share.shareOnFacebook();
+                              }, icon: SvgPicture.asset('assets/facebook.svg')),
+                              IconButton(onPressed: () {
+                                share.shareOnTwitter();
+                              }, icon: SvgPicture.asset('assets/twitter.svg')),
+                              IconButton(onPressed: () async {
+                                share.shareOnInstagram();
+                              }, icon: Image.asset('assets/insta.png')),
+                              IconButton(onPressed: () {
+                                share.shareSMS();
+                              }, icon: SvgPicture.asset('assets/link.svg'))
+                            ],
+                          ),
+                        )
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
+                            ),
+                            width: size.width > 430 ? 430 : size.width - 48,
+                            height: 43,
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                  side: BorderSide(color: Styles.blueColor, width: 1),
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(8))
+                                  )
+                              ),
+                              onPressed: () {
+                                // Navigator.push(context, MaterialPageRoute(builder: (context) => AllStatScreen(currentUser: widget.currentUser, total: (total*(daypay/widget.currentUser.day_work/60/60)).floor(),)));
+                              },
+                              child: Text('다른 월급루팡들 보기', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Styles.blueColor)),
+                            ),
+                          ),
+                        )
                       ],
-                    ),
-                  ),
-                  const Gap(28),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white
-                    ),
-                    width: size.width,
-                    height: 43,
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Styles.blueColor, width: 1)
-                      ),
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => AllStatScreen(currentUser: widget.currentUser, total: widget.total,)));
-                      },
-                      child: Text('다른 월급루팡들 보기', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Styles.blueColor)),
                     ),
                   )
                 ],

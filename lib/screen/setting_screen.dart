@@ -31,7 +31,6 @@ class _SetScreenState extends State<SetScreen> {
     TextEditingController(),
     TextEditingController(),
   ];
-  int id = 0;
   String? nickname;
   String? salary;
   String salToWon(String value) {
@@ -182,7 +181,7 @@ class _SetScreenState extends State<SetScreen> {
   String age = '';
   CategoryList categoryList = CategoryList();
 
-  void validate() {
+  Future<dynamic> validate() async {
     if (nickname == null) {
       return;
     }
@@ -219,9 +218,18 @@ class _SetScreenState extends State<SetScreen> {
 
     callApi(nickname!, int.parse(salary!), int.parse(week_work!), int.parse(day_work!), tempJob, tempAn, tempS, tempAge);
   }
-
+  String transform(String s) {
+    var newStr = '';
+    for (int i=0;i<s.length;i++) {
+      if ((s.length-i)%3==0 && i != 0) {
+        newStr += ',';
+      }
+      newStr += s[i];
+    }
+    return newStr;
+  }
   void callApi(String nickname, int salary, int week_work, int day_work, String job, String annual, int sex, String age) async {
-    final url = Uri.parse("http://3.35.111.171:80/users/$id/");
+    final url = Uri.parse("http://3.35.111.171:80/users/${widget.currentUser!.id}/");
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
@@ -251,11 +259,10 @@ class _SetScreenState extends State<SetScreen> {
 
   @override
   void initState() {
-    id = widget.currentUser!.id;
     nickname = widget.currentUser!.nickname;
     _controllers[0].text = widget.currentUser!.nickname;
     salary = widget.currentUser!.salary.toString();
-    _controllers[1].text = widget.currentUser!.salary.toString();
+    _controllers[1].text = transform(widget.currentUser!.salary.toString());
     salStr = salToWon(widget.currentUser!.salary.toString());
     week_work = widget.currentUser!.week_work.toString();
     _controllers[2].text = widget.currentUser!.week_work.toString();
@@ -279,14 +286,14 @@ class _SetScreenState extends State<SetScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = AppLayout.getSize(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           body: ListView(
             children: [
               Container(
-                width: 375,
-                height: 811,
+                width: size.width > 430 ? 430 : size.width,
                 padding: const EdgeInsets.only(left: 24, right: 24, top: 72, bottom: 40),
                 decoration: BoxDecoration(
                     color: Styles.blueGrey
@@ -313,6 +320,7 @@ class _SetScreenState extends State<SetScreen> {
                             color: Colors.white
                         ),
                         child: TextFormField(
+                          style: Styles.titleStyle,
                           controller: _controllers[0],
                           inputFormatters: [
                             FilteringTextInputFormatter(
@@ -330,10 +338,11 @@ class _SetScreenState extends State<SetScreen> {
                               contentPadding: const EdgeInsets.only(top: 8, left: 18),
                               enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: Colors.white
+                                      color: Colors.transparent
                                   )
                               ),
                               focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
                                     width: 2,
                                     color: Styles.subBlueColor,
@@ -367,7 +376,7 @@ class _SetScreenState extends State<SetScreen> {
                             )
                           ],
                           onChanged: (value) {
-                            salary = value;
+                            salary = transform(value);
                             setState(() {
                               salStr = salToWon(value);
                             });
@@ -380,10 +389,11 @@ class _SetScreenState extends State<SetScreen> {
                               contentPadding: const EdgeInsets.all(8),
                               enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      color: Colors.white
+                                      color: Colors.transparent
                                   )
                               ),
                               focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide(
                                     width: 2,
                                     color: Styles.subBlueColor,
@@ -436,14 +446,15 @@ class _SetScreenState extends State<SetScreen> {
                               decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.all(8),
                                   suffixText: week_work!.isEmpty ? '' : '일',
-                                  prefixText: '일주일 근무 일',
-                                  prefixStyle: Styles.titleStyle.copyWith(color: Styles.blueColor),
+                                  prefixText: '  일주일 근무 일',
+                                  prefixStyle: week_work!.isEmpty ? Styles.titleStyle.copyWith(color: Styles.blueColor, fontSize: 14) : Styles.titleStyle.copyWith(color: Colors.grey, fontSize: 14),
                                   enabledBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: Colors.white
+                                          color: Colors.transparent
                                       )
                                   ),
                                   focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
                                       borderSide: BorderSide(
                                         width: 2,
                                         color: Styles.subBlueColor,
@@ -481,14 +492,15 @@ class _SetScreenState extends State<SetScreen> {
                               decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.all(8),
                                   suffixText: day_work!.isEmpty ? '' : '시간',
-                                  prefixText: '하루 근무시간',
-                                  prefixStyle: Styles.titleStyle.copyWith(color: Styles.blueColor),
+                                  prefixText: '  하루 근무 시간',
+                                  prefixStyle: day_work!.isEmpty ? Styles.titleStyle.copyWith(color: Styles.blueColor, fontSize: 14) : Styles.titleStyle.copyWith(color: Colors.grey, fontSize: 14),
                                   enabledBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: Colors.white
+                                          color: Colors.transparent
                                       )
                                   ),
                                   focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
                                       borderSide: BorderSide(
                                         width: 2,
                                         color: Styles.subBlueColor,
@@ -516,6 +528,9 @@ class _SetScreenState extends State<SetScreen> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)
+                              ),
                               primary: Colors.white, // Background color
                             ),
                             onPressed: () {
@@ -636,7 +651,7 @@ class _SetScreenState extends State<SetScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(job == '' ? '업종/직무' : job, style: job == '' ? Styles.fTextStyle.copyWith(color: Colors.grey) : Styles.fTextStyle.copyWith(color: Colors.black)),
+                                Text(job == '' ? '업종/직무' : job, style: job == '' ? Styles.fTextStyle.copyWith(color: Colors.grey, fontFamily: 'Pretendard') : Styles.fTextStyle.copyWith(color: Colors.black, fontFamily: 'Pretendard')),
                                 Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
                               ],
                             ),
@@ -652,6 +667,9 @@ class _SetScreenState extends State<SetScreen> {
                           height: 42,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)
+                              ),
                               elevation: 0,
                               primary: Colors.white, // Background color
                             ),
@@ -706,9 +724,17 @@ class _SetScreenState extends State<SetScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  annual.isEmpty ? '연차' : annual,
-                                  style: annual == '' ? Styles.fTextStyle.copyWith(color: Colors.grey) : Styles.fTextStyle.copyWith(color: Colors.black),
+                                RichText(
+                                    text: TextSpan(
+                                        text: annual.isEmpty ? '연차' : annual.split(' ')[0],
+                                        style: annual.isEmpty ? Styles.fTextStyle.copyWith(fontFamily: 'Pretendard', color: Colors.grey) : Styles.fTextStyle.copyWith(fontFamily: 'Pretendard', color: Colors.black),
+                                        children: List.generate(annual.split(' ').length - 1, (index) =>
+                                            TextSpan(
+                                                text: ' ${annual.split(' ')[index + 1]}',
+                                                style: (annual.split(' ')[index + 1] == '년차' || annual.split(' ')[index + 1] == '이상') ? Styles.fTextStyle.copyWith(color: Colors.grey) : Styles.fTextStyle.copyWith(color: Colors.black)
+                                            )
+                                        )
+                                    )
                                 ),
                                 Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
                               ],
@@ -729,6 +755,9 @@ class _SetScreenState extends State<SetScreen> {
                                 height: 42,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)
+                                    ),
                                     elevation: 0,
                                     primary: Colors.white, // Background color
                                   ),
@@ -786,7 +815,7 @@ class _SetScreenState extends State<SetScreen> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(categoryList.sexByIndex[sex], style: sex != 0 ? Styles.fTextStyle.copyWith(color: Colors.black) :Styles.fTextStyle.copyWith(color: Colors.grey),),
+                                      Text(categoryList.sexByIndex[sex], style: sex != 0 ? Styles.fTextStyle.copyWith(color: Colors.black, fontFamily: 'Pretendard') :Styles.fTextStyle.copyWith(color: Colors.grey, fontFamily: 'Pretendard'),),
                                       Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
                                     ],
                                   ),
@@ -802,6 +831,9 @@ class _SetScreenState extends State<SetScreen> {
                                 height: 42,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)
+                                    ),
                                     elevation: 0,
                                     primary: Colors.white, // Background color
                                   ),
@@ -857,9 +889,18 @@ class _SetScreenState extends State<SetScreen> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        age.isEmpty ? '연령' : age,
-                                        style: age != '' ? Styles.fTextStyle.copyWith(color: Colors.black):Styles.fTextStyle.copyWith(color: Colors.grey),),
+                                      RichText(
+                                          text: TextSpan(
+                                              text: age.isEmpty ? '연령' : age.split(' ')[0],
+                                              style: age.isEmpty ? Styles.fTextStyle.copyWith(fontFamily: 'Pretendard', color: Colors.grey) : Styles.fTextStyle.copyWith(fontFamily: 'Pretendard', color: Colors.black),
+                                              children: List.generate(age.split(' ').length - 1, (index) =>
+                                                  TextSpan(
+                                                      text: ' ${age.split(' ')[index + 1]}',
+                                                      style: (age.split(' ')[index + 1] == '세' || age.split(' ')[index + 1] == '이상') ? Styles.fTextStyle.copyWith(color: Colors.grey) : Styles.fTextStyle.copyWith(color: Colors.black)
+                                                  )
+                                              )
+                                          )
+                                      ),
                                       Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
                                     ],
                                   ),
@@ -870,23 +911,32 @@ class _SetScreenState extends State<SetScreen> {
                         ),
                       ],
                     ),
-                    const Gap(213),
                     Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Styles.blueColor
-                      ),
-                      width: 327,
-                      height: 43,
-                      child: TextButton(
-                        onPressed: () {
-                          validate();
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => MainScreen()),
-                          // );
-                        },
-                        child: Text('완료', style: Styles.fTextStyle.copyWith(fontSize: 16, color: Styles.blueGrey),),
+                      height: size.height - 330 - 72 - 83 >= 0 ? size.height - 330 - 72 - 83 : 83,
+                      child: Column(
+                        children: [
+                          Expanded(
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Styles.blueColor
+                                  ),
+                                  width: 327,
+                                  height: 43,
+                                  child: TextButton(
+                                    onPressed: () {
+                                      validate().then((value) {
+                                        Navigator.pop(context);
+                                      },);
+                                    },
+                                    child: Text('수정완료', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white)),
+                                  ),
+                                ),
+                              )
+                          ),
+                        ],
                       ),
                     )
                   ],

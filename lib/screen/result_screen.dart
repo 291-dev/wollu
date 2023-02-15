@@ -5,6 +5,7 @@ import 'package:flutter_social_content_share/flutter_social_content_share.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
+import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:social_share/social_share.dart';
 import 'package:wollu/screen/allstat_screen.dart';
@@ -15,6 +16,7 @@ import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:wollu/util/shareManager.dart';
 import 'dart:async';
 
 import '../entity/User.dart';
@@ -43,6 +45,8 @@ class CategoryData {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
+  ShareManager share = ShareManager();
+  DBHelper helper = DBHelper();
   int total = 1;
   int barRate = 0;
   List<CategoryData> categories = [
@@ -65,6 +69,7 @@ class _ResultScreenState extends State<ResultScreen> {
   int daypay = 0;
   Map<String, double> dataMap = {'dump': 0};
   var errorMsg = '';
+  var sortedByValueMap = {};
 
   String transform(String s) {
     var newStr = '';
@@ -78,24 +83,7 @@ class _ResultScreenState extends State<ResultScreen> {
   }
   String imageBackgroundPath = "";
 
-  shareOnFacebook() async {
-    await copyImage('testRes.png').then((path) => {
-      SocialShare.copyToClipboard(text: path)
-    });
-    String? result = await FlutterSocialContentShare.share(
-        type: ShareType.facebookWithoutImage,
-        url: "https://wollu.me",
-        quote: "captions");
-    print(result);
-  }
 
-  shareOnInstagram() async {
-    String? result = await FlutterSocialContentShare.share(
-        type: ShareType.instagramWithImageUrl,
-        imageUrl:
-        "https://post.healthline.com/wp-content/uploads/2020/09/healthy-eating-ingredients-732x549-thumbnail-732x549.jpg");
-    print(result);
-  }
 
   Future<void> copyBundleAssets() async {
     imageBackgroundPath = await copyImage('testRes.png');
@@ -168,7 +156,7 @@ class _ResultScreenState extends State<ResultScreen> {
         map[i] = 0;
       }
     }
-    var sortedByValueMap = Map.fromEntries(
+    sortedByValueMap = Map.fromEntries(
         map.entries.toList()..sort((e1, e2) => e2.value.compareTo(e1.value)));
     setState(() {
       max = wollu.reduce((value, element) => value > element ? value : element);
@@ -182,9 +170,8 @@ class _ResultScreenState extends State<ResultScreen> {
         dataMap[category.name] = value.toDouble();
         colorList.add(Color(category.color));
       });
+      categories.sort((e1, e2) => e2.time > e1.time ? e2.time : e1.time);
     });
-    // categories.sort((e1, e2) => e2[3] > e1[3] ? e2[3] : e1[3]);
-    print(sortedByValueMap);
   }
 
   @override
@@ -227,7 +214,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     child: Column(
                       children: [
                         Container(
-                          width: size.width,
+                          width: size.width > 430 ? 430 : size.width,
                           height: 156,
                           padding: const EdgeInsets.only(top: 28, left: 20, bottom: 22),
                           decoration: const BoxDecoration(
@@ -276,7 +263,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               Stack(
                                 children: [
                                   Container(
-                                    width: size.width - 88,
+                                    width: size.width - 88 > 430 ? 430 - 44 : size.width - 88,
                                     height: 4,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(2),
@@ -284,7 +271,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     ),
                                   ),
                                   Container(
-                                    width: (size.width - 88) * barRate / 100,
+                                    width: (size.width - 88 > 430 ? 430 - 44 : size.width - 88) * barRate / 100,
                                     height: 4,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(2),
@@ -305,7 +292,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.only(top: 4),
+                                    padding: const EdgeInsets.only(top: 2),
                                     child: Text(
                                       (((total*(daypay/widget.currentUser.day_work/60/60)).floor()/daypay)*100).toStringAsFixed(3),
                                       style: TextStyle(
@@ -328,7 +315,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             ],
                           ),
                         ),
-                        const Gap(6),
+                        const Gap(46),
                         Stack(
                             children: [
                               PieChart(
@@ -380,66 +367,72 @@ class _ResultScreenState extends State<ResultScreen> {
                             ]
                         ),
                         Container(
+                            width: size.width > 430 ? 430 : size.width,
                             alignment: Alignment.centerRight,
                             child: IconButton(
+                              alignment: Alignment.centerRight,
                               icon: Image.asset('assets/share.png'),
                               onPressed: () {
                                 showDialog(
                                     context: context,
-                                    barrierDismissible: false,
-                                    barrierColor: Colors.white.withOpacity(0),
+                                    barrierDismissible: true,
+                                    barrierColor: null,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
+                                        elevation: 20,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(16)
+                                            borderRadius: BorderRadius.circular(16)
                                         ),
                                         titlePadding: const EdgeInsets.all(0),
                                         contentPadding: const EdgeInsets.all(0),
                                         content: Container(
                                           height: 86,
                                           alignment: Alignment.topCenter,
-                                          padding: const EdgeInsets.only(left: 70, right: 69, top: 6),
+                                          padding: const EdgeInsets.only(left: 45, right: 45, top: 6),
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               IconButton(onPressed: () {
-                                                shareOnFacebook();
+                                                share.shareOnKakao();
+                                              }, icon: Image.asset('assets/kakao.png')),
+                                              IconButton(onPressed: () {
+                                                share.shareOnFacebook();
                                               }, icon: SvgPicture.asset('assets/facebook.svg')),
                                               IconButton(onPressed: () {
-
+                                                share.shareOnTwitter();
                                               }, icon: SvgPicture.asset('assets/twitter.svg')),
                                               IconButton(onPressed: () async {
-                                                shareOnInstagram();
+                                                share.shareOnInstagram();
                                               }, icon: Image.asset('assets/insta.png')),
                                               IconButton(onPressed: () {
-
+                                                share.shareSMS();
                                               }, icon: SvgPicture.asset('assets/link.svg'))
                                             ],
                                           ),
                                         ),
                                         title: Container(
-                                          width: 319,
-                                          alignment: Alignment.bottomCenter,
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                alignment: Alignment.centerRight,
-                                                height: 27,
-                                                child: IconButton(onPressed: () {Navigator.pop(context);}, icon: Icon(Icons.close, color: Styles.blueColor, size: 22),),
-                                              ),
-                                              const Gap(14),
-                                              Text('친구에게 테스트 공유하기', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor, fontWeight: FontWeight.bold)),
-                                            ],
-                                          )
+                                            width: 319,
+                                            alignment: Alignment.bottomCenter,
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  alignment: Alignment.centerRight,
+                                                  height: 27,
+                                                  child: IconButton(onPressed: () {Navigator.pop(context);}, icon: Icon(Icons.close, color: Styles.blueColor, size: 22),),
+                                                ),
+                                                const Gap(14),
+                                                Text('친구에게 테스트 공유하기', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor, fontWeight: FontWeight.bold)),
+                                              ],
+                                            )
                                         ),
-                                        );
+                                      );
                                     }
                                 );
                               },
                             )
                         ),
                         Container(
-                          width: size.width,
+                          width: size.width > 430 ? 430 : size.width,
                           height: 172,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16),
@@ -448,7 +441,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           child: ListView(
                             children: List.generate(categories.length, (index) {
                               return Container(
-                                width: size.width,
+                                width: size.width > 430 ? 430 : size.width,
                                 padding: const EdgeInsets.only(left: 12, right: 12, bottom: 10, top: 10),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -501,70 +494,80 @@ class _ResultScreenState extends State<ResultScreen> {
                             }),
                           ),
                         ),
-                        const Gap(28),
                         Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Styles.blueColor
-                          ),
-                          width: size.width,
-                          height: 43,
-                          child: TextButton(
-                            onPressed: () {
-                              final List<CategoryData> passData = [];
-                              callApi(
-                                  total, categories[0].time, categories[1].time, categories[2].time, categories[3].time, categories[4].time, categories[5].time, categories[6].time, categories[7].time
-                              ).then((success) => {
-                                if (success) {
-                                  for (int i=0;i<categories.length;i++) {
-                                    if (categories[i].time != 0) {
-                                      categories[i].time = (categories[i].time*(daypay/widget.currentUser.day_work/60/60)).floor(),
-                                      passData.add(categories[i])
-                                    }
-                                  },
-                                  passData.sort((a, b) => b.time.compareTo(a.time)),
-                                  if (passData.isEmpty) {
-                                    Fluttertoast.showToast(
-                                        msg: '오늘은 월루를 하지 않았네요.',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.red,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0
-                                    )
-                                  } else {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => FinishScreen(
-                                      data: passData,
-                                      currentUser: widget.currentUser,
-                                      total: (total*(daypay/widget.currentUser.day_work/60/60)).floor(),
-                                    )))
-                                  }
-                                }
-                              });
-                            },
-                            child: Text('퇴근하기', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white)),
-                          ),
-                        ),
-                        const Gap(15),
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.white,
-                          ),
-                          width: size.width,
-                          height: 43,
-                          child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              side: BorderSide(color: Styles.blueColor, width: 1),
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(8))
+                          width: size.width > 430 ? 430 : size.width,
+                          height: size.height - 556 < 0 ? 131 : size.height - 556,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                bottom: 43 + 15,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Styles.blueColor
+                                  ),
+                                  width: size.width - 48 > 430 ? 430 : size.width - 48,
+                                  height: 43,
+                                  child: TextButton(
+                                    onPressed: () {
+                                      final List<CategoryData> passData = [];
+                                      callApi(
+                                          total, categories[0].time, categories[1].time, categories[2].time, categories[3].time, categories[4].time, categories[5].time, categories[6].time, categories[7].time
+                                      ).then((success) => {
+                                        if (success) {
+                                          for (int i=0;i<categories.length;i++) {
+                                            if (categories[i].time != 0) {
+                                              categories[i].time = (categories[i].time*(daypay/widget.currentUser.day_work/60/60)).floor(),
+                                              passData.add(categories[i])
+                                            }
+                                          },
+                                          passData.sort((a, b) => b.time.compareTo(a.time)),
+                                          if (passData.isEmpty) {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => FinishScreen(
+                                              data: [CategoryData('노예', 'assets/x4zerores.png', 0xFFFFFFFF, 0)],
+                                              currentUser: widget.currentUser,
+                                              total: 0,
+                                            )))
+                                          } else {
+                                            helper.delete().then((value) => {
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) => FinishScreen(
+                                                data: passData,
+                                                currentUser: widget.currentUser,
+                                                total: (total*(daypay/widget.currentUser.day_work/60/60)).floor(),
+                                              )))
+                                            })
+                                          }
+                                        }
+                                      });
+                                    },
+                                    child: Text('퇴근하기', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white)),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white,
+                                  ),
+                                  width: size.width - 48 > 430 ? 430 : size.width - 48,
+                                  height: 43,
+                                  child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                        side: BorderSide(color: Styles.blueColor, width: 1),
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(8))
+                                        )
+                                    ),
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => AllStatScreen(currentUser: widget.currentUser, total: (total*(daypay/widget.currentUser.day_work/60/60)).floor(),)));
+                                    },
+                                    child: Text('다른 월급루팡들 보기', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Styles.blueColor)),
+                                  ),
+                                ),
                               )
-                            ),
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => AllStatScreen(currentUser: widget.currentUser, total: (total*(daypay/widget.currentUser.day_work/60/60)).floor(),)));
-                            },
-                            child: Text('다른 월급루팡들 보기', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Styles.blueColor)),
+                            ],
                           ),
                         )
                       ],

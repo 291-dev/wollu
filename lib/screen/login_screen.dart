@@ -4,7 +4,6 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
-import 'package:wollu/screen/main_screen.dart';
 import 'package:wollu/util/app_layout.dart';
 import 'package:wollu/util/app_styles.dart';
 import 'package:wollu/util/category_list.dart';
@@ -301,7 +300,6 @@ class _LoginScreenState extends State<LoginScreen> {
       return false;
     }
   }
-
   Future<dynamic> check() async {
     final user = await helper.get();
     if (user.isEmpty) {
@@ -315,21 +313,11 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      isLoading = true;
-    });
     check().then((isExistUser) => {
       if (isExistUser is User) {
-        Navigator.push(context, MaterialPageRoute(builder: ((context) => Main(currentUser: isExistUser,))))
-      } else {
-        setState(() {
-          isLoading = false;
-        }),
-        _scrollController.addListener(() {
-          setState(() {
-            offset = _scrollController.offset;
-          });
-        })
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Main(
+          currentUser: isExistUser,
+        )), (route) => false)
       }
     });
   }
@@ -344,852 +332,570 @@ class _LoginScreenState extends State<LoginScreen> {
           if (isLoading) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            return SingleChildScrollView(
-              controller: _scrollController,
-              scrollDirection: Axis.vertical,
-              child: Column(
-                children: [
-                  SizedBox(
-                    key: _globalKeys[0],
-                    width: size.width,
-                    height: 111,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                          color: Styles.blueGrey
-                      ),
-                    ),
-                  ),  // 첫 화면 위 공백
-                  Container(
-                    color: Styles.blueGrey,
-                    padding: const EdgeInsets.symmetric(horizontal: 27),
-                    child: Row(
-                      children: [
-                        Column(
+            return Center(
+              child: Container(
+                width: size.width > 430 ? 430 : size.width,
+                color: Styles.blueGrey,
+                padding: const EdgeInsets.only(left: 24, right: 24, bottom: 45),
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        key: _globalKeys[0],
+                        height: 100,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              color: Styles.blueGrey
+                          ),
+                        ),
+                      ),  // 첫 화면 위 공백
+                      Container(
+                        color: Styles.blueGrey,
+                        child: Row(
                           children: [
-                            const Gap(20),
-                            SizedBox(
-                              width: 7,
-                              height: 7,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Styles.blueColor
-                                ),
-                              ),
-                            ),
-                            Stack(
+                            Column(
                               children: [
                                 SizedBox(
-                                    width: 1,
-                                    height: offset > 808 ? 808 : offset,
-                                    child: CustomPaint(
-                                      painter: MyPainter(),
-                                    )
-                                ),
-                                const SizedBox(
-                                  width: 1,
-                                  height: 808,
+                                  width: 7,
+                                  height: 7,
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
-                                        color: Colors.grey
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Styles.blueColor
                                     ),
                                   ),
                                 ),
+                                Stack(
+                                  children: [
+                                    SizedBox(
+                                        width: 1,
+                                        height: offset > 833 ? 833 : offset,
+                                        child: CustomPaint(
+                                          painter: MyPainter(),
+                                        )
+                                    ),
+                                    const SizedBox(
+                                      width: 1,
+                                      height: 833,
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
-                            )
-                          ],
-                        ),  // 파란선
-                        const Gap(7),
-                        SizedBox(
-                          height: 833,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('step 1/4', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor),),
-                              const Gap(9),
-                              Text('닉네임을 설정해주세요.',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
-                                    color: Styles.black02
-                                ),
-                              ),
-                              const Gap(28),
-                              Column(
+                            ),  // 파란선
+                            const Gap(7),
+                            SizedBox(
+                              height: 833,
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Stack(
+                                  Text('step 1/4', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor),),
+                                  const Gap(9),
+                                  Text('닉네임을 설정해주세요.',
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                        color: Styles.black02
+                                    ),
+                                  ),
+                                  const Gap(28),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Stack(
+                                        children: [
+                                          SizedBox(
+                                            width: size.width > 430 ? 430 - 62 : size.width - 62,
+                                            height: 42,
+                                            child: DecoratedBox(
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    color: Colors.white
+                                                )
+                                            ),
+                                          ),
+                                          Container(
+                                            width: size.width > 430 ? 430 - 62 : size.width - 62,
+                                            height: 62,
+                                            child: TextFormField(
+                                              maxLength: 12,
+                                              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter(
+                                                  RegExp('[a-z A-Z ㄱ-ㅎ|가-힣|·|：]'),
+                                                  allow: true,
+                                                )
+                                              ],
+                                              onChanged: (value) {
+                                                nickname = value;
+                                              },
+                                              onSaved: (value) {
+                                                nickname = value;
+                                              },
+                                              decoration: InputDecoration(
+                                                  contentPadding: const EdgeInsets.only(top: 8, left: 18),
+                                                  enabledBorder: const OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: Colors.transparent
+                                                      )
+                                                  ),
+                                                  focusedBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius.circular(8),
+                                                      borderSide: BorderSide(
+                                                        width: 2,
+                                                        color: Styles.subBlueColor,
+                                                      )
+                                                  ),
+                                                  hintText: '월급도둑',
+                                                  hintStyle: Styles.titleStyle.copyWith(color: Colors.grey)
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),  // 메인
+                          ],
+                        ),
+                      ),  // 닉네임
+                      Container(
+                        color: Styles.blueGrey,
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    SizedBox(
+                                      key: _globalKeys[1],
+                                      width: 1,
+                                      height: 25,
+                                      child: const DecoratedBox(
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        width: 1,
+                                        height: offset > 808 ? (offset - 808) > 25 ? 25 : (offset - 808) : 0,
+                                        child: CustomPaint(
+                                          painter: MyPainter(),
+                                        )
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 7,
+                                  height: 7,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: offset > 833 ? Styles.blueColor : Colors.grey
+                                    ),
+                                  ),
+                                ),
+                                Stack(
+                                  children: [
+                                    const SizedBox(
+                                      width: 1,
+                                      height: 808,
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        width: 1,
+                                        height: offset > 833 ? (offset - 833) > 833 ? 833 : (offset - 833) : 0,
+                                        child: CustomPaint(
+                                          painter: MyPainter(),
+                                        )
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),  // 파란선
+                            const Gap(7),
+                            SizedBox(
+                              height: 833,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('step 2/4', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor),),
+                                  const Gap(9),
+                                  Text('월급을 알려주세요.',
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                        color: Styles.black02
+                                    ),
+                                  ),
+                                  const Gap(28),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: 313,
+                                        width: size.width > 430 ? 430 - 62 : size.width - 62,
                                         height: 42,
                                         child: DecoratedBox(
                                           decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey.withOpacity(0.7),
-                                                  blurRadius: 5.0,
-                                                  spreadRadius: 0.0,
-                                                  offset: const Offset(0,1),
-                                                )
-                                              ],
                                               borderRadius: BorderRadius.circular(8),
                                               color: Colors.white
-                                          )
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 313,
-                                        height: 62,
-                                        child: TextFormField(
-                                          maxLength: 12,
-                                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter(
-                                              RegExp('[a-z A-Z ㄱ-ㅎ|가-힣|·|：]'),
-                                              allow: true,
-                                            )
-                                          ],
-                                          onChanged: (value) {
-                                            nickname = value;
-                                          },
-                                          onSaved: (value) {
-                                            nickname = value;
-                                          },
-                                          decoration: InputDecoration(
-                                              contentPadding: const EdgeInsets.only(top: 8, left: 18),
-                                              enabledBorder: const OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Colors.white
-                                                  )
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    width: 2,
-                                                    color: Styles.subBlueColor,
-                                                  )
-                                              ),
-                                              hintText: '월급도둑',
-                                              hintStyle: Styles.titleStyle.copyWith(color: Colors.grey)
+                                          ),
+                                          child: TextFormField(
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly,
+                                              CurrencyTextInputFormatter(
+                                                  locale: 'ko',
+                                                  decimalDigits: 0,
+                                                  symbol: ''
+                                              )
+                                            ],
+                                            onChanged: (value) {
+                                              salary = value;
+                                              setState(() {
+                                                salaryToWon = salToWon(value);
+                                              });
+                                            },
+                                            onSaved: (value) {
+                                              salary = value;
+                                            },
+                                            textAlign: TextAlign.end,
+                                            decoration: InputDecoration(
+                                                contentPadding: const EdgeInsets.all(8),
+                                                enabledBorder: const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.transparent
+                                                    )
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderSide: BorderSide(
+                                                      width: 2,
+                                                      color: Styles.subBlueColor,
+                                                    )
+                                                ),
+                                                hintText: '100,000',
+                                                hintStyle: Styles.titleStyle.copyWith(color: Colors.grey)
+                                            ),
                                           ),
                                         ),
                                       ),
+                                      const Gap(7),
+                                      SizedBox(
+                                        width: size.width > 430 ? 430 - 62 : size.width - 62,
+                                        height: 20,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Text(salaryToWon, style: Styles.fEnableStyle.copyWith(color: Styles.blueColor), textAlign: TextAlign.end,),
+                                            Text('원', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor), textAlign: TextAlign.end,)
+                                          ],
+                                        ),
+                                      )
                                     ],
-                                  ),
-                                  const Gap(7),
-                                  if (nickError)
-                                    Row(
-                                      children: [
-                                        const Gap(14),
-                                        const SizedBox(
-                                          width: 10,
-                                          height: 10,
-                                          child: DecoratedBox(
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: AssetImage('assets/error.png')
-                                                )
-                                            ),
-                                          ),
-                                        ),
-                                        const Gap(5),
-                                        Text(errorMsg, style: TextStyle(
-                                            fontSize: 10,
-                                            color: Styles.error
-                                        ),)
-                                      ],
-                                    )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),  // 메인
-                      ],
-                    ),
-                  ),  // 닉네임
-                  Container(
-                    color: Styles.blueGrey,
-                    padding: const EdgeInsets.symmetric(horizontal: 27),
-                    child: Row(
-                      children: [
-                        Column(
-                          children: [
-                            Stack(
-                              children: [
-                                SizedBox(
-                                  key: _globalKeys[1],
-                                  width: 1,
-                                  height: 25,
-                                  child: const DecoratedBox(
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                    width: 1,
-                                    height: offset > 808 ? (offset - 808) > 25 ? 25 : (offset - 808) : 0,
-                                    child: CustomPaint(
-                                      painter: MyPainter(),
-                                    )
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 7,
-                              height: 7,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: offset > 833 ? Styles.blueColor : Colors.grey
-                                ),
-                              ),
-                            ),
-                            Stack(
-                              children: [
-                                const SizedBox(
-                                  width: 1,
-                                  height: 808,
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                    width: 1,
-                                    height: offset > 833 ? (offset - 833) > 833 ? 833 : (offset - 833) : 0,
-                                    child: CustomPaint(
-                                      painter: MyPainter(),
-                                    )
-                                ),
-                              ],
-                            )
-                          ],
-                        ),  // 파란선
-                        const Gap(7),
-                        SizedBox(
-                          height: 833,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('step 2/4', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor),),
-                              const Gap(9),
-                              Text('월급을 알려주세요.',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
-                                    color: Styles.black02
-                                ),
-                              ),
-                              const Gap(28),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 313,
-                                    height: 42,
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.7),
-                                              blurRadius: 5.0,
-                                              spreadRadius: 0.0,
-                                              offset: const Offset(0,1),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.circular(8),
-                                          color: Colors.white
-                                      ),
-                                      child: TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.digitsOnly,
-                                          CurrencyTextInputFormatter(
-                                              locale: 'ko',
-                                              decimalDigits: 0,
-                                              symbol: ''
-                                          )
-                                        ],
-                                        onChanged: (value) {
-                                          salary = value;
-                                          setState(() {
-                                            salaryToWon = salToWon(value);
-                                          });
-                                        },
-                                        onSaved: (value) {
-                                          salary = value;
-                                        },
-                                        textAlign: TextAlign.end,
-                                        decoration: InputDecoration(
-                                            contentPadding: const EdgeInsets.all(8),
-                                            enabledBorder: const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.white
-                                                )
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  width: 2,
-                                                  color: Styles.subBlueColor,
-                                                )
-                                            ),
-                                            hintText: '100,000',
-                                            hintStyle: Styles.titleStyle.copyWith(color: Colors.grey)
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(7),
-                                  SizedBox(
-                                    width: 310,
-                                    height: 20,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(salaryToWon, style: Styles.fEnableStyle.copyWith(color: Styles.blueColor), textAlign: TextAlign.end,),
-                                        Text('원', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor), textAlign: TextAlign.end,)
-                                      ],
-                                    ),
                                   )
                                 ],
-                              )
-                            ],
-                          ),
-                        ),  // 메인
-                      ],
-                    ),
-                  ),  // 월급
-                  Container(
-                    color: Styles.blueGrey,
-                    padding: const EdgeInsets.symmetric(horizontal: 27),
-                    child: Row(
-                      children: [
-                        Column(
-                          children: [
-                            Stack(
-                              children: [
-                                SizedBox(
-                                  key: _globalKeys[2],
-                                  width: 1,
-                                  height: 25,
-                                  child: const DecoratedBox(
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                    width: 1,
-                                    height: offset > 1641 ? (offset - 1641) > 25 ? 25 : (offset - 1641) : 0,
-                                    child: CustomPaint(
-                                      painter: MyPainter(),
-                                    )
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 7,
-                              height: 7,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: offset > 1666 ? Styles.blueColor : Colors.grey
-                                ),
                               ),
-                            ),
-                            Stack(
-                              children: [
-                                const SizedBox(
-                                  width: 1,
-                                  height: 808,
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                    width: 1,
-                                    height: offset > 1666 ? (offset - 1666) > 808 ? 808 : (offset - 1666) : 0,
-                                    child: CustomPaint(
-                                      painter: MyPainter(),
-                                    )
-                                ),
-                              ],
-                            )
+                            ),  // 메인
                           ],
-                        ),  // 파란선
-                        const Gap(7),
-                        SizedBox(
-                          height: 833,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('step 3/4', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor),),
-                              const Gap(9),
-                              Text('근무 정보를 알려주세요.',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
-                                    color: Styles.black02
-                                ),
-                              ),
-                              const Gap(28),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 313,
-                                    height: 42,
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.7),
-                                              blurRadius: 5.0,
-                                              spreadRadius: 0.0,
-                                              offset: const Offset(0,1),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.circular(8),
-                                          color: Colors.white
-                                      ),
-                                      child: TextFormField(
-                                        onChanged: (value) {
-                                          week_work = value;
-                                        },
-                                        onSaved: (value) {
-                                          week_work = value;
-                                        },
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.digitsOnly,
-                                        ],
-                                        textAlign: TextAlign.end,
-                                        decoration: InputDecoration(
-                                            contentPadding: const EdgeInsets.all(8),
-                                            suffixText: '일',
-                                            prefixText: '일주일 근무 일',
-                                            prefixStyle: Styles.titleStyle.copyWith(color: Styles.blueColor),
-                                            enabledBorder: const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.white
-                                                )
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  width: 2,
-                                                  color: Styles.subBlueColor,
-                                                )
-                                            ),
-                                            hintText: '일',
-                                            hintStyle: Styles.titleStyle.copyWith(color: Colors.grey)
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(15),
-                                  SizedBox(
-                                    width: 313,
-                                    height: 42,
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.7),
-                                              blurRadius: 5.0,
-                                              spreadRadius: 0.0,
-                                              offset: const Offset(0,1),
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.circular(8),
-                                          color: Colors.white
-                                      ),
-                                      child: TextFormField(
-                                        onChanged: (value) {
-                                          day_work = value;
-                                        },
-                                        onSaved: (value) {
-                                          day_work = value;
-                                        },
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.digitsOnly,
-                                        ],
-                                        textAlign: TextAlign.end,
-                                        decoration: InputDecoration(
-                                            contentPadding: const EdgeInsets.all(8),
-                                            prefixText: '하루 근무시간',
-                                            prefixStyle: Styles.titleStyle.copyWith(color: Styles.blueColor),
-                                            enabledBorder: const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.white
-                                                )
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  width: 2,
-                                                  color: Styles.subBlueColor,
-                                                )
-                                            ),
-                                            hintText: '시간',
-                                            hintStyle: Styles.titleStyle.copyWith(color: Colors.grey)
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(7),
-                                  if (workError)
-                                    Row(
-                                      children: [
-                                        const Gap(14),
-                                        const SizedBox(
-                                          width: 10,
-                                          height: 10,
-                                          child: DecoratedBox(
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: AssetImage('assets/error.png')
-                                                )
-                                            ),
-                                          ),
-                                        ),
-                                        const Gap(5),
-                                        Text(workErrorMsg, style: TextStyle(
-                                            fontSize: 10,
-                                            color: Styles.error
-                                        ),
-                                        ),
-                                      ],
-                                    )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),  // 메인
-                      ],
-                    ),
-                  ),  // 근무정보
-                  Container(
-                    color: Styles.blueGrey,
-                    padding: const EdgeInsets.symmetric(horizontal: 27),
-                    child: Row(
-                      children: [
-                        Column(
+                        ),
+                      ),  // 월급
+                      Container(
+                        color: Styles.blueGrey,
+                        child: Row(
                           children: [
-                            Stack(
+                            Column(
                               children: [
-                                const SizedBox(
-                                  width: 1,
-                                  height: 25,
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey
+                                Stack(
+                                  children: [
+                                    SizedBox(
+                                      key: _globalKeys[2],
+                                      width: 1,
+                                      height: 25,
+                                      child: const DecoratedBox(
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    SizedBox(
+                                        width: 1,
+                                        height: offset > 1641 ? (offset - 1641) > 25 ? 25 : (offset - 1641) : 0,
+                                        child: CustomPaint(
+                                          painter: MyPainter(),
+                                        )
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(
-                                    width: 1,
-                                    height: offset > 2474 ? (offset - 2474) > 25 ? 25 : (offset - 2474) : 0,
-                                    child: CustomPaint(
-                                      painter: MyPainter(),
-                                    )
+                                  width: 7,
+                                  height: 7,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: offset > 1666 ? Styles.blueColor : Colors.grey
+                                    ),
+                                  ),
                                 ),
+                                Stack(
+                                  children: [
+                                    const SizedBox(
+                                      width: 1,
+                                      height: 808,
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        width: 1,
+                                        height: offset > 1666 ? (offset - 1666) > 808 ? 808 : (offset - 1666) : 0,
+                                        child: CustomPaint(
+                                          painter: MyPainter(),
+                                        )
+                                    ),
+                                  ],
+                                )
                               ],
-                            ),
+                            ),  // 파란선
+                            const Gap(7),
                             SizedBox(
-                              width: 7,
-                              height: 7,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: offset > 2499 ? Styles.blueColor : Colors.grey
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 1,
                               height: 833,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                    color: Styles.blueGrey
-                                ),
-                              ),
-                            )
-                          ],
-                        ),  // 파란선
-                        const Gap(7),
-                        SizedBox(
-                          height: 833,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('step 4/4', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor),),
-                              const Gap(9),
-                              Text('추가 정보를 알려주세요.',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
-                                    color: Styles.black02
-                                ),
-                              ),
-                              const Gap(8),
-                              Text('해당 정보는 통계 집계 시, 사용됩니다.',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Styles.black02
-                                ),
-                              ),
-                              const Gap(28),
-                              Column(
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.7),
-                                            blurRadius: 5.0,
-                                            spreadRadius: 0.0,
-                                            offset: const Offset(0,1),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Colors.white
+                                  Text('step 3/4', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor),),
+                                  const Gap(9),
+                                  Text('근무 정보를 알려주세요.',
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                        color: Styles.black02
                                     ),
-                                    width: 313,
-                                    height: 42,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.white, // Background color
-                                      ),
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                            ),
-                                            builder: (BuildContext bContext) {
-                                              return Column(
-                                                children: [
-                                                  const Gap(40),
-                                                  SizedBox(
-                                                    height: 20,
-                                                    width: AppLayout.getSize(context).width,
-                                                    child: Container(
-                                                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                      child: Text('1차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
-                                                    ),
-                                                  ),
-                                                  const Gap(28),
-                                                  SizedBox(
-                                                    height: 260,
-                                                    width: AppLayout.getSize(context).width,
-                                                    child: ListView(
-                                                      scrollDirection: Axis.vertical,
-                                                      children: List.generate(14, (index) => Container(
-                                                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                        width: AppLayout.getSize(bContext).width,
-                                                        height: 260/7,
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Text(categoryList.job1ByIndex[index], style: Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                            IconButton(
-                                                                onPressed: () {
-                                                                  selectedJob = categoryList.job1ByIndex[index];
-                                                                  showModalBottomSheet(
-                                                                      context: context,
-                                                                      shape: const RoundedRectangleBorder(
-                                                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                                      ),
-                                                                      builder: (BuildContext bbContext) {
-                                                                        return Column(
-                                                                          children: [
-                                                                            const Gap(40),
-                                                                            SizedBox(
-                                                                              height: 30,
-                                                                              width: AppLayout.getSize(context).width,
-                                                                              child: Row(
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                children: [
-                                                                                  Container(
-                                                                                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                    child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
-                                                                                  ),
-                                                                                  Container(
-                                                                                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                    child: TextButton(
-                                                                                        onPressed: () {
-                                                                                          Navigator.pop(bContext);
-                                                                                        },
-                                                                                        child: Text(
-                                                                                          '이전으로',
-                                                                                          style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
-                                                                                        )
-                                                                                    ),
-                                                                                  )
-                                                                                ],
-                                                                              ),
-                                                                            ), // 2차직종
-                                                                            const Gap(28),
-                                                                            SizedBox(
-                                                                              height: 260,
-                                                                              width: AppLayout.getSize(context).width,
-                                                                              child: ListView(
-                                                                                scrollDirection: Axis.vertical,
-                                                                                children: List.generate(categoryList.job2ByIndex[selectedJob]!.length, (index) => Container(
-                                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                  width: AppLayout.getSize(bContext).width,
-                                                                                  height: 260/7,
-                                                                                  child: Row(
-                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                    children: [
-                                                                                      Text(categoryList.job2ByIndex[selectedJob]![index], style: job != categoryList.job2ByIndex[selectedJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
-                                                                                      IconButton(
-                                                                                          onPressed: () {
-                                                                                            setState(() {
-                                                                                              job = categoryList.job2ByIndex[selectedJob]![index];
-                                                                                            });
-                                                                                            Navigator.pop(bbContext);
-                                                                                            Navigator.pop(bContext);
-                                                                                          },
-                                                                                          icon: job != categoryList.job2ByIndex[selectedJob]![index] ? const Icon(Icons.check_circle, color: Colors.grey,) : const Icon(Icons.check_circle, color: Colors.black,))
-                                                                                    ],
-                                                                                  ),
-                                                                                )
-                                                                                ),
-                                                                              ),
-                                                                            )
-                                                                          ],
-                                                                        );
-                                                                      }
-                                                                  );
-                                                                },
-                                                                icon: const Icon(Icons.check_circle, color: Colors.grey,))
-                                                          ],
-                                                        ),
-                                                      )
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              );
-                                            }
-                                        );
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(job == '' ? '업종/직무' : job, style: job == '' ? Styles.fTextStyle.copyWith(color: Colors.grey) : Styles.fTextStyle.copyWith(color: Colors.black)),
-                                          Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
-                                        ],
-                                      ),
-                                    ),
-                                  ),  // 업종/직무
-                                  const Gap(15),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.7),
-                                            blurRadius: 5.0,
-                                            spreadRadius: 0.0,
-                                            offset: const Offset(0,1),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Colors.white
-                                    ),
-                                    width: 313,
-                                    height: 42,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.white, // Background color
-                                      ),
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                            ),
-                                            builder: (BuildContext bContext) {
-                                              return Column(
-                                                children: [
-                                                  const Gap(40),
-                                                  LayoutBuilder(
-                                                    builder: (BuildContext bc, BoxConstraints bcs) {
-                                                      return Flex(
-                                                        direction: Axis.vertical,
-                                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                        mainAxisSize: MainAxisSize.max,
-                                                        children: List.generate(8, (index) => Container(
-                                                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                          width: AppLayout.getSize(context).width,
-                                                          height: 300/8,
-                                                          child: Row(
-                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                categoryList.yearByIndex[index+1],
-                                                                style: annual == categoryList.yearByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                              IconButton(
-                                                                  onPressed: () {
-                                                                    setState(() {
-                                                                      annual = categoryList.yearByIndex[index+1];
-                                                                    });
-                                                                    Navigator.pop(bc);
-                                                                  },
-                                                                  icon: Icon(
-                                                                    Icons.check_circle,
-                                                                    color: annual == categoryList.yearByIndex[index+1] ? Colors.black : Colors.grey,))
-                                                            ],
-                                                          ),
-                                                        )
-                                                        ),
-                                                      );
-                                                    },
-                                                  )
-                                                ],
-                                              );
-                                            }
-                                        );
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            annual.isEmpty ? '연차' : annual,
-                                            style: annual == '' ? Styles.fTextStyle.copyWith(color: Colors.grey) : Styles.fTextStyle.copyWith(color: Colors.black),
+                                  ),
+                                  const Gap(28),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: size.width > 430 ? 430 - 62 : size.width - 62,
+                                        height: 42,
+                                        child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8),
+                                              color: Colors.white
                                           ),
-                                          Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
-                                        ],
+                                          child: TextFormField(
+                                            onChanged: (value) {
+                                              week_work = value;
+                                            },
+                                            onSaved: (value) {
+                                              week_work = value;
+                                            },
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly,
+                                            ],
+                                            textAlign: TextAlign.end,
+                                            decoration: InputDecoration(
+                                                contentPadding: const EdgeInsets.all(8),
+                                                suffixText: '일    ',
+                                                prefixText: '일주일 근무 일',
+                                                prefixStyle: Styles.titleStyle.copyWith(color: Styles.blueColor),
+                                                enabledBorder: const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.transparent
+                                                    )
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderSide: BorderSide(
+                                                      width: 2,
+                                                      color: Styles.subBlueColor,
+                                                    )
+                                                ),
+                                                hintText: '일',
+                                                hintStyle: Styles.titleStyle.copyWith(color: Colors.grey)
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const Gap(15),
+                                      SizedBox(
+                                        width: size.width > 430 ? 430 - 62 : size.width - 62,
+                                        height: 42,
+                                        child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8),
+                                              color: Colors.white
+                                          ),
+                                          child: TextFormField(
+                                            onChanged: (value) {
+                                              day_work = value;
+                                            },
+                                            onSaved: (value) {
+                                              day_work = value;
+                                            },
+                                            keyboardType: TextInputType.number,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly,
+                                            ],
+                                            textAlign: TextAlign.end,
+                                            decoration: InputDecoration(
+                                                contentPadding: const EdgeInsets.all(8),
+                                                suffixText: '시간',
+                                                prefixText: '하루 근무시간',
+                                                prefixStyle: Styles.titleStyle.copyWith(color: Styles.blueColor),
+                                                enabledBorder: const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.transparent
+                                                    )
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    borderSide: BorderSide(
+                                                      width: 2,
+                                                      color: Styles.subBlueColor,
+                                                    )
+                                                ),
+                                                hintText: '시간',
+                                                hintStyle: Styles.titleStyle.copyWith(color: Colors.grey)
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const Gap(7),
+                                      if (workError)
+                                        Row(
+                                          children: [
+                                            const Gap(14),
+                                            const SizedBox(
+                                              width: 10,
+                                              height: 10,
+                                              child: DecoratedBox(
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: AssetImage('assets/error.png')
+                                                    )
+                                                ),
+                                              ),
+                                            ),
+                                            const Gap(5),
+                                            Text(workErrorMsg, style: TextStyle(
+                                                fontSize: 10,
+                                                color: Styles.error
+                                            ),
+                                            ),
+                                          ],
+                                        )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),  // 메인
+                          ],
+                        ),
+                      ),  // 근무정보
+                      Container(
+                        color: Styles.blueGrey,
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Stack(
+                                  children: [
+                                    const SizedBox(
+                                      width: 1,
+                                      height: 25,
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey
+                                        ),
                                       ),
                                     ),
-                                  ),  // 연차
-                                  const Gap(15),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    SizedBox(
+                                        width: 1,
+                                        height: offset > 2474 ? (offset - 2474) > 25 ? 25 : (offset - 2474) : 0,
+                                        child: CustomPaint(
+                                          painter: MyPainter(),
+                                        )
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 7,
+                                  height: 7,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: offset > 2499 ? Styles.blueColor : Colors.grey
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 1,
+                                  height: 533,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: Styles.blueGrey
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),  // 파란선
+                            const Gap(7),
+                            SizedBox(
+                              height: 533,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('step 4/4', style: Styles.fEnableStyle.copyWith(color: Styles.blueColor),),
+                                  const Gap(9),
+                                  Text('추가 정보를 알려주세요.',
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                        color: Styles.black02
+                                    ),
+                                  ),
+                                  const Gap(8),
+                                  Text('해당 정보는 통계 집계 시, 사용됩니다.',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Styles.black02
+                                    ),
+                                  ),
+                                  const Gap(28),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey.withOpacity(0.7),
-                                                blurRadius: 5.0,
-                                                spreadRadius: 0.0,
-                                                offset: const Offset(0,1),
-                                              )
-                                            ],
                                             borderRadius: BorderRadius.circular(8),
                                             color: Colors.white
                                         ),
-                                        width: 152,
+                                        width: size.width > 430 ? 430 - 62 : size.width - 62,
                                         height: 42,
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(8)
+                                            ),
                                             primary: Colors.white, // Background color
                                           ),
                                           onPressed: () {
@@ -1199,46 +905,110 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
                                                 ),
                                                 builder: (BuildContext bContext) {
-                                                  return SizedBox(
-                                                    height: 179,
-                                                    child: Column(
-                                                      children: [
-                                                        const Gap(40),
-                                                        LayoutBuilder(
-                                                          builder: (BuildContext bc, BoxConstraints bcs) {
-                                                            return Flex(
-                                                              direction: Axis.vertical,
-                                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                              mainAxisSize: MainAxisSize.min,
-                                                              children: List.generate(3, (index) => Container(
-                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                width: AppLayout.getSize(context).width,
-                                                                height: 100/3,
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Text(
-                                                                      categoryList.sexByIndex[index+1],
-                                                                      style: sex == index+1 ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                    IconButton(
-                                                                        onPressed: () {
-                                                                          setState(() {
-                                                                            sex = index+1;
-                                                                          });
-                                                                          Navigator.pop(bc);
-                                                                        },
-                                                                        icon: Icon(
-                                                                          Icons.check_circle,
-                                                                          color: sex == index+1 ? Colors.black : Colors.grey,))
-                                                                  ],
-                                                                ),
-                                                              )
-                                                              ),
-                                                            );
-                                                          },
-                                                        )
-                                                      ],
-                                                    ),
+                                                  return Column(
+                                                    children: [
+                                                      const Gap(40),
+                                                      SizedBox(
+                                                        height: 20,
+                                                        width: AppLayout.getSize(context).width,
+                                                        child: Container(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                          child: Text('1차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                                        ),
+                                                      ),
+                                                      const Gap(28),
+                                                      SizedBox(
+                                                        height: 260,
+                                                        width: AppLayout.getSize(context).width,
+                                                        child: ListView(
+                                                          scrollDirection: Axis.vertical,
+                                                          children: List.generate(14, (index) => Container(
+                                                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                            width: AppLayout.getSize(bContext).width,
+                                                            height: 260/7,
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                Text(categoryList.job1ByIndex[index], style: selectedJob == categoryList.job1ByIndex[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                IconButton(
+                                                                    onPressed: () {
+                                                                      selectedJob = categoryList.job1ByIndex[index];
+                                                                      showModalBottomSheet(
+                                                                          context: context,
+                                                                          shape: const RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                                          ),
+                                                                          builder: (BuildContext bbContext) {
+                                                                            return Column(
+                                                                              children: [
+                                                                                const Gap(40),
+                                                                                SizedBox(
+                                                                                  height: 30,
+                                                                                  width: AppLayout.getSize(context).width,
+                                                                                  child: Row(
+                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                    children: [
+                                                                                      Container(
+                                                                                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                        child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                                                                      ),
+                                                                                      Container(
+                                                                                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                        child: TextButton(
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(bContext);
+                                                                                            },
+                                                                                            child: Text(
+                                                                                              '이전으로',
+                                                                                              style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
+                                                                                            )
+                                                                                        ),
+                                                                                      )
+                                                                                    ],
+                                                                                  ),
+                                                                                ), // 2차직종
+                                                                                const Gap(28),
+                                                                                SizedBox(
+                                                                                  height: 260,
+                                                                                  width: AppLayout.getSize(context).width,
+                                                                                  child: ListView(
+                                                                                    scrollDirection: Axis.vertical,
+                                                                                    children: List.generate(categoryList.job2ByIndex[selectedJob]!.length, (index) => Container(
+                                                                                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                      width: AppLayout.getSize(bContext).width,
+                                                                                      height: 260/7,
+                                                                                      child: Row(
+                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                        children: [
+                                                                                          Text(categoryList.job2ByIndex[selectedJob]![index], style: job != categoryList.job2ByIndex[selectedJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
+                                                                                          IconButton(
+                                                                                              onPressed: () {
+                                                                                                setState(() {
+                                                                                                  job = categoryList.job2ByIndex[selectedJob]![index];
+                                                                                                });
+                                                                                                Navigator.pop(bbContext);
+                                                                                                Navigator.pop(bContext);
+                                                                                              },
+                                                                                              icon: job != categoryList.job2ByIndex[selectedJob]![index] ? const Icon(Icons.check_circle, color: Colors.grey,) : const Icon(Icons.check_circle, color: Colors.black,))
+                                                                                        ],
+                                                                                      ),
+                                                                                    )
+                                                                                    ),
+                                                                                  ),
+                                                                                )
+                                                                              ],
+                                                                            );
+                                                                          }
+                                                                      );
+                                                                    },
+                                                                    icon: Icon(Icons.check_circle, color: selectedJob == categoryList.job1ByIndex[index] ? Colors.black :Colors.grey,))
+                                                              ],
+                                                            ),
+                                                          )
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
                                                   );
                                                 }
                                             );
@@ -1246,30 +1016,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(categoryList.sexByIndex[sex], style: sex != 0 ? Styles.fTextStyle.copyWith(color: Colors.black) :Styles.fTextStyle.copyWith(color: Colors.grey),),
+                                              Text(job == '' ? '업종/직무' : job, style: job == '' ? Styles.fTextStyle.copyWith(color: Colors.grey) : Styles.fTextStyle.copyWith(color: Colors.black)),
                                               Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
                                             ],
                                           ),
                                         ),
-                                      ),  // 성별
-                                      const Gap(9),
+                                      ),  // 업종/직무
+                                      const Gap(15),
                                       Container(
                                         decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey.withOpacity(0.7),
-                                                blurRadius: 5.0,
-                                                spreadRadius: 0.0,
-                                                offset: const Offset(0,1),
-                                              )
-                                            ],
                                             borderRadius: BorderRadius.circular(8),
                                             color: Colors.white
                                         ),
-                                        width: 152,
+                                        width: size.width > 430 ? 430 - 62 : size.width - 62,
                                         height: 42,
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(8)
+                                            ),
                                             primary: Colors.white, // Background color
                                           ),
                                           onPressed: () {
@@ -1296,19 +1062,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 children: [
                                                                   Text(
-                                                                    categoryList.ageByIndex[index+1],
-                                                                    style: age == categoryList.ageByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                    categoryList.yearByIndex[index+1],
+                                                                    style: annual == categoryList.yearByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
                                                                   IconButton(
                                                                       onPressed: () {
                                                                         setState(() {
-                                                                          age = categoryList.ageByIndex[index+1];
+                                                                          annual = categoryList.yearByIndex[index+1];
                                                                         });
                                                                         Navigator.pop(bc);
                                                                       },
                                                                       icon: Icon(
                                                                         Icons.check_circle,
-                                                                        color: age == categoryList.ageByIndex[index+1] ? Colors.black : Colors.grey,)
-                                                                  )
+                                                                        color: annual == categoryList.yearByIndex[index+1] ? Colors.black : Colors.grey,))
                                                                 ],
                                                               ),
                                                             )
@@ -1324,52 +1089,229 @@ class _LoginScreenState extends State<LoginScreen> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                age.isEmpty ? '연령' : age,
-                                                style: age != '' ? Styles.fTextStyle.copyWith(color: Colors.black):Styles.fTextStyle.copyWith(color: Colors.grey),),
+                                              RichText(
+                                                  text: TextSpan(
+                                                      text: annual.isEmpty ? '연차' : annual.split(' ')[0],
+                                                      style: annual.isEmpty ? Styles.fTextStyle.copyWith(fontFamily: 'Pretendard', color: Colors.grey) : Styles.fTextStyle.copyWith(fontFamily: 'Pretendard', color: Colors.black),
+                                                      children: List.generate(annual.split(' ').length - 1, (index) =>
+                                                          TextSpan(
+                                                              text: ' ${annual.split(' ')[index + 1]}',
+                                                              style: (annual.split(' ')[index + 1] == '년차' || annual.split(' ')[index + 1] == '이상') ? Styles.fTextStyle.copyWith(color: Colors.grey) : Styles.fTextStyle.copyWith(color: Colors.black)
+                                                          )
+                                                      )
+                                                  )
+                                              ),
                                               Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
                                             ],
                                           ),
                                         ),
-                                      ),  // 연령
-                                    ],
-                                  ),
-                                  const Gap(200),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Styles.blueColor
-                                    ),
-                                    width: 327,
-                                    height: 42,
-                                    child: TextButton(
-                                      onPressed: () {
-                                        validate().then((valid) => {
-                                          if (valid) {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => Main(
-                                                currentUser: currentUser!,
-                                              )),
+                                      ),  // 연차
+                                      const Gap(15),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                color: Colors.white
                                             ),
-                                          } else {
-                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMsg)))
-                                          }
-                                        });
-
-                                      },
-                                      child: Text('완료', style: Styles.fTextStyle.copyWith(fontSize: 16, color: Styles.blueGrey),),
-                                    ),
-                                  ) // 완료버튼
+                                            width: size.width > 430 ? (430 - 62 - 10)/2 : (size.width - 62 - 10)/2,
+                                            height: 42,
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                elevation: 0,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(8)
+                                                ),
+                                                primary: Colors.white, // Background color
+                                              ),
+                                              onPressed: () {
+                                                showModalBottomSheet(
+                                                    context: context,
+                                                    shape: const RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                    ),
+                                                    builder: (BuildContext bContext) {
+                                                      return SizedBox(
+                                                        height: 179,
+                                                        child: Column(
+                                                          children: [
+                                                            const Gap(40),
+                                                            LayoutBuilder(
+                                                              builder: (BuildContext bc, BoxConstraints bcs) {
+                                                                return Flex(
+                                                                  direction: Axis.vertical,
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                  mainAxisSize: MainAxisSize.min,
+                                                                  children: List.generate(3, (index) => Container(
+                                                                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                    width: AppLayout.getSize(context).width,
+                                                                    height: 100/3,
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                      children: [
+                                                                        Text(
+                                                                          categoryList.sexByIndex[index+1],
+                                                                          style: sex == index+1 ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                        IconButton(
+                                                                            onPressed: () {
+                                                                              setState(() {
+                                                                                sex = index+1;
+                                                                              });
+                                                                              Navigator.pop(bc);
+                                                                            },
+                                                                            icon: Icon(
+                                                                              Icons.check_circle,
+                                                                              color: sex == index+1 ? Colors.black : Colors.grey,))
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                  ),
+                                                                );
+                                                              },
+                                                            )
+                                                          ],
+                                                        ),
+                                                      );
+                                                    }
+                                                );
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(categoryList.sexByIndex[sex], style: sex != 0 ? Styles.fTextStyle.copyWith(color: Colors.black) :Styles.fTextStyle.copyWith(color: Colors.grey),),
+                                                  Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                                ],
+                                              ),
+                                            ),
+                                          ),  // 성별
+                                          const Gap(9),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(8),
+                                                color: Colors.white
+                                            ),
+                                            width: size.width > 430 ? (430 - 62 - 10)/2 : (size.width - 62 - 10)/2,
+                                            height: 42,
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                elevation: 0,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(8)
+                                                ),
+                                                primary: Colors.white, // Background color
+                                              ),
+                                              onPressed: () {
+                                                showModalBottomSheet(
+                                                    context: context,
+                                                    shape: const RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                    ),
+                                                    builder: (BuildContext bContext) {
+                                                      return Column(
+                                                        children: [
+                                                          const Gap(40),
+                                                          LayoutBuilder(
+                                                            builder: (BuildContext bc, BoxConstraints bcs) {
+                                                              return Flex(
+                                                                direction: Axis.vertical,
+                                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: List.generate(8, (index) => Container(
+                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                  width: AppLayout.getSize(context).width,
+                                                                  height: 300/8,
+                                                                  child: Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                    children: [
+                                                                      Text(
+                                                                        categoryList.ageByIndex[index+1],
+                                                                        style: age == categoryList.ageByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                      IconButton(
+                                                                          onPressed: () {
+                                                                            setState(() {
+                                                                              age = categoryList.ageByIndex[index+1];
+                                                                            });
+                                                                            Navigator.pop(bc);
+                                                                          },
+                                                                          icon: Icon(
+                                                                            Icons.check_circle,
+                                                                            color: age == categoryList.ageByIndex[index+1] ? Colors.black : Colors.grey,)
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                )
+                                                                ),
+                                                              );
+                                                            },
+                                                          )
+                                                        ],
+                                                      );
+                                                    }
+                                                );
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  RichText(
+                                                      text: TextSpan(
+                                                          text: age.isEmpty ? '연령' : age.split(' ')[0],
+                                                          style: age.isEmpty ? Styles.fTextStyle.copyWith(fontFamily: 'Pretendard', color: Colors.grey) : Styles.fTextStyle.copyWith(fontFamily: 'Pretendard', color: Colors.black),
+                                                          children: List.generate(age.split(' ').length - 1, (index) =>
+                                                              TextSpan(
+                                                                  text: ' ${age.split(' ')[index + 1]}',
+                                                                  style: (age.split(' ')[index + 1] == '세' || age.split(' ')[index + 1] == '이상') ? Styles.fTextStyle.copyWith(color: Colors.grey) : Styles.fTextStyle.copyWith(color: Colors.black)
+                                                              )
+                                                          )
+                                                      )
+                                                  ),
+                                                  Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                                ],
+                                              ),
+                                            ),
+                                          ),  // 연령
+                                        ],
+                                      )
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
-                          ),
-                        ),  // 메인
-                      ],
-                    ),
-                  ),  // 추가정보
-                ],
+                              ),
+                            ),  // 메인
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Styles.blueColor
+                        ),
+                        width: size.width > 430 ? 430 : size.width,
+                        height: 42,
+                        child: TextButton(
+                          onPressed: () {
+                            validate().then((valid) => {
+                              if (valid) {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(builder: (context) => Main(
+                                //     currentUser: currentUser!,
+                                //   )),
+                                // ),
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Main(
+                                  currentUser: currentUser!,
+                                )), (route) => false)
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMsg)))
+                              }
+                            });
+
+                          },
+                          child: Text('완료', style: Styles.fTextStyle.copyWith(fontSize: 16, color: Styles.blueGrey),),
+                        ),
+                      )  // 추가정보
+                    ],
+                  ),
+                ),
               ),
             );
           }

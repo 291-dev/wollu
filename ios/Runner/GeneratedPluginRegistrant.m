@@ -24,6 +24,12 @@
 @import fluttertoast;
 #endif
 
+#if __has_include(<kakao_flutter_sdk_common/KakaoFlutterSdkPlugin.h>)
+#import <kakao_flutter_sdk_common/KakaoFlutterSdkPlugin.h>
+#else
+@import kakao_flutter_sdk_common;
+#endif
+
 #if __has_include(<path_provider_foundation/PathProviderPlugin.h>)
 #import <path_provider_foundation/PathProviderPlugin.h>
 #else
@@ -54,6 +60,7 @@
   [FlutterLocalNotificationsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterLocalNotificationsPlugin"]];
   [FlutterSocialContentSharePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterSocialContentSharePlugin"]];
   [FluttertoastPlugin registerWithRegistrar:[registry registrarForPlugin:@"FluttertoastPlugin"]];
+  [KakaoFlutterSdkPlugin registerWithRegistrar:[registry registrarForPlugin:@"KakaoFlutterSdkPlugin"]];
   [PathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"PathProviderPlugin"]];
   [SharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"SharedPreferencesPlugin"]];
   [SocialSharePlugin registerWithRegistrar:[registry registrarForPlugin:@"SocialSharePlugin"]];

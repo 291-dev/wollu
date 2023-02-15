@@ -10,9 +10,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
+import 'package:navigation_history_observer/navigation_history_observer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wollu/category_view.dart';
 import 'package:wollu/circle_painter.dart';
+import 'package:wollu/screen/login_screen.dart';
 import 'package:wollu/screen/result_screen.dart';
 import 'package:wollu/screen/setting_screen.dart';
 import 'package:wollu/screen/stat_screen.dart';
@@ -35,9 +37,13 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   // TotalTime
-  var totalTime = 0;
+  var _totalTime = 0;
   // Timer to gathering each category's time
   Timer? timer;
+  Timer? notificationTimer;
+
+  // Local notification
+  final NavigationHistoryObserver historyObserver = NavigationHistoryObserver();
 
   // For data load
   var isLoading = false;
@@ -96,13 +102,24 @@ class _MainState extends State<Main> {
     get().then((value) => {
       // Set Category List
       setList().then((value) => {
+        timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+          setState(() {
+            _totalTime = _views[0].category.getTime()
+                + _views[1].category.getTime()
+                + _views[2].category.getTime()
+                + _views[3].category.getTime()
+                + _views[4].category.getTime()
+                + _views[5].category.getTime()
+                + _views[6].category.getTime()
+                + _views[7].category.getTime();
+
+            painter.setAngle((_totalTime/(60*60*widget.currentUser.day_work)));
+          });
+        }),
         setState(() {
           isLoading = false;
         })
       })
-    });
-    setState(() {
-      isLoading = false;
     });
   }
   Future get() async {
@@ -118,6 +135,7 @@ class _MainState extends State<Main> {
       print('DB called, $times');
     }
   }
+
   Future setList() async {
     print('setList() called $selected');
     for (int i=0; i<8; i++) {
@@ -205,20 +223,6 @@ class _MainState extends State<Main> {
         _list.add(_itemList[i]);
       }
     }
-    timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      setState(() {
-        totalTime = _views[0].category.getTime()
-            + _views[1].category.getTime()
-            + _views[2].category.getTime()
-            + _views[3].category.getTime()
-            + _views[4].category.getTime()
-            + _views[5].category.getTime()
-            + _views[6].category.getTime()
-            + _views[7].category.getTime();
-
-        painter.setAngle((totalTime/(60*60*widget.currentUser.day_work)));
-      });
-    });
     _contents = List.generate(1, (index) {
       return DragAndDropList(
           children: _list
@@ -243,7 +247,7 @@ class _MainState extends State<Main> {
     }
 
     try {
-      final id = await helper.addWollu(widget.currentUser.id, totalTime,
+      final id = await helper.addWollu(widget.currentUser.id, _totalTime,
           times[0], times[1], times[2], times[3], times[4], times[5], times[6], times[7]);
       return true;
     } catch (e) {
@@ -262,27 +266,34 @@ class _MainState extends State<Main> {
     print('initState() called, $isLoading');
     // Data loading
     isLoading = true;
+    // Local notification
+    LocalNotification.init();
+    LocalNotification.requestPermission();
     // Get pref and selected categories data
     getPref();
-
     print('super.initState() called soon, $selected');
     super.initState();
     print('super.initState() called, $selected');
+
+    notificationTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      if (isRun) {
+        LocalNotification.notification(categories[latest].name, _views[latest].category.getTime());
+      }
+    });
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     timer?.cancel();
+    notificationTimer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Styles.blueGrey,
+    return Scaffold(
+        backgroundColor: Colors.black,
         body: LayoutBuilder(
           builder: (BuildContext bc, BoxConstraints bcs) {
             if (isLoading) {
@@ -294,7 +305,6 @@ class _MainState extends State<Main> {
             }
           },
         )
-      )
     );
   }
 
@@ -303,31 +313,22 @@ class _MainState extends State<Main> {
     return Container(
       alignment: Alignment.center,
       child: Container(
-        width: 375,
+        width: size.width > 430 ? 430 : size.width, // 375
         height: size.height,
         decoration: BoxDecoration(
-            border: Border(
-                left: BorderSide(color: Styles.blueColor),
-                right: BorderSide(color: Styles.blueColor)
-            )
+            color: Styles.blueGrey
         ),
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: ListView(
           children: [
             // TopLeft, TopRight Navigation Buttons and TotalTime Text
             Container(
-              width: 327,
+              width: size.width > 430 ? 430 : size.width, // 327
               height: 79,
-              decoration: BoxDecoration(
-                  border: Border(
-                      left: BorderSide(color: Styles.blueColor),
-                      right: BorderSide(color: Styles.blueColor)
-                  )
-              ),
               child: Stack(
                 children: [
                   Positioned(
-                    left: -10,
+                    left: -8,
                     child: IconButton(
                       iconSize: 39,
                       alignment: Alignment.centerLeft,
@@ -338,7 +339,7 @@ class _MainState extends State<Main> {
                     ),
                   ),
                   Positioned(
-                    right: -10,
+                    right: -8,
                     child: IconButton(
                       iconSize: 39,
                       alignment: Alignment.centerRight,
@@ -352,14 +353,14 @@ class _MainState extends State<Main> {
                     ),
                   ),
                   Positioned(
-                    left: 82.5,
+                    left: size.width > 430 ? 430/2 - 81 - 24: size.width/2 - 81 - 24,
                     top: 32,
                     child: Container(
                       width: 162,
                       height: 55,
                       child: Center(
                         child: Text(
-                          intToTimeLeft(totalTime), // _totalTime
+                          intToTimeLeft(_totalTime), // _totalTime
                           style: TextStyle(
                               fontFamily: 'Pretendard',
                               fontSize: 46,
@@ -376,12 +377,6 @@ class _MainState extends State<Main> {
             const Gap(25),
             // Center Image and ArcPainter
             Container(
-                decoration: BoxDecoration(
-                    border: Border(
-                        left: BorderSide(color: Styles.blueColor),
-                        right: BorderSide(color: Styles.blueColor)
-                    )
-                ),
                 width: 275,
                 height: 275,
                 child: Stack(
@@ -445,12 +440,6 @@ class _MainState extends State<Main> {
             const Gap(30),
             // Category List
             Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      left: BorderSide(color: Styles.blueColor),
-                      right: BorderSide(color: Styles.blueColor)
-                  )
-              ),
               width: 312,
               height: 146,
               child: DragAndDropLists(
@@ -499,7 +488,7 @@ class _MainState extends State<Main> {
                               const Gap(40),
                               StatefulBuilder(
                                 builder: (BuildContext bc, StateSetter bottomState) {
-                                  return SizedBox(
+                                  return Container(
                                     height: 250,
                                     child: ListView(
                                       children: List.generate(8, (index) => Container(
@@ -569,7 +558,7 @@ class _MainState extends State<Main> {
             const Gap(40),
             // End Button
             Container(
-              height: size.height - 597,
+              height: size.height - 597 - 83 - 37 >= 0 ? size.height - 597 - 83 - 37 : 83,
               child: Column(
                 children: [
                   Expanded(

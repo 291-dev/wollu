@@ -33,7 +33,7 @@ class LocalNotification {
         );
   }
 
-  static Future<void> notification() async {
+  static Future<void> notification(String category, int time) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
       AndroidNotificationDetails('wollu id', 'wollu name',
         channelDescription: 'wollu',
@@ -52,8 +52,8 @@ class LocalNotification {
 
     await plugin.show(
         0,
-        'Test',
-        '인터넷 서핑하기 \t 06:02',
+        'Wollu',
+        '현재 $category 로 $time 초 만큼 월루 중... ',
         platformChannelSpecifics,
         payload: 'payload'
     );
