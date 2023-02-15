@@ -8,14 +8,10 @@ import RotatingCircle from "../Resources/Images/RotatingCircle.png";
 import FloatingMoney from "../Resources/Images/FloatingMoney.svg";
 import GetWolluView_WolluImage from "../Resources/Images/GetWolluView_WolluImage.svg";
 import BottomArrrow from "../Resources/Images/InputBottomArrowImage.svg";
+import BottomSheet from './BottomSheet';
 
-export default function ThirdPage(){
+export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
 
-    const [workingTimeText, setWorkingTimeText] = useState('');
-    const [wolluMinuteText, setWolluMinuteText] = useState('');
-    const [wolluItemText,setWolluItemText] = useState('');
-
-    //const [wolluMinuteText, setWolluMinuteText] = useState('');
     const onWolluMinuteChange = (e) => {
         
         if (isNaN(e.target.value)) {
@@ -25,25 +21,24 @@ export default function ThirdPage(){
             if (Number(e.target.value) > 60 * 24 ){
                 alert("하루를 초과한 시간은 할 수 없습니다.");
                 e.target.value = 60 * 24;
-            } else if (workingTimeText * 60 < e.target.value){
+            } else if (salaryInfo.workingTime * 60 < e.target.value){
                 alert("일한 시간보다 많을 수 없습니다.");
                 e.target.value = "";
             }
-            setWolluMinuteText(e.target.value);
+            wolluInfo.wolluTime = e.target.value;
         }
-        
     };
 
     const showBottomSheet = () => {
-        let container = document.querySelector("#bottomSheetContainer");
-        let bottomSheet = document.querySelector("#bottomSheetContainer #bottomSheet");
+        let container = document.querySelector(".Container");
+        let bottomSheet = document.querySelector(".Container .BottomSheetContent")
         container.classList.add("active");
         setTimeout(() => {
             bottomSheet.classList.add("active");
         }, 1);
-        let bodyTag = document.getElementById("root");
-        bodyTag.classList.add("StopScroll");
     };
+    let test_value = "";
+    const bottomSheet = BottomSheet(wolluInfo, showWolluInfo,test_value);
 
     var window_width = window.innerWidth;
     var window_height = window.innerHeight;
@@ -226,6 +221,7 @@ export default function ThirdPage(){
 
     return (
       <Background>
+        {bottomSheet}
       <Card>
         <WolluTextFiled>
             <WolluTextFieldInner>월루중</WolluTextFieldInner>
@@ -238,7 +234,7 @@ export default function ThirdPage(){
         <TextField>
             <TextInRow>
               <TextStyleInlineFront>오늘</TextStyleInlineFront>
-              <InputTextField placeholder="월루 항목 선택" onClick={showBottomSheet} value={wolluItemText}></InputTextField>
+              <InputTextField className="WolluFactor" placeholder="월루 항목 선택" onClick={showBottomSheet} readOnly></InputTextField>
               <TextStyleInlineBack>으로</TextStyleInlineBack>
             </TextInRow>
             <TextMarginTop/>

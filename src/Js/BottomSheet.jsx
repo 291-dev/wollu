@@ -4,7 +4,7 @@ import bottomSheetItemUnSelected from "../Resources/Images/bottomSheetItemUnSele
 import bottomSheetItemSelected  from "../Resources/Images/bottomSheetItemSelected.svg";
 import "./bottomsheet.css";
 
-export default function BottomSheet(){
+export default function BottomSheet(wolluInfo, showWolluInfo, test_value){
     const [wolluItemText,setWolluItemText] = useState('');
     const [wolluItemSelected,setWolluItemSelected] = useState(-1);
     const [showWolluText,setShowWolluText] = useState('');
@@ -30,12 +30,12 @@ export default function BottomSheet(){
         width: 100%;
         height: 100%;
         background-color:rgba(0,0,0,0.85);
-        display: flex;
+        //display: ${showWolluInfo.isBottomSheetOn ? "flex" : "none"};
         align-items: flex-end;
         justify-content: center;
-        display:flex; //display: none;
+        //display:flex;
+        display: none;
     `;
-
     const BottomSheetContent = styled.div`
             //transform: translateY(100%);
             //transition: transform 0.4s ease-in-out;
@@ -68,13 +68,13 @@ export default function BottomSheet(){
         height:max-content;
         width: ${311/width_standard*window_width}px;
     `;
-    var BottomSheetUnSelected = styled.div`
+    const BottomSheetUnSelected = styled.div`
         text-align: left;
         font-family: "pretendard_regular";
         //font-size: ${16/height_standard*window_height}px;
         line-height: 20px;
         font-size: 16px;
-        color: ${({selected}) => selected ? 'var(--gray01-color)' : '#AAAAAA'};
+        color:#AAAAAA;
         vertical-align: auto;
         justify-content: space-between;
         display: flex;
@@ -89,129 +89,7 @@ export default function BottomSheet(){
     const SelectionSpace = styled.div`
         padding-top: ${20/height_standard*window_height}px;
     `;
-    const [selection0, setSelection0] = useState(false);
-    const [selection1, setSelection1] = useState(false);
-    const [selection2, setSelection2] = useState(false);
-    const [selection3, setSelection3] = useState(false);
-    const [selection4, setSelection4] = useState(false);
-    const [selection5, setSelection5] = useState(false);
-    const [selection6, setSelection6] = useState(false);
-    const [selection7, setSelection7] = useState(false);
-    const [current_number,set_current_number] = useState(-1);
-    const selected = (number) => {
-        if (number == 0) {
-            setSelection0(true);
-            setSelection1(false);
-            setSelection2(false);
-            setSelection3(false);
-            setSelection4(false);
-            setSelection5(false);
-            setSelection6(false);
-            setSelection7(false);
-            set_current_number(0);
-            setWolluItemText("업무 없음");
-            setShowWolluText("업무가 없어");
-            setRoopangText("찐루팡");
-        }
-        else if (number == 1){
-            setSelection0(false);
-            setSelection1(true);
-            setSelection2(false);
-            setSelection3(false);
-            setSelection4(false);
-            setSelection5(false);
-            setSelection6(false);
-            setSelection7(false);
-            set_current_number(1);
-            setWolluItemText("커피/간식 먹기");
-            setShowWolluText("커피/간식먹기");
-            setRoopangText("간식 루팡");
-        }
-        else if (number == 2){
-            setSelection0(false);
-            setSelection1(false);
-            setSelection2(true);
-            setSelection3(false);
-            setSelection4(false);
-            setSelection5(false);
-            setSelection6(false);
-            setSelection7(false);
-            set_current_number(2);
-            setWolluItemText("화장실 가기");
-            setShowWolluText("화장실 가기");
-            setRoopangText("똥루");
-        }
-        else if (number == 3){
-            setSelection0(false);
-            setSelection1(false);
-            setSelection2(false);
-            setSelection3(true);
-            setSelection4(false);
-            setSelection5(false);
-            setSelection6(false);
-            setSelection7(false);
-            set_current_number(3);
-            setWolluItemText("바람 쐬기");
-            setShowWolluText("바깥바람쐬며");
-            setRoopangText("바람루팡");
-        }
-        else if (number == 4){
-            setSelection0(false);
-            setSelection1(false);
-            setSelection2(false);
-            setSelection3(false);
-            setSelection4(true);
-            setSelection5(false);
-            setSelection6(false);
-            setSelection7(false);
-            set_current_number(4);
-            setWolluItemText("인터넷 서핑하기");
-            setShowWolluText("인터넷 서핑하기");
-            setRoopangText("전기세 루팡");
-        }
-        else if (number == 5){
-            setSelection0(false);
-            setSelection1(false);
-            setSelection2(false);
-            setSelection3(false);
-            setSelection4(false);
-            setSelection5(true);
-            setSelection6(false);
-            setSelection7(false);
-            set_current_number(5);
-            setWolluItemText("담배 피우기");
-            setShowWolluText("담배 피우기");
-            setRoopangText("흡연 루팡");
-        }
-        else if (number == 6){
-            setSelection0(false);
-            setSelection1(false);
-            setSelection2(false);
-            setSelection3(false);
-            setSelection4(false);
-            setSelection5(false);
-            setSelection6(true);
-            setSelection7(false);
-            set_current_number(6);
-            setWolluItemText("딴 짓 하기");
-            setShowWolluText("딴짓하기");
-            setRoopangText("딴짓루팡");
-        }
-        else if (number == 7){
-            setSelection0(false);
-            setSelection1(false);
-            setSelection2(false);
-            setSelection3(false);
-            setSelection4(false);
-            setSelection5(false);
-            setSelection6(false);
-            setSelection7(true);
-            set_current_number(7);
-            setWolluItemText("이직 준비");
-            setShowWolluText("이직 준비하기");
-            setRoopangText("이직 루팡");   
-        }
-    };
+
 
     const AdjustButton = styled.div`
         margin-top:${34/height_standard*window_height}px;
@@ -220,7 +98,7 @@ export default function BottomSheet(){
         width: ${327/width_standard*window_width}px;
         height: ${43/height_standard*window_height}px;
         text-align: center;
-        background-color:  ${({current_number}) => current_number != -1 ? "var(--main-color)" : '#AAAAAA'};
+        background-color: #AAAAAA;
         color: white;
         border-radius: 8px;
         font-family: "pretendard_semibold";
@@ -233,69 +111,131 @@ export default function BottomSheet(){
         padding-top: ${34/height_standard*window_height}px;
     `;
 
+    let selected_number = -1;
     const hideBottomSheet = () => {     
-        if (current_number != -1) {
-            alert("todo");
-            /*
-            let container = document.querySelector("#bottomSheetContainer");
-            let bottomSheet = document.querySelector("#bottomSheetContainer #bottomSheet");
+        if (selected_number != -1) {
+            let container = document.querySelector(".Container");
+            let bottomSheet = document.querySelector(".Container .BottomSheetContent");
             bottomSheet.classList.remove('active');
             setTimeout(()=> {
                 container.classList.remove("active");
             }, 500);
-            */
         } else {
             alert("하나의 항목을 선택해주세요");
         }
     };
+
+    const SelectionClicked = (number) => {
+        selected_number = number;
+        
+        let wolluFactorInputTextValue = document.querySelector(".WolluFactor");
+        wolluFactorInputTextValue.setAttribute("value","");
+        if (number == 0){
+            wolluInfo.wolluFactor = 0;
+            wolluFactorInputTextValue.setAttribute("value",'업무 없음');
+            showWolluInfo.wolluFactorText = "업무가 없어";
+            showWolluInfo.wolluTitle = "찐루팡";
+        } else if (number == 1) {
+            wolluInfo.wolluFactor = 1;
+            wolluFactorInputTextValue.setAttribute("value",'커피/간식 먹기');
+            showWolluInfo.wolluFactorText = "커피/간식 먹기";
+            showWolluInfo.wolluTitle = "간식 루팡";           
+        } else if (number == 2) {
+            wolluInfo.wolluFactor = 2;
+            wolluFactorInputTextValue.setAttribute("value",'화장실 가기');
+            showWolluInfo.wolluFactorText = "화장실 가기";
+            showWolluInfo.wolluTitle = "똥루팡";            
+        } else if (number == 3) {
+            wolluInfo.wolluFactor = 3;
+            wolluFactorInputTextValue.setAttribute("value",'바람 쐬기');
+            showWolluInfo.wolluFactorText = "바깥 바람쐬며";
+            showWolluInfo.wolluTitle = "바람루팡";            
+        } else if (number == 4) {
+            wolluInfo.wolluFactor = 4;
+            wolluFactorInputTextValue.setAttribute("value",'인터넷 서핑하기');
+            showWolluInfo.wolluFactorText = "인터넷 서핑하기";
+            showWolluInfo.wolluTitle = "전기세 루팡";            
+        } else if (number == 5) {
+            wolluInfo.wolluFactor = 5;
+            wolluFactorInputTextValue.setAttribute("value",'담배 피우기');
+            showWolluInfo.wolluFactorText = "담배 피우기";
+            showWolluInfo.wolluTitle = "흡연 루팡";            
+        } else if (number == 6) {
+            wolluInfo.wolluFactor = 6;
+            wolluFactorInputTextValue.setAttribute("value",'딴 짓 하기');
+            showWolluInfo.wolluFactorText = "딴짓하기";
+            showWolluInfo.wolluTitle = "딴짓 루팡";            
+        } else if (number == 7) {
+            wolluInfo.wolluFactor = 7;
+            wolluFactorInputTextValue.setAttribute("value",'이직 준비');
+            showWolluInfo.wolluFactorText = "이직 준비하기";
+            showWolluInfo.wolluTitle = "이직 루팡";            
+        }
+        let selected_text = document.querySelector(".SelText" + number);
+        let selected_image = document.querySelector(".SelImage" + number);
+        let adjust_button = document.querySelector(".BottomSheetButton");
+        selected_text.classList.add("TextSelected");
+        selected_image.classList.add("ImageSelected");
+        adjust_button.classList.add("active");
+        for (var i = 0; i< 8; i++){
+            if (number == i)
+                continue;
+            let selected_text = document.querySelector(".SelText" + i);
+            let selected_image = document.querySelector(".SelImage" + i);
+            selected_text.classList.remove("TextSelected");
+            selected_image.classList.remove("ImageSelected");        
+        }
+
+
+    }
     return (
-        <Container>
-            <BottomSheetContent>
+        <Container className="Container">
+            <BottomSheetContent className="BottomSheetContent">
                 <BottomSheetHeader/>
                 <BottomSheetBody>
                     <BottomSheetBodySelectionSpace/>
                     <BottomSheetSelection>
-                        <BottomSheetUnSelected onClick={()=>selected(0)} selected={selection0}>
-                            <SelectionText>업무 없음</SelectionText>
-                            <SelectionImage className={selection0 ? "SelectedImage" : "NotSelectedImage"} selected={selection0}></SelectionImage>
+                        <BottomSheetUnSelected onClick={() => SelectionClicked(0)}>
+                            <SelectionText className="SelText0">업무 없음</SelectionText>
+                            <SelectionImage className="SelImage0" src={bottomSheetItemUnSelected}></SelectionImage>
                         </BottomSheetUnSelected>
                         <SelectionSpace/>
-                        <BottomSheetUnSelected onClick={()=>selected(1)} selected={selection1}>
-                            <SelectionText>커피/간식 먹기</SelectionText>
-                            <SelectionImage className={selection1 ? "SelectedImage" : "NotSelectedImage"} selected={selection1}></SelectionImage>
+                        <BottomSheetUnSelected onClick={()=>SelectionClicked(1)}>
+                            <SelectionText className="SelText1">커피/간식 먹기</SelectionText>
+                            <SelectionImage className="SelImage1" src={bottomSheetItemUnSelected}></SelectionImage>
                         </BottomSheetUnSelected>
                         <SelectionSpace/>
-                        <BottomSheetUnSelected onClick={()=>selected(2)} selected={selection2}>
-                            <SelectionText>화장실 가기</SelectionText>
-                            <SelectionImage className={selection2 ? "SelectedImage" : "NotSelectedImage"} selected={selection2}></SelectionImage>
+                        <BottomSheetUnSelected onClick={()=>SelectionClicked(2)} >
+                            <SelectionText className="SelText2">화장실 가기</SelectionText>
+                            <SelectionImage className="SelImage2" src={bottomSheetItemUnSelected}></SelectionImage>
                         </BottomSheetUnSelected>
                         <SelectionSpace/>
-                        <BottomSheetUnSelected onClick={()=>selected(3)} selected={selection3}>
-                            <SelectionText>바람쐬기</SelectionText>
-                            <SelectionImage className={selection3 ? "SelectedImage" : "NotSelectedImage"} selected={selection3}></SelectionImage>
+                        <BottomSheetUnSelected onClick={()=>SelectionClicked(3)} >
+                            <SelectionText className="SelText3">바람쐬기</SelectionText>
+                            <SelectionImage className="SelImage3" src={bottomSheetItemUnSelected}></SelectionImage>
                         </BottomSheetUnSelected>
                         <SelectionSpace/>
-                        <BottomSheetUnSelected onClick={()=>selected(4)} selected={selection4}>
-                            <SelectionText>인터넷 서핑하기</SelectionText>
-                            <SelectionImage className={selection4 ? "SelectedImage" : "NotSelectedImage"} selected={selection4}></SelectionImage>
+                        <BottomSheetUnSelected onClick={()=>SelectionClicked(4)}>
+                            <SelectionText className="SelText4">인터넷 서핑하기</SelectionText>
+                            <SelectionImage className="SelImage4" src={bottomSheetItemUnSelected}></SelectionImage>
                         </BottomSheetUnSelected>
                         <SelectionSpace/>
-                        <BottomSheetUnSelected onClick={()=>selected(5)} selected={selection5}>
-                            <SelectionText>담배 피우기</SelectionText>
-                            <SelectionImage className={selection5 ? "SelectedImage" : "NotSelectedImage"} selected={selection5}></SelectionImage>
+                        <BottomSheetUnSelected onClick={()=>SelectionClicked(5)}>
+                            <SelectionText className="SelText5">담배 피우기</SelectionText>
+                            <SelectionImage className="SelImage5" src={bottomSheetItemUnSelected}></SelectionImage>
                         </BottomSheetUnSelected>
                         <SelectionSpace/>
-                        <BottomSheetUnSelected onClick={()=>selected(6)} selected={selection6}>
-                            <SelectionText>딴짓하기</SelectionText>
-                            <SelectionImage className={selection6 ? "SelectedImage" : "NotSelectedImage"} selected={selection6}></SelectionImage>
+                        <BottomSheetUnSelected onClick={()=>SelectionClicked(6)}>
+                            <SelectionText className="SelText6">딴짓하기</SelectionText>
+                            <SelectionImage className="SelImage6" src={bottomSheetItemUnSelected}></SelectionImage>
                         </BottomSheetUnSelected>
                         <SelectionSpace/>
-                        <BottomSheetUnSelected onClick={()=>selected(7)} selected={selection7}>
-                            <SelectionText>이직준비</SelectionText>
-                            <SelectionImage className={selection7 ? "SelectedImage" : "NotSelectedImage"} selected={selection7}></SelectionImage>
+                        <BottomSheetUnSelected onClick={()=>SelectionClicked(7)} >
+                            <SelectionText className="SelText7">이직준비</SelectionText>
+                            <SelectionImage className="SelImage7" src={bottomSheetItemUnSelected}></SelectionImage>
                         </BottomSheetUnSelected>
                     </BottomSheetSelection>
-                    <AdjustButton current_number={current_number} onClick={hideBottomSheet}>적용하기</AdjustButton>
+                    <AdjustButton className="BottomSheetButton" onClick={hideBottomSheet}>적용하기</AdjustButton>
                     <BottomMargin/>
                 </BottomSheetBody>
             </BottomSheetContent>

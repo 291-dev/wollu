@@ -10,36 +10,32 @@ import '../CssUtil/Spaces.css';
 import '../CssUtil/Utils.css'
 import React, {useState} from 'react';
 
-
-
-export default function SecondPage() {
-    const [nickNameText, setNickNameText] = useState('');
-    const [salaryText, setSalaryText] = useState('');
-    const [workingTimeText, setWorkingTimeText] = useState('');
-
+export default function SecondPage(salaryInfo) {
     const onNickNameChange = (e) => {
       // replace string
       var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
-      e.target.value = e.target.value.replace(reg,'');
+      e.target.value = e.target.value.replace(reg,'');      
       
       if ([...e.target.value].length > 7) {
         alert("7자리 아래로 만들어주세요");
         e.target.value = e.target.value.slice(0,-1);
       }
-      setNickNameText(e.target.value);      
+      //nickNameText = e.target.value;
+      salaryInfo.nickName = e.target.value;
     };
   
     const onSalaryChange = (e) => {
       
       if (isNaN(e.target.value)) {
-        e.target.value = "";
         alert("숫자만 입력해주세요");
+        e.target.value = "";
       }  else {
         if (e.target.value > 10000) {
           alert("월급 1억 이상은 계산을 못합니다..");
           e.target.value = "";
         }
-        setSalaryText(e.target.value);
+        //salaryText = e.target.value;
+        salaryInfo.salary = e.target.value;
       }
     };
   
@@ -54,8 +50,8 @@ export default function SecondPage() {
         } else if (e.target.value < 0) {
           alert("음수는 입력이 안됩니다");
         }
-        setWorkingTimeText(e.target.value);
-        
+        //workingTimeText = e.target.value;
+        salaryInfo.workingTime = e.target.value;
       }
     };
 

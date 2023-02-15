@@ -1,0 +1,9 @@
+.showBackColor.active_0, .showBackColor2.active_0{
+    background-color: #58D2DA;
+}
+#showText1.active_0, #showText2.active_0{
+    color:#58D2DA;
+}
+.showWolluImage.active_0{
+    content:url("../Resources/Images/Group 34425.png");
+}

@@ -25,27 +25,36 @@ import ThirdPage from "./ThirdPage";
 import FourthPage from './FourthPage';
 import BottomSheet from './BottomSheet';
 import FifthPage from './FifthPage';
-function Wollu() {
 
-  const [nickNameText, setNickNameText] = useState('');
-  const [salaryText, setSalaryText] = useState('');
-  const [workingTimeText, setWorkingTimeText] = useState('');
+
+function Wollu() {
+  var [nickNameText, setNickNameText] = useState('');
+  var [salaryText, setSalaryText] = useState('');
+  var [workingTimeText, setWorkingTimeText] = useState('');
   const [wolluMinuteText, setWolluMinuteText] = useState('');
   const [wolluItemSelected,setWolluItemSelected] = useState(-1);
   const [wolluItemText,setWolluItemText] = useState('');
   const [showWolluText,setShowWolluText] = useState('');
   const [roopangText,setRoopangText] = useState('');
 
-  // views
-  const wolluItemBottomSheet = WolluItemBottomSheet(wolluItemSelected, setWolluItemSelected, wolluItemText, setWolluItemText,setShowWolluText,setRoopangText);
-  const getSalaryView = GetSalaryView(nickNameText,setNickNameText, salaryText,setSalaryText, workingTimeText, setWorkingTimeText);
-  const getWolluView = GetWolluView(wolluMinuteText, setWolluMinuteText , workingTimeText, wolluItemText);
-  const showWolluAmountView = ShowWolluAmountView(salaryText,workingTimeText,wolluMinuteText,wolluItemText,showWolluText,roopangText,setRoopangText,wolluItemSelected);
-
 
   const outerDivRef = useRef();
   const DIVIDER_HEIGHT = 5;
-  
+  let salaryInfo = {
+    nickName: "",
+    workingTime: "",
+    salary : "",
+  };
+  let wolluInfo = {
+    wolluFactor: 0,
+    wolluTime: 0,
+  }
+  let showWolluInfo = {
+    wolluFactorText: "",
+    wolluAmount : 0,
+    wolluTitle : "",
+  }
+  // views
   useEffect(() => {
     const wheelHandler = (e) => {
         e.preventDefault();
@@ -65,6 +74,48 @@ function Wollu() {
           } else {
 
             for (var page_number = 2; page_number<6; page_number++){
+              console.log("page")
+              if (page_number ==2){
+                  if (salaryInfo.nickName == ""){
+                      alert("닉네임을 입력해주세요!");
+                      break;
+                  } else if (salaryInfo.salary == "") {
+                      alert("월급을 입력해주세요!");
+                      break;
+                  } else if (salaryInfo.workingTime == ""){
+                      alert("근무 시간을 입력해주세요!");
+                      alert(salaryInfo.salary);
+                      break;
+                  }
+              } else if (page_number == 3){
+                  if (showWolluInfo.wolluFactorText == "") {
+                    alert("월급 항목을 선택해주세요!");
+                    break;
+                  } else if (wolluInfo.wolluTime == 0) {
+                    alert("루팡한 시간을 입력해주세요!");
+                    break;
+                  } else {
+                    showWolluInfo.wolluAmount = parseInt(parseInt(wolluInfo.wolluTime) * ( (parseInt(salaryInfo.salary) * 10000 )/20/parseInt(salaryInfo.workingTime)/60));        
+                    document.querySelector(".showWolluFactor").innerHTML = showWolluInfo.wolluFactorText;
+                    document.querySelector(".showWolluAmount").innerHTML = showWolluInfo.wolluAmount + "원";
+                    document.querySelector(".showWolluTitle").innerHTML = showWolluInfo.wolluTitle;
+                    let showBackColor = document.querySelector(".showBackColor");
+                    let showBackColor2 = document.querySelector(".showBackColor2");
+                    let showText1 = document.querySelector("#showText1");
+                    let showText2 = document.querySelector("#showText2");
+                    let showImage = document.querySelector(".showWolluImage");
+                    var adjustClassNumber = "active_" + wolluInfo.wolluFactor;
+                    showBackColor.classList.add(adjustClassNumber);
+                    showBackColor2.classList.add(adjustClassNumber);
+                    showText1.classList.add(adjustClassNumber);
+                    showText2.classList.add(adjustClassNumber);
+                    showImage.classList.add(adjustClassNumber);
+
+                  }
+              } else if ( page_number == 4){
+                
+              }
+              //if (page_number == 3 && ())
                 if (scrollTop >= pageHeight && scrollTop < pageHeight * page_number){
                     outerDivRef.current.scrollTo({
                         top: pageHeight * page_number + DIVIDER_HEIGHT * page_number,
@@ -148,51 +199,24 @@ function Wollu() {
       height: ${DIVIDER_HEIGHT}px;
       background-color: var(--main-background-color);
   `;
-  return (
+
+  const  fourth = FourthPage(showWolluInfo);
+ 
+
+  const second = SecondPage(salaryInfo);
+  const third = ThirdPage(salaryInfo, wolluInfo, showWolluInfo);
+   return (
     <SCROLL_OUTER ref={outerDivRef}>
       <FirstPage/>
       <PageDivider/>
-      <SecondPage/>
+      {second}
       <PageDivider/>
-      <ThirdPage/>
+      {third}
       <PageDivider/>
-      <FourthPage/>
+      {fourth}
       <PageDivider/>
       <FifthPage/>
     </SCROLL_OUTER>
-    /*
-      <FirstPage/>
-      <BottomSheet></BottomSheet>
-      
-    <>
-    <BrowserRouter>
-        <Routes>
-          <Route path={"/wollu"} element={<WolluAppAggroView/>}></Route>
-          <Route path={"/download_app"} element={<AppDownloadView/>}></Route>
-      </Routes>
-      </BrowserRouter>
-      <AppDownloadView/>
-      <Background>
-
-      </Background>
-    </>
-    <div className='WalluBackground'>
-      <ScrollTest/>
-      <AppDownloadView/>
-      {wolluItemBottomSheet}
-      <MainView/>
-      {getSalaryView}
-      {getWolluView}
-      {showWolluAmountView}
-      <WolluAppAggroView/>
-      <div id="WolluAdSpace"/>
-      <Slider/>
-      <WolluAggroCardSlider/>
-      <div className="GoogleAd">
-        광고 
-      </div> 
-    </div>
-    */
   );
 }
 

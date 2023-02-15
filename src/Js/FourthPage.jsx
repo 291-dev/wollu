@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styled from 'styled-components';
 import "../CssUtil/Color.css";
 import "../CssUtil/Font.css";
@@ -6,7 +6,9 @@ import "../CssUtil/Effects.css";
 import ShowWolluImageBorder from "../Resources/Images/ShowWolluImageBorder.svg";
 import ShowWolluImageEffect from "../Resources/Images/ShowWolluImageEffect.svg";
 import EatWolluImage from "../Resources/Images/EatWolluImage.png";
-export default function FourthPage(){
+import "./fourthpage.css";
+
+export default function FourthPage(showWolluInfo){
     var window_width = window.innerWidth;
     var window_height = window.innerHeight;
   
@@ -66,7 +68,9 @@ export default function FourthPage(){
 
     const WolluTextField = styled.div`
       padding-top: ${132/700*card_height}px;
-      margin-left: ${54/339*card_width}px;
+      //margin-left: ${54/339*card_width}px;
+      margin-left : auto;
+      margin-right : auto;
       font-family: "inter_regular";
       line-height: 145%;
       font-size: ${24/700*card_height}px;
@@ -90,7 +94,9 @@ export default function FourthPage(){
     const WolluImage = styled.img`
       position: absolute;
       margin-top: ${258/700*card_height}px;
-      margin-left: ${50/339*card_width}px;
+      //margin-left: ${50/339*card_width}px;
+      margin-left : auto;
+      margin-right: auto;
       height:${295/700*card_height}px;
     `;
 
@@ -118,22 +124,24 @@ export default function FourthPage(){
       margin-top: auto;
       margin-bottom: auto;
     `;
+    
     return (
         <Background>
-            <Card>
+            <Card className="showBackColor">
               <CombineImages>
-                <BorderImage src={ShowWolluImageBorder}/>
-                <BackEffect src={ShowWolluImageEffect}/>
-                <WolluImage src={EatWolluImage}/>
+                <BorderImage className="showBackColor" src={ShowWolluImageBorder}/>
+                <BackEffect className="showCardEffect" src={ShowWolluImageEffect}/>
+                <WolluImage className="showWolluImage" src={EatWolluImage}/>
+                <MyImage content={"../Resources/Images/Group 34425.png"} w={100} h={100}/>
                 <WolluTextField>
-                  <FocusText>커피/간식먹기</FocusText>
+                  <FocusText className = "showWolluFactor" id="showText1">커피/간식먹기</FocusText>
                   <UnFocusText>로</UnFocusText>
                   <BR/>
-                  <FocusText>12,500원</FocusText>
+                  <FocusText className = "showWolluAmount" id="showText2">12,500원</FocusText>
                   <UnFocusText> 루팡중입니다!</UnFocusText>
                 </WolluTextField>
-                <WolluName>
-                  <WolluNameText>
+                <WolluName className = "showBackColor2">
+                  <WolluNameText className="showWolluTitle">
                     간식루팡
                   </WolluNameText>
                 </WolluName>
@@ -141,4 +149,14 @@ export default function FourthPage(){
             </Card>
         </Background>
     );
+}
+
+function MyImage(content, w, h) {
+  return (
+    <img 
+      src={EatWolluImage}
+      alt="My Image"
+      style={{ width: w, height: h }}
+    />
+  );
 }
