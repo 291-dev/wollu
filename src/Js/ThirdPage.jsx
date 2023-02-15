@@ -219,6 +219,11 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
         }
     `;
 
+    function prevent_tabkey(event) {
+        if (event.key === 'Tab') {
+        event.preventDefault();
+        }
+    }
     return (
       <Background>
         {bottomSheet}
@@ -234,12 +239,12 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
         <TextField>
             <TextInRow>
               <TextStyleInlineFront>오늘</TextStyleInlineFront>
-              <InputTextField className="WolluFactor" placeholder="월루 항목 선택" onClick={showBottomSheet} readOnly></InputTextField>
+              <InputTextField className="WolluFactor" placeholder="월루 항목 선택" onClick={showBottomSheet} readOnly onKeyDown={prevent_tabkey}></InputTextField>
               <TextStyleInlineBack>으로</TextStyleInlineBack>
             </TextInRow>
             <TextMarginTop/>
             <TextInRow>
-              <InputTextField2 placeholder="00" onChange={onWolluMinuteChange}></InputTextField2>
+              <InputTextField2 placeholder="00" onChange={onWolluMinuteChange} onKeyDown={prevent_tabkey}></InputTextField2>
               <TextStyleInlineBack>분 월루했습니다.</TextStyleInlineBack>
             </TextInRow>
         </TextField>

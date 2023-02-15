@@ -196,6 +196,11 @@ export default function SecondPage(salaryInfo) {
       }
       `;
 
+    function prevent_tabkey(event) {
+      if (event.key === 'Tab') {
+        event.preventDefault();
+      }
+    }
 
     return (
       <Background>
@@ -218,7 +223,7 @@ export default function SecondPage(salaryInfo) {
             <TextMarginTop/>
             <TextInRow>
               <TextStyleInlineFront>하루</TextStyleInlineFront>
-              <InputTextField3 placeholder="0" onChange={onWorkingTimeChange}></InputTextField3>
+              <InputTextField3 placeholder="0" onChange={onWorkingTimeChange} onKeyDown={prevent_tabkey}></InputTextField3>
               <TextStyleInlineBack>시간 근무합니다</TextStyleInlineBack>
             </TextInRow>
           </TextBox>

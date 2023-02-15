@@ -74,7 +74,6 @@ function Wollu() {
           } else {
 
             for (var page_number = 2; page_number<6; page_number++){
-              console.log("page")
               if (page_number ==2){
                   if (salaryInfo.nickName == ""){
                       alert("닉네임을 입력해주세요!");
