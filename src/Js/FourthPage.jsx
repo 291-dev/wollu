@@ -132,7 +132,6 @@ export default function FourthPage(showWolluInfo){
                 <BorderImage className="showBackColor" src={ShowWolluImageBorder}/>
                 <BackEffect className="showCardEffect" src={ShowWolluImageEffect}/>
                 <WolluImage className="showWolluImage" src={EatWolluImage}/>
-                <MyImage content={"../Resources/Images/Group 34425.png"} w={100} h={100}/>
                 <WolluTextField>
                   <FocusText className = "showWolluFactor" id="showText1">커피/간식먹기</FocusText>
                   <UnFocusText>로</UnFocusText>
