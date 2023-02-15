@@ -80,7 +80,8 @@ export default function SecondPage(salaryInfo) {
       height:${card_height}px;
       background-color: #FFFFFF;
       border-radius: 12px;
-      filter : drop-shadow(0px 0px 1px #8294EF);
+      //filter : drop-shadow(0px 0px 1px #8294EF);
+      filter : drop-shadow(rgba(130,148,239,0.2) 0px 0px 20px);
     `;
 
     const image_height = card_height * 0.6271;

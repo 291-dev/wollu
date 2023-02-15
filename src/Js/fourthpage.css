@@ -79,3 +79,12 @@
     content:url("../Resources/Images/SelectionImage8.svg");
 }
 
+.showBackColor.active_none, .showBackColor2.active_none{
+    background-color: #9F97FF;
+}
+#showText1.active_none, #showText2.active_none{
+    color: #9F97FF;
+}
+.showWolluImage.active_none{
+    content:url("../Resources/Images/SelectionImage8.svg");
+}
