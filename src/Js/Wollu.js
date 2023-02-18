@@ -11,8 +11,6 @@ import WolluAggroCardSlider from "./WolluAggroCardSlider";
 
 import AppDownloadView from "./AppDownloadView";
 import ScrollTest from "./ScrollTest";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import Background from './BackGround';
 
 import FirstPage from "./FirstPage";
@@ -25,7 +23,7 @@ import ThirdPage from "./ThirdPage";
 import FourthPage from './FourthPage';
 import BottomSheet from './BottomSheet';
 import FifthPage from './FifthPage';
-
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 function Wollu() {
   var [nickNameText, setNickNameText] = useState('');
@@ -103,13 +101,23 @@ function Wollu() {
                     let showText1 = document.querySelector("#showText1");
                     let showText2 = document.querySelector("#showText2");
                     let showImage = document.querySelector(".showWolluImage");
+
+                    // remove all first
+                    for (var i = 0; i< 8; i++){
+                      var classNumber = "active_" + i;
+                        showBackColor.classList.remove(classNumber);
+                        showBackColor2.classList.remove(classNumber);
+                        showText1.classList.remove(classNumber);
+                        showText2.classList.remove(classNumber);
+                        showImage.classList.remove(classNumber);
+                    }
+
                     var adjustClassNumber = "active_" + wolluInfo.wolluFactor;
                     showBackColor.classList.add(adjustClassNumber);
                     showBackColor2.classList.add(adjustClassNumber);
                     showText1.classList.add(adjustClassNumber);
                     showText2.classList.add(adjustClassNumber);
                     showImage.classList.add(adjustClassNumber);
-
                   }
               } else if ( page_number == 4){
                 

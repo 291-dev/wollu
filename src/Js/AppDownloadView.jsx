@@ -9,7 +9,7 @@ import WolluTextImage from "../Resources/Images/MainView_WolluMainImage.svg";
 import PlayStoreButtonImage from "../Resources/Images/PlayStoreButtonImage.png";
 import AppStoreButtonImage from "../Resources/Images/AppStoreButtonImage.png";
 
-function AppDownloadView() {
+export default function AppDownloadView() {
   // initialize
   var window_width = window.innerWidth;
   var window_height = window.innerHeight;
@@ -178,5 +178,3 @@ function AppDownloadView() {
     </>
   );
 }
-
-export default AppDownloadView;

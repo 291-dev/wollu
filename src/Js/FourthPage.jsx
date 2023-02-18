@@ -93,11 +93,9 @@ export default function FourthPage(showWolluInfo){
 
     const WolluImage = styled.img`
       position: absolute;
-      margin-top: ${258/700*card_height}px;
-      //margin-left: ${50/339*card_width}px;
-      margin-left : auto;
-      margin-right: auto;
-      height:${295/700*card_height}px;
+      margin-top: ${196/700*card_height}px;
+      margin-left: ${34/339*card_width}px;
+      height:${350/700*card_height}px;
     `;
 
     const WolluName = styled.div`

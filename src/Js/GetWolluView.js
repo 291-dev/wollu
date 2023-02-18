@@ -15,7 +15,6 @@ import "../Css/WolluItemBottomSheet.css";
 //const [wolluMinuteText, setWolluMinuteText] = useState('');
 
 function GetWolluView(wolluMinuteText, setWolluMinuteText, workingTimeText, wolluItemText) {
-    
 
     //const [wolluMinuteText, setWolluMinuteText] = useState('');
     const onWolluMinuteChange = (e) => {

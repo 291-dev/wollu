@@ -5,7 +5,7 @@
     color:#58D2DA;
 }
 .showWolluImage.active_0{
-    content:url("../Resources/Images/Group 34425.png");
+    content:url("../Resources/Images/Selection_NoWork.png");
 }
 
 .showBackColor.active_1, .showBackColor2.active_1{
@@ -15,7 +15,7 @@
     color:#0017B3;
 }
 .showWolluImage.active_1{
-    content:url("../Resources/Images/SelectionImage2.svg");
+    content:url("../Resources/Images/Selection_Eat.png");
 }
 
 .showBackColor.active_2, .showBackColor2.active_2{
@@ -25,7 +25,7 @@
     color:#9CDC15;
 }
 .showWolluImage.active_2{
-    content:url("../Resources/Images/SelectionImage3.svg");
+    content:url("../Resources/Images/Selection_Toilet.png");
 }
 
 .showBackColor.active_3, .showBackColor2.active_3{
@@ -35,7 +35,7 @@
     color:#F3BC1F;
 }
 .showWolluImage.active_3{
-    content:url("../Resources/Images/SelectionImage4.svg");
+    content:url("../Resources/Images/Selection_Air.png");
 }
 
 .showBackColor.active_4, .showBackColor2.active_4{
@@ -45,7 +45,7 @@
     color:#EE9492;
 }
 .showWolluImage.active_4{
-    content:url("../Resources/Images/SelectionImage5.svg");
+    content:url("../Resources/Images/Selection_Surf.png");
 }
 
 .showBackColor.active_5, .showBackColor2.active_5{
@@ -55,7 +55,7 @@
     color:#935DDD;
 }
 .showWolluImage.active_5{
-    content:url("../Resources/Images/SelectionImage6.svg");
+    content:url("../Resources/Images/Selection_Smoke.png");
 }
 
 
@@ -66,7 +66,7 @@
     color:#00D19F;
 }
 .showWolluImage.active_6{
-    content:url("../Resources/Images/SelectionImage7.svg");
+    content:url("../Resources/Images/Selection_SlackOff.png");
 }
 
 .showBackColor.active_7, .showBackColor2.active_7{
@@ -76,15 +76,15 @@
     color:#D228D3;
 }
 .showWolluImage.active_7{
-    content:url("../Resources/Images/SelectionImage8.svg");
+    content:url("../Resources/Images/Selection_TurnOver.png");
 }
 
-.showBackColor.active_none, .showBackColor2.active_none{
+.showBackColor.active_8, .showBackColor2.active_8{
     background-color: #9F97FF;
 }
-#showText1.active_none, #showText2.active_none{
+#showText1.active_8, #showText2.active_8{
     color: #9F97FF;
 }
-.showWolluImage.active_none{
-    content:url("../Resources/Images/SelectionImage8.svg");
+.showWolluImage.active_8{
+    content:url("../Resources/Images/Selection_Dobby.png");
 }
