@@ -93,3 +93,7 @@
 .showWolluImage.active_8{
     content:url("../Resources/Images/Selection_Dobby.png");
 }
+
+.showBackColor:hover{
+    transform: rotateY(180deg);
+}

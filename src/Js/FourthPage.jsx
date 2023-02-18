@@ -125,6 +125,28 @@ export default function FourthPage(showWolluInfo){
     `;
     
     return (
+      <Background>
+            <Card className="showBackColor">
+              <CombineImages>
+                <BorderImage className="showBackColor" src={ShowWolluImageBorder}/>
+                <BackEffect className="showCardEffect" src={ShowWolluImageEffect}/>
+                <WolluImage className="showWolluImage" src={EatWolluImage}/>
+                <WolluTextField>
+                  <FocusText className = "showWolluFactor" id="showText1">커피/간식먹기</FocusText>
+                  <UnFocusText className="hideText1">로</UnFocusText>
+                  <BR/>
+                  <FocusText className = "showWolluAmount" id="showText2">12,500원</FocusText>
+                  <UnFocusText className="hideText2"> 루팡중입니다!</UnFocusText>
+                </WolluTextField>
+                <WolluName className = "showBackColor2">
+                  <WolluNameText className="showWolluTitle">
+                    간식루팡
+                  </WolluNameText>
+                </WolluName>
+              </CombineImages>
+            </Card>
+        </Background>
+      /*
         <Background>
             <Card className="showBackColor">
               <CombineImages>
@@ -146,6 +168,7 @@ export default function FourthPage(showWolluInfo){
               </CombineImages>
             </Card>
         </Background>
+      */
     );
 }
 

@@ -23,9 +23,8 @@ function ShowWolluAmountView(salaryText,workingTimeText,wolluMinuteText,wolluIte
   }
       
   return (
-    <div class="card">
-        <div id="cardTopSpaces"/>
-
+    <div>
+     <div class="card">
       <div class="face face--front">
         <div className="ShowWolluAmountView" id="ShowCardEmpty" ></div>
       </div>
@@ -51,6 +50,7 @@ function ShowWolluAmountView(salaryText,workingTimeText,wolluMinuteText,wolluIte
     </div>
       </div>
   </div>
+    </div>
   );
 }
 
