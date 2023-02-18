@@ -5,11 +5,7 @@ import bottomSheetItemSelected  from "../Resources/Images/bottomSheetItemSelecte
 import "./bottomsheet.css";
 
 export default function BottomSheet(wolluInfo, showWolluInfo, test_value){
-    const [wolluItemText,setWolluItemText] = useState('');
-    const [wolluItemSelected,setWolluItemSelected] = useState(-1);
-    const [showWolluText,setShowWolluText] = useState('');
-    const [roopangText,setRoopangText] = useState('');
-  
+    
     var window_width = window.innerWidth;
     var window_height = window.innerHeight;
 
@@ -83,8 +79,6 @@ export default function BottomSheet(wolluInfo, showWolluInfo, test_value){
     const SelectionText = styled.div`
     `;
     const SelectionImage = styled.img`
-    `;
-    const TestImage = styled.img`
     `;
     const SelectionSpace = styled.div`
         padding-top: ${20/height_standard*window_height}px;

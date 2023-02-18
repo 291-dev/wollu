@@ -81,21 +81,33 @@ function Wollu() {
                       break;
                   } else if (salaryInfo.workingTime == ""){
                       alert("근무 시간을 입력해주세요!");
-                      alert(salaryInfo.salary);
                       break;
                   }
               } else if (page_number == 3){
                   if (showWolluInfo.wolluFactorText == "") {
                     alert("월급 항목을 선택해주세요!");
                     break;
-                  } else if (wolluInfo.wolluTime == 0) {
+                  } else if (wolluInfo.wolluTime == "") {
                     alert("루팡한 시간을 입력해주세요!");
                     break;
                   } else {
-                    showWolluInfo.wolluAmount = parseInt(parseInt(wolluInfo.wolluTime) * ( (parseInt(salaryInfo.salary) * 10000 )/20/parseInt(salaryInfo.workingTime)/60));        
-                    document.querySelector(".showWolluFactor").innerHTML = showWolluInfo.wolluFactorText;
-                    document.querySelector(".showWolluAmount").innerHTML = showWolluInfo.wolluAmount + "원";
-                    document.querySelector(".showWolluTitle").innerHTML = showWolluInfo.wolluTitle;
+                    showWolluInfo.wolluAmount = parseInt(parseInt(wolluInfo.wolluTime) * ( (parseInt(salaryInfo.salary) * 10000 )/20/parseInt(salaryInfo.workingTime)/60));
+                    if (showWolluInfo.wolluAmount != 0){
+                      document.querySelector(".hideText1").innerHTML = "로";
+                      document.querySelector(".hideText2").innerHTML = " 루팡중입니다!";
+
+                      document.querySelector(".showWolluFactor").innerHTML = showWolluInfo.wolluFactorText;
+                      document.querySelector(".showWolluAmount").innerHTML = showWolluInfo.wolluAmount + "원";
+                      document.querySelector(".showWolluTitle").innerHTML = showWolluInfo.wolluTitle;
+                    } else {
+
+                        document.querySelector(".showWolluFactor").innerHTML = "월루를 하지 않은 당신";
+                        document.querySelector(".showWolluAmount").innerHTML = "사장님의 최애 직장인 등극";
+                        document.querySelector(".showWolluTitle").innerHTML = "충직한 도비";
+                        document.querySelector(".hideText1").innerHTML = "";
+                        document.querySelector(".hideText2").innerHTML = "";
+  
+                    }
                     let showBackColor = document.querySelector(".showBackColor");
                     let showBackColor2 = document.querySelector(".showBackColor2");
                     let showText1 = document.querySelector("#showText1");
@@ -103,21 +115,24 @@ function Wollu() {
                     let showImage = document.querySelector(".showWolluImage");
 
                     // remove all first
-                    for (var i = 0; i< 8; i++){
-                      var classNumber = "active_" + i;
+                    for (var i = 0; i< 9; i++){
+                        var classNumber = "active_" + i;
                         showBackColor.classList.remove(classNumber);
                         showBackColor2.classList.remove(classNumber);
                         showText1.classList.remove(classNumber);
                         showText2.classList.remove(classNumber);
                         showImage.classList.remove(classNumber);
                     }
-
                     var adjustClassNumber = "active_" + wolluInfo.wolluFactor;
+                    if (document.querySelector(".showWolluTitle").innerHTML == "충직한 도비"){
+                      adjustClassNumber = "active_8";
+                    }
                     showBackColor.classList.add(adjustClassNumber);
                     showBackColor2.classList.add(adjustClassNumber);
                     showText1.classList.add(adjustClassNumber);
                     showText2.classList.add(adjustClassNumber);
                     showImage.classList.add(adjustClassNumber);
+                    console.log(showImage.classList)
                   }
               } else if ( page_number == 4){
                 

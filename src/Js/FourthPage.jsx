@@ -96,6 +96,7 @@ export default function FourthPage(showWolluInfo){
       margin-top: ${196/700*card_height}px;
       margin-left: ${34/339*card_width}px;
       height:${350/700*card_height}px;
+      width:${270/339*card_width}px;
     `;
 
     const WolluName = styled.div`
@@ -132,10 +133,10 @@ export default function FourthPage(showWolluInfo){
                 <WolluImage className="showWolluImage" src={EatWolluImage}/>
                 <WolluTextField>
                   <FocusText className = "showWolluFactor" id="showText1">커피/간식먹기</FocusText>
-                  <UnFocusText>로</UnFocusText>
+                  <UnFocusText className="hideText1">로</UnFocusText>
                   <BR/>
                   <FocusText className = "showWolluAmount" id="showText2">12,500원</FocusText>
-                  <UnFocusText> 루팡중입니다!</UnFocusText>
+                  <UnFocusText className="hideText2"> 루팡중입니다!</UnFocusText>
                 </WolluTextField>
                 <WolluName className = "showBackColor2">
                   <WolluNameText className="showWolluTitle">

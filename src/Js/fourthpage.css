@@ -1,3 +1,5 @@
+@import "../CssUtil/Font.css";
+
 .showBackColor.active_0, .showBackColor2.active_0{
     background-color: #58D2DA;
 }
@@ -83,7 +85,10 @@
     background-color: #9F97FF;
 }
 #showText1.active_8, #showText2.active_8{
-    color: #9F97FF;
+    background-color: transparent;
+    color: white;
+    font-family: "puradack";
+    font-size:large;
 }
 .showWolluImage.active_8{
     content:url("../Resources/Images/Selection_Dobby.png");
