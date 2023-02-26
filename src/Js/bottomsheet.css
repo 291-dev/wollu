@@ -31,3 +31,7 @@
 .BottomSheetButton.active{
     background-color: var(--main-color);
 }
+
+.WolluFactor.active{
+    color:var(--gray01-color);
+}

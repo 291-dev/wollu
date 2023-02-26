@@ -117,51 +117,56 @@ export default function BottomSheet(wolluInfo, showWolluInfo, test_value){
         } else {
             alert("하나의 항목을 선택해주세요");
         }
+        let wolluFactorInputTextValue = document.querySelector(".WolluFactor");
+        wolluFactorInputTextValue.classList.add('active');
+
     };
 
     const SelectionClicked = (number) => {
         selected_number = number;
         
         let wolluFactorInputTextValue = document.querySelector(".WolluFactor");
-        wolluFactorInputTextValue.setAttribute("value","");
+        //wolluFactorInputTextValue.classList.add('active');
+
+       wolluFactorInputTextValue.innerHTML = "";
         if (number == 0){
             wolluInfo.wolluFactor = 0;
-            wolluFactorInputTextValue.setAttribute("value",'업무 없음');
+            wolluFactorInputTextValue.innerHTML = "업무 없음";
             showWolluInfo.wolluFactorText = "업무가 없어";
             showWolluInfo.wolluTitle = "찐루팡";
         } else if (number == 1) {
             wolluInfo.wolluFactor = 1;
-            wolluFactorInputTextValue.setAttribute("value",'커피/간식 먹기');
+            wolluFactorInputTextValue.innerHTML = "커피/간식 먹기";
             showWolluInfo.wolluFactorText = "커피/간식 먹기";
             showWolluInfo.wolluTitle = "간식 루팡";           
         } else if (number == 2) {
             wolluInfo.wolluFactor = 2;
-            wolluFactorInputTextValue.setAttribute("value",'화장실 가기');
+            wolluFactorInputTextValue.innerHTML = "화장실 가기";
             showWolluInfo.wolluFactorText = "화장실 가기";
             showWolluInfo.wolluTitle = "똥루팡";            
         } else if (number == 3) {
             wolluInfo.wolluFactor = 3;
-            wolluFactorInputTextValue.setAttribute("value",'바람 쐬기');
+            wolluFactorInputTextValue.innerHTML = "바람 쐬기";
             showWolluInfo.wolluFactorText = "바깥 바람쐬며";
             showWolluInfo.wolluTitle = "바람루팡";            
         } else if (number == 4) {
             wolluInfo.wolluFactor = 4;
-            wolluFactorInputTextValue.setAttribute("value",'인터넷 서핑하기');
+            wolluFactorInputTextValue.innerHTML = "인터넷 서핑하기";
             showWolluInfo.wolluFactorText = "인터넷 서핑하기";
             showWolluInfo.wolluTitle = "전기세 루팡";            
         } else if (number == 5) {
             wolluInfo.wolluFactor = 5;
-            wolluFactorInputTextValue.setAttribute("value",'담배 피우기');
+            wolluFactorInputTextValue.innerHTML = "담배 피우기";
             showWolluInfo.wolluFactorText = "담배 피우기";
             showWolluInfo.wolluTitle = "흡연 루팡";            
         } else if (number == 6) {
             wolluInfo.wolluFactor = 6;
-            wolluFactorInputTextValue.setAttribute("value",'딴 짓 하기');
+            wolluFactorInputTextValue.innerHTML = "딴 짓 하기";
             showWolluInfo.wolluFactorText = "딴짓하기";
             showWolluInfo.wolluTitle = "딴짓 루팡";            
         } else if (number == 7) {
             wolluInfo.wolluFactor = 7;
-            wolluFactorInputTextValue.setAttribute("value",'이직 준비');
+            wolluFactorInputTextValue.innerHTML = "이직 준비";
             showWolluInfo.wolluFactorText = "이직 준비하기";
             showWolluInfo.wolluTitle = "이직 루팡";            
         }
@@ -179,8 +184,6 @@ export default function BottomSheet(wolluInfo, showWolluInfo, test_value){
             selected_text.classList.remove("TextSelected");
             selected_image.classList.remove("ImageSelected");        
         }
-
-
     }
     return (
         <Container className="Container">

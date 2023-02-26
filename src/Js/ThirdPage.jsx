@@ -188,27 +188,6 @@ display:inline-block;
 margin-left:${175/339 * card_width + text_between_margin}px;
 width: ${42/339*card_width}px;
 `;
-
-    const InputTextField = styled.input`
-        font-family: "pretendard_light";
-        font-size: ${pretendard_font_size}px;
-        color: var(--gray01-color);
-        border-color: #FFFFFF;
-        line-height: 145%;
-        border-radius: 4px;
-        border-width: 0px;
-        width : ${175/339 * card_width}px;
-        text-align: center;
-        display: inline-block;
-        filter : drop-shadow(0px 0px 20px rgba(43, 53, 139, 0.1));
-        :focus{
-        font-family: "pretendard_medium";
-        color: var(--main-color);
-        filter : drop-shadow(0px 0px 0px rgba(43, 53, 139, 0.1));
-        border-color: var(--main-color);
-        border-width: 1px;
-        }
-    `;
     const BottomArrowImage = styled.img`
         position:absolute;
     `;
@@ -265,8 +244,8 @@ width: ${42/339*card_width}px;
         border-radius: 4px;
         width : ${165/339 * card_width}px;
         height : ${30/700 * card_height}px;
-        text-align: left;
-        padding-left:${10/339 * card_width}px;
+        text-align: center;
+        //padding-left:${10/339 * card_width}px;
         filter : drop-shadow(0px 0px 20px rgba(43, 53, 139, 0.1));
     `;
     const Test2 = styled.img`
@@ -290,8 +269,8 @@ width: ${42/339*card_width}px;
         <TextField>
             <TextInRow>
               <TextStyleInlineFront>오늘</TextStyleInlineFront>
-              <Test className="WolluFactor" onClick={showBottomSheet}>
-                <Test1>
+              <Test onClick={showBottomSheet}>
+                <Test1 className="WolluFactor">
                     월루 항목 선택
                 </Test1>
                 <Test2 src={BottomArrrow}/>
