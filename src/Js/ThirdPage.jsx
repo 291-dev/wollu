@@ -185,7 +185,7 @@ line-height: 145%;
 font-size: ${pretendard_font_size}px;
 color: var(--gray01-color);
 display:inline-block;
-margin-left:${165/339 * card_width + text_between_margin}px;
+margin-left:${175/339 * card_width + text_between_margin}px;
 width: ${42/339*card_width}px;
 `;
 
