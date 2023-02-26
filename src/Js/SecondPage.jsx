@@ -157,6 +157,9 @@ export default function SecondPage(salaryInfo) {
         filter : drop-shadow(0px 0px 0px rgba(43, 53, 139, 0.1));
         outline: 0;
       }
+      ::placeholder{
+            color: #E8E9F5;
+        }
       `;
 
       
@@ -182,6 +185,9 @@ export default function SecondPage(salaryInfo) {
           border-width: 1px;
           outline: 0;
         }
+        ::placeholder{
+            color: #E8E9F5;
+        }
         `;
 
     const InputTextField3 = styled.input`
@@ -205,6 +211,9 @@ export default function SecondPage(salaryInfo) {
         outline: 0;
         border-width: 1px;
       }
+      ::placeholder{
+            color: #E8E9F5;
+        }
       `;
 
     function prevent_tabkey(event) {

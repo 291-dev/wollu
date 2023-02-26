@@ -177,6 +177,18 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
         margin-left:${text_between_margin}px;
     `;
 
+const TextStyleInlineBack2 = styled.div`
+position: absolute;
+font-family: "pretendard_light";
+font-weight: normal;
+line-height: 145%;
+font-size: ${pretendard_font_size}px;
+color: var(--gray01-color);
+display:inline-block;
+margin-left:${165/339 * card_width + text_between_margin}px;
+width: ${42/339*card_width}px;
+`;
+
     const InputTextField = styled.input`
         font-family: "pretendard_light";
         font-size: ${pretendard_font_size}px;
@@ -221,6 +233,9 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
           border-width: 1px;
           outline: 0;
         }
+        ::placeholder{
+            color: #E8E9F5;
+        }
     `;
 
     function prevent_tabkey(event) {
@@ -228,6 +243,38 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
         event.preventDefault();
         }
     }
+
+
+    const Test = styled.div`
+        position:absolute;
+        display:inline-block;
+        width : ${175/339 * card_width}px;
+        height : ${30/700 * card_height}px;        
+    `;
+
+    const Test1 = styled.div`
+        margin-top:0px;
+        position:absolute;
+        font-family: "pretendard_light";
+        font-size: ${pretendard_font_size}px;
+        outline:1px;
+        background-color: #FFFFFF;
+        border: 1px solid #FFFFFF;
+        color : #E8E9F5;
+        line-height: 145%;
+        border-radius: 4px;
+        width : ${165/339 * card_width}px;
+        height : ${30/700 * card_height}px;
+        text-align: left;
+        padding-left:${10/339 * card_width}px;
+        filter : drop-shadow(0px 0px 20px rgba(43, 53, 139, 0.1));
+    `;
+    const Test2 = styled.img`
+        position: absolute;
+        right:0px;
+        top:${12/700*card_height}px;
+        right:${8/339*card_width}px;
+    `;
     return (
       <Background>
         {bottomSheet}
@@ -243,8 +290,14 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
         <TextField>
             <TextInRow>
               <TextStyleInlineFront>오늘</TextStyleInlineFront>
-              <InputTextField className="WolluFactor" placeholder="월루 항목 선택" onClick={showBottomSheet} readOnly onKeyDown={prevent_tabkey}></InputTextField>
-              <TextStyleInlineBack>으로</TextStyleInlineBack>
+              <Test className="WolluFactor" onClick={showBottomSheet}>
+                <Test1>
+                    월루 항목 선택
+                </Test1>
+                <Test2 src={BottomArrrow}/>
+                <TextStyleInlineBack2>으로</TextStyleInlineBack2>                
+              </Test>
+              <br/>
             </TextInRow>
             <TextMarginTop/>
             <TextInRow>

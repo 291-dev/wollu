@@ -242,7 +242,7 @@ function Wollu() {
   const third = ThirdPage(salaryInfo, wolluInfo, showWolluInfo);
    return (
     <SCROLL_OUTER ref={outerDivRef}>
-      {second}
+      {third}
       <FirstPage/>
       <PageDivider/>
       {second}
