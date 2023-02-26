@@ -7,6 +7,7 @@ import ShowWolluImageBorder from "../Resources/Images/ShowWolluImageBorder.svg";
 import ShowWolluImageEffect from "../Resources/Images/ShowWolluImageEffect.svg";
 import EatWolluImage from "../Resources/Images/EatWolluImage.png";
 import "./fourthpage.css";
+import ReactCardFlip from 'react-card-flip';
 
 export default function FourthPage(showWolluInfo){
     var window_width = window.innerWidth;
@@ -123,10 +124,68 @@ export default function FourthPage(showWolluInfo){
       margin-top: auto;
       margin-bottom: auto;
     `;
-    
+
+    let TestCard = styled.div`
+      
+      position: relative;
+      margin-top: ${card_margin_top}px;
+      width: ${card_width}px;
+      height:${card_height}px;
+      float:left;
+      border-radius: 12px;
+      perspective: 500px;
+      `;
+
+    const TestContent = styled.div`
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      transition: transform 1s;
+      border-radius: 12px;
+      transform-style: preserve-3d;
+    `;
+    const FrontCard = styled.div`
+      position : absolute;
+      height: 100%;
+      width : 100%;
+      background-color: white;
+      border-radius: 12px;
+      backface-visibility: hidden;
+    `;
+
+
+    const BackCard = styled.div`
+      position : absolute;
+      height: 100%;
+      width : 100%;
+      transform: rotateY(180deg);
+      backface-visibility: hidden;
+      border-radius: 12px;
+      background-color: var(--main-color);
+    `;
+
+
+    var clicked_var = false;
+    const cardClicked = () => {
+
+      let testContent = document.querySelector('.content');
+      if (clicked_var){
+        testContent.classList.add("card_flip_active");
+        clicked_var = false;
+      } else {
+        testContent.classList.remove("card_flip_active");
+        clicked_var = true;
+      }
+
+    };
     return (
       <Background>
-            <Card className="showBackColor">
+<TestCard onClick={cardClicked}>
+  <TestContent className='content'>
+    <FrontCard className="showFrontColor">
+    </FrontCard>
+    <BackCard className="showBackColor">
               <CombineImages>
                 <BorderImage className="showBackColor" src={ShowWolluImageBorder}/>
                 <BackEffect className="showCardEffect" src={ShowWolluImageEffect}/>
@@ -144,8 +203,24 @@ export default function FourthPage(showWolluInfo){
                   </WolluNameText>
                 </WolluName>
               </CombineImages>
-            </Card>
-        </Background>
+            </BackCard>
+  </TestContent>
+</TestCard>
+  </Background>
+        /*
+              <Background>
+        <div class="card">
+        <div class="content">
+          <div class="front">
+            front
+          </div>
+          <div class="back">
+            back
+          </div>
+        </div>
+        </div>
+    </Background>
+         */
       /*
         <Background>
             <Card className="showBackColor">

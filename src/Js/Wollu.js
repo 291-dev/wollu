@@ -108,6 +108,7 @@ function Wollu() {
                         document.querySelector(".hideText2").innerHTML = "";
   
                     }
+                    let showFrontColor = document.querySelector(".showFrontColor");
                     let showBackColor = document.querySelector(".showBackColor");
                     let showBackColor2 = document.querySelector(".showBackColor2");
                     let showText1 = document.querySelector("#showText1");
@@ -117,6 +118,7 @@ function Wollu() {
                     // remove all first
                     for (var i = 0; i< 9; i++){
                         var classNumber = "active_" + i;
+                        showFrontColor.classList.remove(classNumber);
                         showBackColor.classList.remove(classNumber);
                         showBackColor2.classList.remove(classNumber);
                         showText1.classList.remove(classNumber);
@@ -127,15 +129,21 @@ function Wollu() {
                     if (document.querySelector(".showWolluTitle").innerHTML == "충직한 도비"){
                       adjustClassNumber = "active_8";
                     }
+                    showFrontColor.classList.add(adjustClassNumber);
                     showBackColor.classList.add(adjustClassNumber);
                     showBackColor2.classList.add(adjustClassNumber);
                     showText1.classList.add(adjustClassNumber);
                     showText2.classList.add(adjustClassNumber);
                     showImage.classList.add(adjustClassNumber);
-                    console.log(showImage.classList)
+
+                    // flip card
+                    let testContent = document.querySelector('.content');
+                    testContent.classList.add("card_flip_active");
                   }
               } else if ( page_number == 4){
-                
+                let testContent = document.querySelector('.content');
+                testContent.classList.remove("card_flip_active");
+            
               }
               //if (page_number == 3 && ())
                 if (scrollTop >= pageHeight && scrollTop < pageHeight * page_number){
@@ -171,7 +179,7 @@ function Wollu() {
               behavior: "smooth",
             });
           } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 3) {
-            //현재 2페이지
+            //현재3페이지
             outerDivRef.current.scrollTo({
               top: pageHeight + DIVIDER_HEIGHT,
               left: 0,
@@ -179,19 +187,24 @@ function Wollu() {
             });
           }
           else if (scrollTop >= pageHeight && scrollTop < pageHeight * 4) {
-            //현재 2페이지
+            //현재 4페이지
             outerDivRef.current.scrollTo({
               top: pageHeight*2 + DIVIDER_HEIGHT*2,
               left: 0,
               behavior: "smooth",
             });
+            let testContent = document.querySelector('.content');
+            testContent.classList.remove("card_flip_active");
+
           } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 5) {
-            //현재 2페이지
+            //현재 5페이지
             outerDivRef.current.scrollTo({
               top: pageHeight*3 + DIVIDER_HEIGHT*3,
               left: 0,
               behavior: "smooth",
             });
+            let testContent = document.querySelector('.content');
+            testContent.classList.add("card_flip_active");
           } else {
             // 현재 3페이지
             outerDivRef.current.scrollTo({

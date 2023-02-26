@@ -94,6 +94,59 @@
     content:url("../Resources/Images/Selection_Dobby.png");
 }
 
+/*
 .showBackColor:hover{
     transform: rotateY(180deg);
+    transform-style: preserve-3d
+}
+*/
+
+/*FLIP CARD EFFECT*/
+
+
+.card {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  margin: -150px;
+  float: left;
+  perspective: 500px;
+}
+
+.content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 1px #8294EF;
+
+  transition: transform 1s;
+  transform-style: preserve-3d;
+}
+.card_flip_active {
+    transform: rotateY( 180deg ) ;
+    transition: transform 0.5s;
+}
+  
+
+
+.front,
+.back {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: white;
+  line-height: 300px;
+  color: #03446A;
+  text-align: center;
+  font-size: 60px;
+  border-radius: 5px;
+  backface-visibility: hidden;
+}
+
+.back {
+  background: #03446A;
+  color: white;
+  transform: rotateY( 180deg );
 }
