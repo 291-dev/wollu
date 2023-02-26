@@ -151,6 +151,7 @@ export default function SecondPage(salaryInfo) {
       filter : drop-shadow(0px 0px 20px rgba(43, 53, 139, 0.1));
       :focus{
         font-family: "pretendard_medium";
+        border-width: 1px;
         color: var(--main-color);
         border-color: var(--main-color);
         filter : drop-shadow(0px 0px 0px rgba(43, 53, 139, 0.1));
@@ -178,7 +179,7 @@ export default function SecondPage(salaryInfo) {
           color: var(--main-color);
           border-color: var(--main-color);
           filter : drop-shadow(0px 0px 0px rgba(43, 53, 139, 0.1));
-
+          border-width: 1px;
           outline: 0;
         }
         `;
@@ -202,6 +203,7 @@ export default function SecondPage(salaryInfo) {
         border-color: var(--main-color);
         filter : drop-shadow(0px 0px 0px rgba(43, 53, 139, 0.1));
         outline: 0;
+        border-width: 1px;
       }
       `;
 

@@ -194,6 +194,7 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
         color: var(--main-color);
         filter : drop-shadow(0px 0px 0px rgba(43, 53, 139, 0.1));
         border-color: var(--main-color);
+        border-width: 1px;
         }
     `;
     const BottomArrowImage = styled.img`
@@ -217,7 +218,7 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
           color: var(--main-color);
           border-color: var(--main-color);
           filter : drop-shadow(0px 0px 0px rgba(43, 53, 139, 0.1));
-
+          border-width: 1px;
           outline: 0;
         }
     `;
