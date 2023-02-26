@@ -9,7 +9,7 @@ import '../CssUtil/TextStyle.css';
 import '../CssUtil/Spaces.css';
 import '../CssUtil/Utils.css'
 import React, {useState} from 'react';
-
+import { BrowserView, MobileView } from "react-device-detect";
 export default function SecondPage(salaryInfo) {
     const onNickNameChange = (e) => {
       // replace string
@@ -143,9 +143,9 @@ export default function SecondPage(salaryInfo) {
       border-color: #FFFFFF;
       line-height: 145%;
       border-radius: 4px;
-      border-width: 1px;
+      border-width: 0px;
       width : ${102/339 * card_width}px;
-      height : ${36/700 * card_height}px;
+      height : ${30/700 * card_height}px;
       text-align: center;
       display: inline-block;
       filter : drop-shadow(0px 0px 20px rgba(43, 53, 139, 0.1));
@@ -158,6 +158,8 @@ export default function SecondPage(salaryInfo) {
       }
       `;
 
+      
+
     const InputTextField2 = styled.input`
         font-family: "pretendard_light";
         font-size: ${pretendard_font_size}px;
@@ -165,9 +167,9 @@ export default function SecondPage(salaryInfo) {
         border-color: #FFFFFF;
         line-height: 145%;
         border-radius: 4px;
-        border-width: 1px;
+        border-width: 0px;
         width : ${62/339 * card_width}px;
-        height : ${36/700 * card_height}px;
+        height : ${30/700 * card_height}px;
         text-align: center;
         display: inline-block;
         filter : drop-shadow(0px 0px 20px rgba(43, 53, 139, 0.1));
@@ -176,6 +178,7 @@ export default function SecondPage(salaryInfo) {
           color: var(--main-color);
           border-color: var(--main-color);
           filter : drop-shadow(0px 0px 0px rgba(43, 53, 139, 0.1));
+
           outline: 0;
         }
         `;
@@ -187,8 +190,9 @@ export default function SecondPage(salaryInfo) {
       border-color: #FFFFFF;
       line-height: 145%;
       border-radius: 4px;
-      border-width: 1px;
+      border-width: 0px;
       width : ${34/339 * card_width}px;
+      height : ${30/700 * card_height}px;
       text-align: center;
       display: inline-block;
       filter : drop-shadow(0px 0px 20px rgba(43, 53, 139, 0.1));

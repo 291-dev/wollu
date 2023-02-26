@@ -184,7 +184,7 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
         border-color: #FFFFFF;
         line-height: 145%;
         border-radius: 4px;
-        border-width: 1px;
+        border-width: 0px;
         width : ${175/339 * card_width}px;
         text-align: center;
         display: inline-block;
@@ -192,8 +192,8 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
         :focus{
         font-family: "pretendard_medium";
         color: var(--main-color);
-        border-color: var(--main-color);
         filter : drop-shadow(0px 0px 0px rgba(43, 53, 139, 0.1));
+        border-color: var(--main-color);
         }
     `;
     const BottomArrowImage = styled.img`
@@ -206,8 +206,9 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
         border-color: #FFFFFF;
         line-height: 145%;
         border-radius: 4px;
-        border-width: 1px;
+        border-width: 0px;
         width : ${62/339 * card_width}px;
+        height : ${30/700 * card_height}px;
         text-align: center;
         display: inline-block;
         filter : drop-shadow(0px 0px 20px rgba(43, 53, 139, 0.1));
@@ -216,6 +217,7 @@ export default function ThirdPage(salaryInfo, wolluInfo, showWolluInfo){
           color: var(--main-color);
           border-color: var(--main-color);
           filter : drop-shadow(0px 0px 0px rgba(43, 53, 139, 0.1));
+
           outline: 0;
         }
     `;
