@@ -26,15 +26,6 @@ import FifthPage from './FifthPage';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 function Wollu() {
-  var [nickNameText, setNickNameText] = useState('');
-  var [salaryText, setSalaryText] = useState('');
-  var [workingTimeText, setWorkingTimeText] = useState('');
-  const [wolluMinuteText, setWolluMinuteText] = useState('');
-  const [wolluItemSelected,setWolluItemSelected] = useState(-1);
-  const [wolluItemText,setWolluItemText] = useState('');
-  const [showWolluText,setShowWolluText] = useState('');
-  const [roopangText,setRoopangText] = useState('');
-
 
   const outerDivRef = useRef();
   const DIVIDER_HEIGHT = 5;
@@ -258,7 +249,6 @@ function Wollu() {
 
   const touch_end = (e) => {
     touch_end_y = e.changedTouches[0].clientY;
-    console.log(touch_end_y - touch_start_y);
 
     var scrolled = touch_end_y - touch_start_y;
     const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치

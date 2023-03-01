@@ -181,7 +181,7 @@ export default function FourthPage(showWolluInfo){
     };
     return (
       <Background>
-      <TestCard onClick={cardClicked}>
+      <TestCard>
         <TestContent className='content'>
           <FrontCard className="showFrontColor">
           </FrontCard>
