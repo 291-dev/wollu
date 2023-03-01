@@ -24,6 +24,8 @@ import BottomSheet from './BottomSheet';
 import FifthPage from './FifthPage';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import AppDownloadView from './AppDownloadView.jsx';
+import AD from "./AD.jsx";
+
 function Wollu() {
 
   const outerDivRef = useRef();
@@ -426,6 +428,7 @@ function Wollu() {
       {fourth}
       <PageDivider/>
       <FifthPage/>
+      <AD/>
       </div>
     </SCROLL_OUTER>
   );
