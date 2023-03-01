@@ -261,9 +261,11 @@ export default function FifthPage(){
     `;
 
     const downloadAppButtonClicked = () => {
-      alert("clicked");
-      window.location="https://wollu.me";
-
+      let appDownloadView = document.querySelector('.AppDownloadView');
+      appDownloadView.classList.add('active');
+      let wolluView = document.querySelector('.WolluView');
+      console.log(wolluView);
+      wolluView.classList.add('active');
     }
     return (
         <Background>
@@ -302,7 +304,7 @@ export default function FifthPage(){
                     <br/>
                     <WolluAmountSlider><WolluAmountInnerSlider/></WolluAmountSlider>
                 </ShowWolluCases>
-                <AggroTextButton>
+                <AggroTextButton onClick={downloadAppButtonClicked}>
                     <AggroTextField>
                         <AggroTextInner>
                             직장인 하루 평균 담배로 월루하는 시간

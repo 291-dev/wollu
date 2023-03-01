@@ -9,7 +9,6 @@ import WolluItemBottomSheet from './WolluItemBottomSheet';
 import Slider from "./Slider";
 import WolluAggroCardSlider from "./WolluAggroCardSlider";
 
-import AppDownloadView from "./AppDownloadView";
 import ScrollTest from "./ScrollTest";
 import Background from './BackGround';
 
@@ -24,7 +23,7 @@ import FourthPage from './FourthPage';
 import BottomSheet from './BottomSheet';
 import FifthPage from './FifthPage';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
+import AppDownloadView from './AppDownloadView.jsx';
 function Wollu() {
 
   const outerDivRef = useRef();
@@ -414,10 +413,10 @@ function Wollu() {
 
 
   }
-  
    return (
     <SCROLL_OUTER ref={outerDivRef} className="TouchEventClass" onTouchStart={touch_start} onTouchEnd={touch_end}>
-      <FifthPage/>
+      <AppDownloadView/>
+      <div className='WolluView'>
       <FirstPage/>
       <PageDivider/>
       {second}
@@ -427,6 +426,7 @@ function Wollu() {
       {fourth}
       <PageDivider/>
       <FifthPage/>
+      </div>
     </SCROLL_OUTER>
   );
 }

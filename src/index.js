@@ -10,14 +10,6 @@ import { Routes ,Route } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-      <Route exact path="/" component={Wollu} />
-      <Route exact path="/AppDownload" component={AppDownloadView} />
-      <Route exact path="/test" component={test} />
-      </Routes>
-    </BrowserRouter>
-
     <Wollu/>
   </React.StrictMode>
 );

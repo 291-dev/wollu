@@ -22,3 +22,7 @@
 #WolluAdSpace{
     padding-top: 26px;
 }
+
+.WolluView.active{
+    display:none;
+}

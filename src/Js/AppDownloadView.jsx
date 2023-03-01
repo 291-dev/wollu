@@ -1,6 +1,6 @@
 import '../CssUtil/Color.css';
 import '../CssUtil/Font.css';
-
+import '../Css/AppDownloadView.css';
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import WebDownloadViewImage from "../Resources/Images/WebDownloadViewImage.png";
@@ -25,9 +25,10 @@ export default function AppDownloadView() {
     width: ${window_width}px;
     height:${window_height}px;
     background-color: #E3E4EC;
-    display:flex;
+    //display:flex;
     justify-content: center;
     align-items: center;
+    display:none;
   `;
   const AppDownloadViewInner = styled.div`
     width: max-content;
@@ -149,7 +150,7 @@ export default function AppDownloadView() {
   `;
   return (
     <>
-      <AppDownloadViewBackground>
+      <AppDownloadViewBackground className='AppDownloadView'>
         <AppDownloadViewInner>
           <UpperPart>
             <LeftPart>
