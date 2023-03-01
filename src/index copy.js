@@ -17,7 +17,6 @@ root.render(
       <Route exact path="/test" component={test} />
       </Routes>
     </BrowserRouter>
-
     <Wollu/>
   </React.StrictMode>
 );
