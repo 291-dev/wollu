@@ -66,7 +66,6 @@ export default function FifthPage(){
           isMobile = true;
         }
         if (window.navigator.share){ // only safari
-          alert("share function exists");
           window.navigator.share({
             title: "test", // 공유될 제목
             text: "", // 공유될 설명
@@ -74,9 +73,6 @@ export default function FifthPage(){
             files: [], // 공유할 파일 배열
           });
         } else {
-          alert("share function not exists");
-          alert(isMobile);
-          alert(window.device);
         }
       };
 

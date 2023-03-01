@@ -59,8 +59,8 @@ function Wollu() {
         const { deltaY } = e;
         const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
         const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
-      
-        if (deltaY > 0) {
+        const SCROLL_SENSITIVITY = 200
+        if (deltaY > SCROLL_SENSITIVITY) {
           // 스크롤 내릴 때
           if (scrollTop >= 0 && scrollTop < pageHeight) {
             //현재 1페이지
@@ -162,7 +162,7 @@ function Wollu() {
                 }
             }
           } 
-        } else {
+        } else if (deltaY < -SCROLL_SENSITIVITY){
           // 스크롤 올릴 때
           if (scrollTop >= 0 && scrollTop < pageHeight) {
             //현재 1페이지
