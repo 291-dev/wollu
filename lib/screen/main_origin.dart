@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:drag_and_drop_lists/drag_and_drop_item.dart';
@@ -27,6 +28,12 @@ import 'package:wollu/util/local_notification.dart';
 import '../entity/User.dart';
 import '../util/categories.dart';
 
+class Times {
+  List<int> times = [];
+
+  Times(this.times);
+}
+
 class Main extends StatefulWidget {
   User currentUser;
   Main({Key? key, required this.currentUser}) : super(key: key);
@@ -41,10 +48,12 @@ class _MainState extends State<Main> {
   // Timer to gathering each category's time
   Timer? timer;
   Timer? notificationTimer;
+  User? currentUser;
 
   // Local notification
   final NavigationHistoryObserver historyObserver = NavigationHistoryObserver();
 
+  DBHelper helper = DBHelper();
   // For data load
   var isLoading = false;
   // To control current running category
@@ -54,7 +63,7 @@ class _MainState extends State<Main> {
   // Categories which user selected
   var selected = [false, true, false, false, false, true, true, false];
   // Category List
-  late List<DragAndDropList> _contents;
+  late List<DragAndDropList> _contents = [DragAndDropList(children: [DragAndDropItem(child: Container())])];
   // Dynamic List
   List<DragAndDropItem> _list = [];
   // DragAndDropItem Objects
@@ -84,7 +93,6 @@ class _MainState extends State<Main> {
 
   // Functions
   void getPref() async {
-    print('getPref() called');
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     setState(() {
@@ -97,7 +105,6 @@ class _MainState extends State<Main> {
       selected[6] = pref.getBool('6') == null ? true : true;
       selected[7] = pref.getBool('7') == null ? false : true;
     });
-    print('getPref() finish, $selected');
     // Get wollu data
     get().then((value) => {
       // Set Category List
@@ -112,9 +119,8 @@ class _MainState extends State<Main> {
                 + _views[5].category.getTime()
                 + _views[6].category.getTime()
                 + _views[7].category.getTime();
-
-            painter.setAngle((_totalTime/(60*60*widget.currentUser.day_work)));
           });
+          painter.arcAngle = 2 * pi * (_totalTime/(60*60*widget.currentUser.day_work));
         }),
         setState(() {
           isLoading = false;
@@ -122,22 +128,20 @@ class _MainState extends State<Main> {
       })
     });
   }
-  Future get() async {
-    print('DB called');
+  Future<Times> get() async {
     DBHelper helper = DBHelper();
     final result = await helper.getWollu(widget.currentUser.id);
     if (result.isEmpty) {
-
+      return Times(List.empty());
     } else {
       setState(() {
         times = result.sublist(2);
       });
-      print('DB called, $times');
+      return Times(result.sublist(2));
     }
   }
 
   Future setList() async {
-    print('setList() called $selected');
     for (int i=0; i<8; i++) {
       _views.add(
           CategoryView(
@@ -159,10 +163,8 @@ class _MainState extends State<Main> {
                         }
                       }
                     }
-                    print('Click before $times');
                     times[i] = _keys[i].currentState!.time;
-                    save();
-                    print('Click after $times');
+                    saveAsIndex(i);
                   });
                 }
                 // 아무도 실행 중이 아닐 때
@@ -197,7 +199,6 @@ class _MainState extends State<Main> {
                 children: [
                   Container(
                     height: 42,
-                    width: 312,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -254,6 +255,23 @@ class _MainState extends State<Main> {
       return false;
     }
   }
+
+  Future<bool> saveAsIndex(int index) async {
+    DBHelper helper = DBHelper();
+
+      if (_keys[index].currentState != null) {
+        times[index] = _keys[index].currentState!.time;
+      }
+    
+
+    try {
+      final id = await helper.addWollu(widget.currentUser.id, _totalTime,
+          times[0], times[1], times[2], times[3], times[4], times[5], times[6], times[7]);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
   _onItemReorder(int oldItemIndex, int oldListIndex, int newItemIndex, int newListIndex) {
     setState(() {
       var movedItem = _contents[oldListIndex].children.removeAt(oldItemIndex);
@@ -261,9 +279,18 @@ class _MainState extends State<Main> {
     });
   }
 
+  Future<dynamic> check() async {
+    final user = await helper.get();
+    if (user.isEmpty) {
+      return false;
+    } else {
+      return user.last;
+    }
+  }
+
   @override
   void initState() {
-    print('initState() called, $isLoading');
+    currentUser = widget.currentUser;
     // Data loading
     isLoading = true;
     // Local notification
@@ -271,9 +298,7 @@ class _MainState extends State<Main> {
     LocalNotification.requestPermission();
     // Get pref and selected categories data
     getPref();
-    print('super.initState() called soon, $selected');
     super.initState();
-    print('super.initState() called, $selected');
 
     notificationTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
       if (isRun) {
@@ -283,6 +308,11 @@ class _MainState extends State<Main> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+  
+  @override
   void dispose() {
     // TODO: implement dispose
     timer?.cancel();
@@ -290,21 +320,13 @@ class _MainState extends State<Main> {
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
-        body: LayoutBuilder(
-          builder: (BuildContext bc, BoxConstraints bcs) {
-            if (isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return _body(context);
-            }
-          },
-        )
+        body: _body(context)
     );
   }
 
@@ -312,285 +334,291 @@ class _MainState extends State<Main> {
     final size = AppLayout.getSize(scaffold);
     return Container(
       alignment: Alignment.center,
-      child: Container(
-        width: size.width > 430 ? 430 : size.width, // 375
-        height: size.height,
-        decoration: BoxDecoration(
-            color: Styles.blueGrey
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: ListView(
-          children: [
-            // TopLeft, TopRight Navigation Buttons and TotalTime Text
-            Container(
-              width: size.width > 430 ? 430 : size.width, // 327
-              height: 79,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: -8,
-                    child: IconButton(
-                      iconSize: 39,
-                      alignment: Alignment.centerLeft,
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => StatScreen(currentUser: widget.currentUser)));
-                      },
-                      icon: Image.asset('assets/x4stat.png'),
-                    ),
-                  ),
-                  Positioned(
-                    right: -8,
-                    child: IconButton(
-                      iconSize: 39,
-                      alignment: Alignment.centerRight,
-                      onPressed: () {
-                        // Must be fixed Main passes user data to SetScreen
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => SetScreen(currentUser: widget.currentUser)));
-                      },
-                      icon: Image.asset(
-                        'assets/x4set.png',
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: size.width > 430 ? 430/2 - 81 - 24: size.width/2 - 81 - 24,
-                    top: 32,
-                    child: Container(
-                      width: 162,
-                      height: 55,
-                      child: Center(
-                        child: Text(
-                          intToTimeLeft(_totalTime), // _totalTime
-                          style: TextStyle(
-                              fontFamily: 'Pretendard',
-                              fontSize: 46,
-                              fontWeight: FontWeight.bold,
-                              color: Styles.blueColor
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+      child: Stack(
+        children: [
+          Container(
+            width: size.width > 430 ? 430 : size.width, // 375
+            height: size.height,
+            decoration: BoxDecoration(
+                color: Styles.blueGrey
             ),
-            const Gap(25),
-            // Center Image and ArcPainter
-            Container(
-                width: 275,
-                height: 275,
-                child: Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    Stack(
-                      children: [
-                        CustomPaint(
-                          painter: CirclePainter(),
-                        ),
-                        CustomPaint(
-                          painter: painter,
-                        )
-                      ],
-                    ),
-                    Positioned(
-                      child: Image.asset(
-                        isRunOnce ? mainPictures[latest] : 'assets/default.png',
-                        width: 220,
-                        height: 220,
-                      ),
-                    ),
-                    Visibility(
-                      visible: isRunOnce,
-                      child: Positioned(
-                        top: 205,
-                        width: 75,
-                        height: 75,
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: ListView(
+              children: [
+                // TopLeft, TopRight Navigation Buttons and TotalTime Text
+                Container(
+                  width: size.width > 430 ? 430 : size.width, // 327
+                  height: 84,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: -8,
                         child: IconButton(
-                          icon: Image.asset(
-                            isRun ? 'assets/stopBtn.png' : 'assets/play.png',
-                          ),
-                          onPressed: isRun ? () {
-                            setState(() {
-                              isRun = false;
-                              _keys[latest].currentState!.stop();
-                              for (int i=0; i<8; i++) {
-                                if (_keys[i].currentState != null) {
-                                  _keys[i].currentState!.active = true;
-                                }
-                              }
-                            });
-                          } :
-                              () {
-                            setState(() {
-                              isRun = true;
-                              _keys[latest].currentState!.run();
-                              for (int i=0; i<8; i++) {
-                                if (_keys[i].currentState != null && latest != i) {
-                                  _keys[i].currentState!.active = false;
-                                }
+                          iconSize: 39,
+                          alignment: Alignment.centerLeft,
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => StatScreen(currentUser: widget.currentUser)));
+                          },
+                          icon: Image.asset('assets/x4stat.png'),
+                        ),
+                      ),
+                      Positioned(
+                        right: -8,
+                        child: IconButton(
+                          iconSize: 39,
+                          alignment: Alignment.centerRight,
+                          onPressed: () {
+                            // Must be fixed Main passes user data to SetScreen
+                            check().then((value) {
+                              if (value is User) {
+                                currentUser = value;
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => SetScreen(currentUser: currentUser)));
                               }
                             });
                           },
+                          icon: Image.asset(
+                            'assets/x4set.png',
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )
-            ),
-            const Gap(30),
-            // Category List
-            Container(
-              width: 312,
-              height: 146,
-              child: DragAndDropLists(
-                children: _contents,
-                onItemReorder: _onItemReorder,
-                onListReorder: (a, b) {},
-                lastItemTargetHeight: 42,
-                listDividerOnLastChild: true,
-                listDivider: Container(height: 1,decoration: BoxDecoration(color: Styles.blueColor),),
-                lastListTargetSize: 0,
-                horizontalAlignment: MainAxisAlignment.center,
-                verticalAlignment: CrossAxisAlignment.center,
-              ),
-            ),
-            const Gap(10),
-            // Category Add Button
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: const Color(0xFFE3E4EC)
-              ),
-              width: 312,
-              height: 42,
-              child: IconButton(
-                icon: Icon(Icons.add, color: Styles.blueColor,),
-                onPressed: () {
-                  if (isRun) {
-                    Fluttertoast.showToast(
-                        msg: '실행중인 월루 카테고리를 종료해주세요.',
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.CENTER,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.white,
-                        fontSize: 16.0
-                    );
-                  } else {
-                    showModalBottomSheet(
-                        context: context,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                        ),
-                        builder: (BuildContext bContext) {
-                          return Column(
-                            children: [
-                              const Gap(40),
-                              StatefulBuilder(
-                                builder: (BuildContext bc, StateSetter bottomState) {
-                                  return Container(
-                                    height: 250,
-                                    child: ListView(
-                                      children: List.generate(8, (index) => Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                                        width: AppLayout.getSize(context).width,
-                                        height: 300/8,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Text(
-                                              categories[index].name,
-                                              style: selected[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                            IconButton(
-                                                onPressed: () {
-                                                  bottomState(() {
-                                                    setState(() {
-                                                      selected[index] = !selected[index];
-                                                      if (selected[index]) {
-                                                        setPref(index, true);
-                                                        _list.add(
-                                                            _itemList[index]
-                                                        );
-                                                      } else {
-                                                        setPref(index, false);
-                                                        _list.remove(
-                                                            _itemList[index]
-                                                        );
-                                                      }
-                                                    });
-                                                  });
-                                                },
-                                                icon: Icon(
-                                                  Icons.check_circle,
-                                                  color: selected[index] ? Colors.black : Colors.grey,)
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              const Gap(34),
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: Styles.blueColor
-                                ),
-                                width: 327,
-                                height: 42,
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(bContext);
-                                  },
-                                  child: Text('적용하기', style: Styles.fTextStyle.copyWith(fontSize: 16, color: Styles.blueGrey),),
-                                ),
-                              )
-                            ],
-                          );
-                        }
-                    );
-                  }
-                },
-              ),
-            ),
-            const Gap(40),
-            // End Button
-            Container(
-              height: size.height - 597 - 83 - 37 >= 0 ? size.height - 597 - 83 - 37 : 83,
-              child: Column(
-                children: [
-                  Expanded(
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
+                      Positioned(
+                        left: size.width > 430 ? 430/2 - 81 - 24: size.width/2 - 81 - 24,
+                        top: 32,
                         child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Styles.blueColor
-                          ),
-                          width: size.width,
-                          height: 43,
-                          child: TextButton(
-                            onPressed: () {
-                              save().then((success) => {
-                                if (success) {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ResultScreen(currentUser: widget.currentUser,)))
-                                }
-                              });
-                            },
-                            child: Text('계산하기', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white)),
+                          width: 162,
+                          height: 55,
+                          child: Center(
+                            child: Text(
+                              intToTimeLeft(_totalTime), // _totalTime
+                              style: TextStyle(
+                                  fontFamily: 'Pretendard',
+                                  fontSize: 46,
+                                  fontWeight: FontWeight.bold,
+                                  color: Styles.blueColor
+                              ),
+                            ),
                           ),
                         ),
                       )
+                    ],
                   ),
-                  const Gap(40),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+                ),
+                const Gap(25),
+                // Center Image and ArcPainter
+                Container(
+                    width: 300,
+                    height: 340,
+                    child: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        Stack(
+                          children: [
+                            CustomPaint(
+                              painter: CirclePainter(),
+                            ),
+                            CustomPaint(
+                              painter: painter,
+                            )
+                          ],
+                        ),
+                        Positioned(
+                          child: Image.asset(
+                            isRunOnce ? mainPictures[latest] : 'assets/default.png',
+                            width: 275,
+                            height: 275,
+                          ),
+                        ),
+                        Visibility(
+                          visible: isRunOnce,
+                          child: Positioned(
+                            top: 265,
+                            width: 85,
+                            height: 85,
+                            child: IconButton(
+                              icon: Image.asset(
+                                isRun ? 'assets/stopBtn.png' : 'assets/play.png',
+                              ),
+                              onPressed: isRun ? () {
+                                setState(() {
+                                  isRun = false;
+                                  _keys[latest].currentState!.stop();
+                                  for (int i=0; i<8; i++) {
+                                    if (_keys[i].currentState != null) {
+                                      _keys[i].currentState!.active = true;
+                                    }
+                                  }
+                                });
+                                saveAsIndex(latest);
+                              } :
+                                  () {
+                                setState(() {
+                                  isRun = true;
+                                  _keys[latest].currentState!.run();
+                                  for (int i=0; i<8; i++) {
+                                    if (_keys[i].currentState != null && latest != i) {
+                                      _keys[i].currentState!.active = false;
+                                    }
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                ),
+                const Gap(20),
+                // Category List
+                Container(
+                  width: size.width > 430 ? 430 : size.width,
+                  height: _contents[0].children.length * 52 - 10 < 0 ? 52 : _contents[0].children.length * 52 - 10,
+                  child: DragAndDropLists(
+                    children: _contents,
+                    onItemReorder: _onItemReorder,
+                    onListReorder: (a, b) {},
+                    // lastItemTargetHeight: 42,
+                    // listDividerOnLastChild: true,
+                    // listDivider: Container(height: 1,decoration: BoxDecoration(color: Styles.blueColor),),
+                    lastListTargetSize: 0,
+                    horizontalAlignment: MainAxisAlignment.center,
+                    verticalAlignment: CrossAxisAlignment.center,
+                  ),
+                ),
+                const Gap(10),
+                // Category Add Button
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: const Color(0xFFE3E4EC)
+                  ),
+                  width: 312,
+                  height: 42,
+                  child: IconButton(
+                    icon: Icon(Icons.add, color: Styles.blueColor,),
+                    onPressed: () {
+                      if (isRun) {
+                        Fluttertoast.showToast(
+                            msg: '실행중인 월루 카테고리를 종료해주세요.',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0
+                        );
+                      } else {
+                        showModalBottomSheet(
+                            context: context,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                            ),
+                            builder: (BuildContext bContext) {
+                              return Column(
+                                children: [
+                                  const Gap(40),
+                                  StatefulBuilder(
+                                    builder: (BuildContext bc, StateSetter bottomState) {
+                                      return Container(
+                                        height: 250,
+                                        child: ListView(
+                                          children: List.generate(8, (index) => Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                                            width: AppLayout.getSize(context).width,
+                                            height: 300/8,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: <Widget>[
+                                                Text(
+                                                  categories[index].name,
+                                                  style: selected[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                IconButton(
+                                                    onPressed: () {
+                                                      bottomState(() {
+                                                        setState(() {
+                                                          selected[index] = !selected[index];
+                                                          if (selected[index]) {
+                                                            setPref(index, true);
+                                                            _list.add(
+                                                                _itemList[index]
+                                                            );
+                                                          } else {
+                                                            setPref(index, false);
+                                                            _list.remove(
+                                                                _itemList[index]
+                                                            );
+                                                          }
+                                                        });
+                                                      });
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.check_circle,
+                                                      color: selected[index] ? Colors.black : Colors.grey,)
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  const Gap(34),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Styles.blueColor
+                                    ),
+                                    width: size.width - 60,
+                                    height: 42,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(bContext);
+                                      },
+                                      child: Text('적용하기', style: Styles.fTextStyle.copyWith(fontSize: 16, color: Styles.blueGrey),),
+                                    ),
+                                  )
+                                ],
+                              );
+                            }
+                        );
+                      }
+                    },
+                  ),
+                ),
+                const Gap(40),
+                Container(
+                  child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: // End Button
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 40),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Styles.blueColor
+                        ),
+                        width: size.width > 430 ? 430 : size.width,
+                        height: 43,
+                        child: TextButton(
+                          onPressed: () {
+                            save().then((success) => {
+                              if (success) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => ResultScreen(currentUser: widget.currentUser,))
+                                )
+                              }
+                            });
+                          },
+                          child: Text('계산하기', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white)),
+                        ),
+                      )
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      )
     );
   }
 }

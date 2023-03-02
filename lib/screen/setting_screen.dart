@@ -10,6 +10,7 @@ import 'package:wollu/util/category_list.dart';
 import 'package:wollu/util/db_helper.dart';
 import 'package:http/http.dart' as http;
 import '../entity/User.dart';
+import 'main_origin.dart';
 
 class SetScreen extends StatefulWidget {
   User? currentUser;
@@ -269,9 +270,7 @@ class _SetScreenState extends State<SetScreen> {
     day_work = widget.currentUser!.day_work.toString();
     _controllers[3].text = widget.currentUser!.day_work.toString();
     job = widget.currentUser!.job.split('/')[1];
-    print(job);
     selectedJob = widget.currentUser!.job.split('/')[0];
-    print(selectedJob);
     _controllers[4].text = widget.currentUser!.job;
     annual = widget.currentUser!.annual;
     _controllers[5].text = widget.currentUser!.annual;
@@ -928,7 +927,8 @@ class _SetScreenState extends State<SetScreen> {
                                   child: TextButton(
                                     onPressed: () {
                                       validate().then((value) {
-                                        Navigator.pop(context);
+                                        // Navigator.pop(context);
+                                        Navigator.of(context).popUntil((route) => route.isFirst);
                                       },);
                                     },
                                     child: Text('수정완료', style: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.white)),

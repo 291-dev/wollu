@@ -34,6 +34,11 @@ class CategoryViewState extends State<CategoryView> {
     });
   }
 
+  clear() {
+    widget.category.setTime(0);
+    time = 0;
+  }
+
   void run() {
     setState(() {
       widget.category.togglePlay();
@@ -55,6 +60,12 @@ class CategoryViewState extends State<CategoryView> {
     // TODO: implement initState
     time = widget.time;
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    time = widget.category.time;
+    super.didChangeDependencies();
   }
   @override
   void dispose() {
@@ -97,13 +108,13 @@ class CategoryViewState extends State<CategoryView> {
                     ],
                   ),
                   Container(
-                    width: 72,
+                    width: 84,
                     child: Stack(
                       children: [
                         Positioned(
                             top: 11.5,
                             child: Container(
-                                width: 43,
+                                width: 50,
                                 alignment: Alignment.centerRight,
                                 child: Text(
                                   intToTimeLeft(time),

@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -115,6 +116,7 @@ class DBHelper {
 
   Future<void> updateUser(int id, String nickname, int salary, int week_work, int day_work, String job, String annual, int sex, String age) async {
     final db = await _openDb();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     await db.update(
       "user",

@@ -4,6 +4,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wollu/util/app_layout.dart';
 import 'package:wollu/util/app_styles.dart';
 import 'package:wollu/util/category_list.dart';
@@ -15,7 +16,8 @@ import 'package:http/http.dart' as http;
 import 'main_origin.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  final VoidCallback onLogin;
+  const LoginScreen({Key? key, required this.onLogin}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -23,26 +25,21 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   CategoryList categoryList = CategoryList();
-  final _globalKeys = <GlobalKey>[
-    GlobalKey(),
-    GlobalKey(),
-    GlobalKey(),
-  ];
   Future<bool> validate() async {
     if (nickname == null || nickname!.isEmpty) {
-      Scrollable.ensureVisible(_globalKeys[0].currentContext!, duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
+      errorMsg = '닉네임은 필수항목입니다 !';
       return false;
     }
 
     if (salary == null || salary!.isEmpty) {
-      Scrollable.ensureVisible(_globalKeys[1].currentContext!, duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
+      errorMsg = '월급은 필수항목입니다 !';
       return false;
     } else {
       salary = salary!.replaceAll(',', '');
     }
 
     if (week_work == null || day_work == null || week_work!.isEmpty || day_work!.isEmpty) {
-      Scrollable.ensureVisible(_globalKeys[2].currentContext!, duration: const Duration(milliseconds: 600), curve: Curves.easeIn);
+      errorMsg = '근무시간 및 근무날짜는 필수항목입니다 !';
       return false;
     }
 
@@ -236,6 +233,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String selectedJob = '';
   var isLoading = false;
   User? currentUser;
+  final _focusNodes = [FocusNode(), FocusNode(), FocusNode(), FocusNode()];
 
   Future<bool> callApi(String nickname, int salary, int week_work, int day_work, String job, String annual, int sex, String age) async {
     final url = Uri.parse("http://3.35.111.171:80/users/");
@@ -267,7 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
         return false;
       } else {
-        await helper.add(
+        final id = await helper.add(
             jsonData['id'],
             jsonData['nickname'],
             jsonData['salary'],
@@ -277,6 +275,8 @@ class _LoginScreenState extends State<LoginScreen> {
             jsonData['annual'],
             jsonData['sex'],
             jsonData['age']);
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        pref.setInt('id', id);
         setState(() {
           currentUser = User(
             id: jsonData['id'],
@@ -308,17 +308,32 @@ class _LoginScreenState extends State<LoginScreen> {
       return user.last;
     }
   }
-  
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _focusNodes.forEach((element) {
+      element.dispose();
+    });
+    super.dispose();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    check().then((isExistUser) => {
-      if (isExistUser is User) {
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Main(
-          currentUser: isExistUser,
-        )), (route) => false)
-      }
+    _scrollController.addListener(() {
+      setState(() {
+        offset = _scrollController.offset;
+        print(offset);
+      });
+      // check().then((isExistUser) => {
+      //   if (isExistUser is User) {
+      //     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Main(
+      //       currentUser: isExistUser,
+      //     )), (route) => false)
+      //   }
+      // });
     });
   }
 
@@ -343,7 +358,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       SizedBox(
-                        key: _globalKeys[0],
                         height: 100,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
@@ -424,6 +438,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             width: size.width > 430 ? 430 - 62 : size.width - 62,
                                             height: 62,
                                             child: TextFormField(
+                                              focusNode: _focusNodes[0],
                                               maxLength: 12,
                                               maxLengthEnforcement: MaxLengthEnforcement.enforced,
                                               inputFormatters: [
@@ -475,11 +490,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Stack(
                                   children: [
-                                    SizedBox(
-                                      key: _globalKeys[1],
+                                    const SizedBox(
                                       width: 1,
                                       height: 25,
-                                      child: const DecoratedBox(
+                                      child: DecoratedBox(
                                         decoration: BoxDecoration(
                                             color: Colors.grey
                                         ),
@@ -554,6 +568,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               color: Colors.white
                                           ),
                                           child: TextFormField(
+                                            focusNode: _focusNodes[1],
                                             keyboardType: TextInputType.number,
                                             inputFormatters: [
                                               FilteringTextInputFormatter.digitsOnly,
@@ -621,11 +636,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Stack(
                                   children: [
-                                    SizedBox(
-                                      key: _globalKeys[2],
+                                    const SizedBox(
                                       width: 1,
                                       height: 25,
-                                      child: const DecoratedBox(
+                                      child: DecoratedBox(
                                         decoration: BoxDecoration(
                                             color: Colors.grey
                                         ),
@@ -700,6 +714,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               color: Colors.white
                                           ),
                                           child: TextFormField(
+                                            focusNode: _focusNodes[2],
                                             onChanged: (value) {
                                               week_work = value;
                                             },
@@ -744,6 +759,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               color: Colors.white
                                           ),
                                           child: TextFormField(
+                                            focusNode: _focusNodes[3],
                                             onChanged: (value) {
                                               day_work = value;
                                             },
@@ -848,7 +864,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 SizedBox(
                                   width: 1,
-                                  height: 533,
+                                  height: 808,
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
                                         color: Styles.blueGrey
@@ -859,7 +875,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),  // 파란선
                             const Gap(7),
                             SizedBox(
-                              height: 533,
+                              height: 833,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -905,110 +921,116 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
                                                 ),
                                                 builder: (BuildContext bContext) {
-                                                  return Column(
-                                                    children: [
-                                                      const Gap(40),
-                                                      SizedBox(
-                                                        height: 20,
-                                                        width: AppLayout.getSize(context).width,
-                                                        child: Container(
-                                                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                          child: Text('1차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
-                                                        ),
-                                                      ),
-                                                      const Gap(28),
-                                                      SizedBox(
-                                                        height: 260,
-                                                        width: AppLayout.getSize(context).width,
-                                                        child: ListView(
-                                                          scrollDirection: Axis.vertical,
-                                                          children: List.generate(14, (index) => Container(
+                                                  return SizedBox(
+                                                    height: 390,
+                                                    child: Column(
+                                                      children: [
+                                                        const Gap(40),
+                                                        SizedBox(
+                                                          height: 20,
+                                                          width: AppLayout.getSize(context).width,
+                                                          child: Container(
                                                             padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                            width: AppLayout.getSize(bContext).width,
-                                                            height: 260/7,
-                                                            child: Row(
-                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Text(categoryList.job1ByIndex[index], style: selectedJob == categoryList.job1ByIndex[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                IconButton(
-                                                                    onPressed: () {
-                                                                      selectedJob = categoryList.job1ByIndex[index];
-                                                                      showModalBottomSheet(
-                                                                          context: context,
-                                                                          shape: const RoundedRectangleBorder(
-                                                                            borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                                          ),
-                                                                          builder: (BuildContext bbContext) {
-                                                                            return Column(
-                                                                              children: [
-                                                                                const Gap(40),
-                                                                                SizedBox(
-                                                                                  height: 30,
-                                                                                  width: AppLayout.getSize(context).width,
-                                                                                  child: Row(
-                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                    children: [
-                                                                                      Container(
-                                                                                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                        child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
-                                                                                      ),
-                                                                                      Container(
-                                                                                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                        child: TextButton(
-                                                                                            onPressed: () {
-                                                                                              Navigator.pop(bContext);
-                                                                                            },
-                                                                                            child: Text(
-                                                                                              '이전으로',
-                                                                                              style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
-                                                                                            )
-                                                                                        ),
-                                                                                      )
-                                                                                    ],
-                                                                                  ),
-                                                                                ), // 2차직종
-                                                                                const Gap(28),
-                                                                                SizedBox(
-                                                                                  height: 260,
-                                                                                  width: AppLayout.getSize(context).width,
-                                                                                  child: ListView(
-                                                                                    scrollDirection: Axis.vertical,
-                                                                                    children: List.generate(categoryList.job2ByIndex[selectedJob]!.length, (index) => Container(
-                                                                                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                      width: AppLayout.getSize(bContext).width,
-                                                                                      height: 260/7,
+                                                            child: Text('1차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                                          ),
+                                                        ),
+                                                        const Gap(28),
+                                                        SizedBox(
+                                                          height: 260,
+                                                          width: AppLayout.getSize(context).width,
+                                                          child: ListView(
+                                                            scrollDirection: Axis.vertical,
+                                                            children: List.generate(14, (index) => Container(
+                                                              padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                              width: AppLayout.getSize(bContext).width,
+                                                              height: 260/7,
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  Text(categoryList.job1ByIndex[index], style: selectedJob == categoryList.job1ByIndex[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                  IconButton(
+                                                                      onPressed: () {
+                                                                        selectedJob = categoryList.job1ByIndex[index];
+                                                                        showModalBottomSheet(
+                                                                            context: context,
+                                                                            shape: const RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                                            ),
+                                                                            builder: (BuildContext bbContext) {
+                                                                              return SizedBox(
+                                                                                height: 390,
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    const Gap(40),
+                                                                                    SizedBox(
+                                                                                      height: 30,
+                                                                                      width: AppLayout.getSize(context).width,
                                                                                       child: Row(
                                                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                         children: [
-                                                                                          Text(categoryList.job2ByIndex[selectedJob]![index], style: job != categoryList.job2ByIndex[selectedJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
-                                                                                          IconButton(
-                                                                                              onPressed: () {
-                                                                                                setState(() {
-                                                                                                  job = categoryList.job2ByIndex[selectedJob]![index];
-                                                                                                });
-                                                                                                Navigator.pop(bbContext);
-                                                                                                Navigator.pop(bContext);
-                                                                                              },
-                                                                                              icon: job != categoryList.job2ByIndex[selectedJob]![index] ? const Icon(Icons.check_circle, color: Colors.grey,) : const Icon(Icons.check_circle, color: Colors.black,))
+                                                                                          Container(
+                                                                                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                            child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                                                                          ),
+                                                                                          Container(
+                                                                                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                            child: TextButton(
+                                                                                                onPressed: () {
+                                                                                                  Navigator.pop(bContext);
+                                                                                                },
+                                                                                                child: Text(
+                                                                                                  '이전으로',
+                                                                                                  style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
+                                                                                                )
+                                                                                            ),
+                                                                                          )
                                                                                         ],
                                                                                       ),
+                                                                                    ), // 2차직종
+                                                                                    const Gap(28),
+                                                                                    SizedBox(
+                                                                                      height: 260,
+                                                                                      width: AppLayout.getSize(context).width,
+                                                                                      child: ListView(
+                                                                                        scrollDirection: Axis.vertical,
+                                                                                        children: List.generate(categoryList.job2ByIndex[selectedJob]!.length, (index) => Container(
+                                                                                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                          width: AppLayout.getSize(bContext).width,
+                                                                                          height: 260/7,
+                                                                                          child: Row(
+                                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                            children: [
+                                                                                              Text(categoryList.job2ByIndex[selectedJob]![index], style: job != categoryList.job2ByIndex[selectedJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
+                                                                                              IconButton(
+                                                                                                  onPressed: () {
+                                                                                                    setState(() {
+                                                                                                      job = categoryList.job2ByIndex[selectedJob]![index];
+                                                                                                    });
+                                                                                                    Navigator.pop(bbContext);
+                                                                                                    Navigator.pop(bContext);
+                                                                                                  },
+                                                                                                  icon: job != categoryList.job2ByIndex[selectedJob]![index] ? const Icon(Icons.check_circle, color: Colors.grey,) : const Icon(Icons.check_circle, color: Colors.black,))
+                                                                                            ],
+                                                                                          ),
+                                                                                        )
+                                                                                        ),
+                                                                                      ),
                                                                                     )
-                                                                                    ),
-                                                                                  ),
-                                                                                )
-                                                                              ],
-                                                                            );
-                                                                          }
-                                                                      );
-                                                                    },
-                                                                    icon: Icon(Icons.check_circle, color: selectedJob == categoryList.job1ByIndex[index] ? Colors.black :Colors.grey,))
-                                                              ],
+                                                                                  ],
+                                                                                ),
+                                                                              );
+                                                                            }
+                                                                        );
+                                                                      },
+                                                                      icon: Icon(Icons.check_circle, color: selectedJob == categoryList.job1ByIndex[index] ? Colors.black :Colors.grey,))
+                                                                ],
+                                                              ),
+                                                            )
                                                             ),
-                                                          )
                                                           ),
-                                                        ),
-                                                      )
-                                                    ],
+                                                        )
+                                                      ],
+                                                    ),
                                                   );
                                                 }
                                             );
@@ -1045,43 +1067,46 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
                                                 ),
                                                 builder: (BuildContext bContext) {
-                                                  return Column(
-                                                    children: [
-                                                      const Gap(40),
-                                                      LayoutBuilder(
-                                                        builder: (BuildContext bc, BoxConstraints bcs) {
-                                                          return Flex(
-                                                            direction: Axis.vertical,
-                                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                            mainAxisSize: MainAxisSize.max,
-                                                            children: List.generate(8, (index) => Container(
-                                                              padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                              width: AppLayout.getSize(context).width,
-                                                              height: 300/8,
-                                                              child: Row(
-                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                children: [
-                                                                  Text(
-                                                                    categoryList.yearByIndex[index+1],
-                                                                    style: annual == categoryList.yearByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                  IconButton(
-                                                                      onPressed: () {
-                                                                        setState(() {
-                                                                          annual = categoryList.yearByIndex[index+1];
-                                                                        });
-                                                                        Navigator.pop(bc);
-                                                                      },
-                                                                      icon: Icon(
-                                                                        Icons.check_circle,
-                                                                        color: annual == categoryList.yearByIndex[index+1] ? Colors.black : Colors.grey,))
-                                                                ],
+                                                  return SizedBox(
+                                                    height: 372,
+                                                    child: Column(
+                                                      children: [
+                                                        const Gap(40),
+                                                        LayoutBuilder(
+                                                          builder: (BuildContext bc, BoxConstraints bcs) {
+                                                            return Flex(
+                                                              direction: Axis.vertical,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                              mainAxisSize: MainAxisSize.max,
+                                                              children: List.generate(8, (index) => Container(
+                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                width: AppLayout.getSize(context).width,
+                                                                height: 300/8,
+                                                                child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  children: [
+                                                                    Text(
+                                                                      categoryList.yearByIndex[index+1],
+                                                                      style: annual == categoryList.yearByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                    IconButton(
+                                                                        onPressed: () {
+                                                                          setState(() {
+                                                                            annual = categoryList.yearByIndex[index+1];
+                                                                          });
+                                                                          Navigator.pop(bc);
+                                                                        },
+                                                                        icon: Icon(
+                                                                          Icons.check_circle,
+                                                                          color: annual == categoryList.yearByIndex[index+1] ? Colors.black : Colors.grey,))
+                                                                  ],
+                                                                ),
+                                                              )
                                                               ),
-                                                            )
-                                                            ),
-                                                          );
-                                                        },
-                                                      )
-                                                    ],
+                                                            );
+                                                          },
+                                                        )
+                                                      ],
+                                                    ),
                                                   );
                                                 }
                                             );
@@ -1208,44 +1233,47 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
                                                     ),
                                                     builder: (BuildContext bContext) {
-                                                      return Column(
-                                                        children: [
-                                                          const Gap(40),
-                                                          LayoutBuilder(
-                                                            builder: (BuildContext bc, BoxConstraints bcs) {
-                                                              return Flex(
-                                                                direction: Axis.vertical,
-                                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                mainAxisSize: MainAxisSize.max,
-                                                                children: List.generate(8, (index) => Container(
-                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                  width: AppLayout.getSize(context).width,
-                                                                  height: 300/8,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                        categoryList.ageByIndex[index+1],
-                                                                        style: age == categoryList.ageByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                      IconButton(
-                                                                          onPressed: () {
-                                                                            setState(() {
-                                                                              age = categoryList.ageByIndex[index+1];
-                                                                            });
-                                                                            Navigator.pop(bc);
-                                                                          },
-                                                                          icon: Icon(
-                                                                            Icons.check_circle,
-                                                                            color: age == categoryList.ageByIndex[index+1] ? Colors.black : Colors.grey,)
-                                                                      )
-                                                                    ],
+                                                      return SizedBox(
+                                                        height: 372,
+                                                        child: Column(
+                                                          children: [
+                                                            const Gap(40),
+                                                            LayoutBuilder(
+                                                              builder: (BuildContext bc, BoxConstraints bcs) {
+                                                                return Flex(
+                                                                  direction: Axis.vertical,
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                  mainAxisSize: MainAxisSize.min,
+                                                                  children: List.generate(8, (index) => Container(
+                                                                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                    width: AppLayout.getSize(context).width,
+                                                                    height: 300/8,
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                      children: [
+                                                                        Text(
+                                                                          categoryList.ageByIndex[index+1],
+                                                                          style: age == categoryList.ageByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                        IconButton(
+                                                                            onPressed: () {
+                                                                              setState(() {
+                                                                                age = categoryList.ageByIndex[index+1];
+                                                                              });
+                                                                              Navigator.pop(bc);
+                                                                            },
+                                                                            icon: Icon(
+                                                                              Icons.check_circle,
+                                                                              color: age == categoryList.ageByIndex[index+1] ? Colors.black : Colors.grey,)
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  )
                                                                   ),
-                                                                )
-                                                                ),
-                                                              );
-                                                            },
-                                                          )
-                                                        ],
+                                                                );
+                                                              },
+                                                            )
+                                                          ],
+                                                        ),
                                                       );
                                                     }
                                                 );
@@ -1291,12 +1319,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             validate().then((valid) => {
                               if (valid) {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(builder: (context) => Main(
-                                //     currentUser: currentUser!,
-                                //   )),
-                                // ),
+                                widget.onLogin(),
                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Main(
                                   currentUser: currentUser!,
                                 )), (route) => false)
@@ -1320,7 +1343,17 @@ class _LoginScreenState extends State<LoginScreen> {
       floatingActionButton: FloatingActionButton.small(
         elevation: 0,
         backgroundColor: Styles.blueGrey,
-        onPressed: () {},
+        onPressed: () {
+          if (_focusNodes[0].hasFocus) {
+            _focusNodes[0].unfocus();
+          } else if (_focusNodes[1].hasFocus) {
+            _focusNodes[1].unfocus();
+          } else if (_focusNodes[2].hasFocus) {
+            _focusNodes[2].unfocus();
+          } else if (_focusNodes[3].hasFocus) {
+            _focusNodes[3].unfocus();
+          }
+        },
         child: Image.asset('assets/down_arrow.png',
         ),
       ),

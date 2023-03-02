@@ -98,7 +98,7 @@ class _StatScreenState extends State<StatScreen> {
           child: Container(
               alignment: Alignment.center,
               width: size.width,
-              height: size.height,
+              padding: const EdgeInsets.only(bottom: 33),
               child: LayoutBuilder(
                 builder: (BuildContext buildContext, BoxConstraints boxConstraints) {
                   if (isLoading) {

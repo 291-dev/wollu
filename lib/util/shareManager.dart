@@ -11,15 +11,17 @@ class ShareManager {
 
   shareOnTwitter() async {
     SocialShare.shareTwitter(
-      "This is Social Share twitter example with link.  ",
+      "회사에서 나는 어떤 루팡일까?",
       hashtags: [
-        "SocialSharePlugin",
-        "world",
-        "foo",
-        "bar"
+        "월루",
+        "월급",
+        "루팡",
+        "사장님돈내꺼",
+        "개꿀",
+        "꽁돈"
       ],
       url: "https://wollu.me",
-      trailingText: "cool!!",
+      trailingText: "월루 체험하기",
     ).then((data) {
       print(data);
     });
@@ -31,9 +33,9 @@ class ShareManager {
     final FeedTemplate defaultFeed = FeedTemplate(
       content: Content(
         title: '월급루팡',
-        description: '#월루 #월급 #루팡 #사장님돈내꺼 #개꿀 #꽁돈',
+        description: '회사에서 나는 어떤 루팡일까?\n#월루 #월급 #루팡 #사장님돈내꺼 #개꿀 #꽁돈',
         imageUrl: Uri.parse(
-            'https://mud-kage.kakao.com/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png'),
+            'https://wollu-img.s3.ap-northeast-2.amazonaws.com/wollu.png'),
         link: Link(
             webUrl: Uri.parse('https://wollu.me'),
             mobileWebUrl: Uri.parse('https://wollu.me')),
@@ -90,7 +92,7 @@ class ShareManager {
     String? result = await FlutterSocialContentShare.share(
         type: ShareType.instagramWithImageUrl,
         imageUrl:
-        "https://post.healthline.com/wp-content/uploads/2020/09/healthy-eating-ingredients-732x549-thumbnail-732x549.jpg");
+        "https://wollu-img.s3.ap-northeast-2.amazonaws.com/wollu.png");
     print(result);
   }
 }

@@ -150,14 +150,11 @@ class _ResultScreenState extends State<ResultScreen> {
     wollu = wolluTime.sublist(2);
     Map<int, int> map = {};
     for (int i=0; i<wollu.length; i++) {
-      if (wollu[i] != 0) {
-        map[i] = wollu[i];
-      } else {
-        map[i] = 0;
-      }
+      map[i] = wollu[i];
     }
     sortedByValueMap = Map.fromEntries(
         map.entries.toList()..sort((e1, e2) => e2.value.compareTo(e1.value)));
+    print(sortedByValueMap);
     setState(() {
       max = wollu.reduce((value, element) => value > element ? value : element);
       dataMap = {};
@@ -170,9 +167,11 @@ class _ResultScreenState extends State<ResultScreen> {
         dataMap[category.name] = value.toDouble();
         colorList.add(Color(category.color));
       });
-      categories.sort((e1, e2) => e2.time > e1.time ? e2.time : e1.time);
+      categories.sort((e1, e2) => e2.time.compareTo(e1.time));
     });
   }
+
+
 
   @override
   void initState() {
@@ -187,8 +186,11 @@ class _ResultScreenState extends State<ResultScreen> {
     setState(() {
       isLoading = false;
     });
-    print(max);
-    print(total);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override
@@ -197,9 +199,7 @@ class _ResultScreenState extends State<ResultScreen> {
     final dayPer = ((max/total*100).isNaN || (max/total*100).isInfinite) ? 0 : (max/total*100).floor();
     String facebookId = '2026184997588579';
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         body: ListView(
           children: [
             LayoutBuilder(
@@ -275,7 +275,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     height: 4,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(2),
-                                        color: Styles.secondary
+                                        color: const Color(0xFF8ADF1D)
                                     ),
                                   )
                                 ],
@@ -295,10 +295,10 @@ class _ResultScreenState extends State<ResultScreen> {
                                     padding: const EdgeInsets.only(top: 2),
                                     child: Text(
                                       (((total*(daypay/widget.currentUser.day_work/60/60)).floor()/daypay)*100).toStringAsFixed(3),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.normal,
-                                          color: Styles.secondary
+                                          color: Color(0xFF8ADF1D)
                                       ),
                                     ),
                                   ),
@@ -496,7 +496,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         ),
                         Container(
                           width: size.width > 430 ? 430 : size.width,
-                          height: size.height - 556 < 0 ? 131 : size.height - 556,
+                          height: size.height - 556 - 131 - 43 < 0 ? 131 : size.height - 556 - 131 - 43,
                           child: Stack(
                             children: [
                               Positioned(
@@ -524,7 +524,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                           passData.sort((a, b) => b.time.compareTo(a.time)),
                                           if (passData.isEmpty) {
                                             Navigator.push(context, MaterialPageRoute(builder: (context) => FinishScreen(
-                                              data: [CategoryData('노예', 'assets/x4zerores.png', 0xFFFFFFFF, 0)],
+                                              data: [CategoryData('월급루팡', 'assets/dobi.svg', 0xFF9F97FF, 0)],
                                               currentUser: widget.currentUser,
                                               total: 0,
                                             )))
@@ -534,7 +534,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                                 data: passData,
                                                 currentUser: widget.currentUser,
                                                 total: (total*(daypay/widget.currentUser.day_work/60/60)).floor(),
-                                              )))
+                                              ))),
                                             })
                                           }
                                         }
@@ -578,7 +578,6 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
           ],
         )
-      ),
     );
   }
 }

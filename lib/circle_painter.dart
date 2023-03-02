@@ -16,7 +16,7 @@ class CirclePainter extends CustomPainter {
       ..moveTo(0, 0)
       ..lineTo(0, size.height + 0.8);
 
-    canvas.drawCircle(Offset(size.width/2,size.height/2), 135, paint);
+    canvas.drawCircle(Offset(size.width/2,size.height/2), 170, paint);
   }
 
   @override
@@ -40,13 +40,13 @@ class ArcPainter extends CustomPainter {
       begin: Alignment.bottomLeft,
       end: Alignment.topRight
       )
-      .createShader(Rect.fromCircle(center: Offset(135,135), radius: min(135 / 2 ,135/2)));
+      .createShader(Rect.fromCircle(center: Offset(165,165), radius: min(165 / 2 ,165/2)));
 
   @override
   void paint(Canvas canvas, Size size) {
     // TODO: implement paint
     final paint = Paint()
-      ..strokeWidth = 135.0
+      ..strokeWidth = 170.0
       ..shader = gradient
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.butt;
@@ -65,7 +65,7 @@ class ArcPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     // TODO: implement shouldRepaint
-    return false;
+    return true;
   }
   
 }
