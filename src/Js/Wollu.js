@@ -55,7 +55,7 @@ function Wollu() {
         const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
         const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
         const SCROLL_SENSITIVITY = 200;
-
+        console.log('delta Y : ',deltaY);
         if (deltaY > SCROLL_SENSITIVITY) {
           // 스크롤 내릴 때
           if (scrollTop >= 0 && scrollTop < pageHeight) {
@@ -254,8 +254,8 @@ function Wollu() {
     var scrolled = touch_end_y - touch_start_y;
     const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
     const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
-    const SCROLL_SENSITIVITY = 200;
-
+    const SCROLL_SENSITIVITY = 0;
+    console.log('touched ', scrolled);
     if (scrolled > SCROLL_SENSITIVITY){
       // up
       
@@ -415,8 +415,11 @@ function Wollu() {
 
 
   }
+    const touch_move= () => {
+        console.log('moved');
+    }
    return (
-    <SCROLL_OUTER ref={outerDivRef} className="TouchEventClass" onTouchStart={touch_start} onTouchEnd={touch_end}>
+    <SCROLL_OUTER ref={outerDivRef} className="TouchEventClass" onTouchStart={touch_start} onTouchEnd={touch_end} onTouchMove={touch_move}>
       <AppDownloadView/>
       <div className='WolluView'>
       <FirstPage/>
