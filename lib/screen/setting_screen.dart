@@ -269,7 +269,7 @@ class _SetScreenState extends State<SetScreen> {
     _controllers[2].text = widget.currentUser!.week_work.toString();
     day_work = widget.currentUser!.day_work.toString();
     _controllers[3].text = widget.currentUser!.day_work.toString();
-    job = widget.currentUser!.job.split('/')[1];
+    job = widget.currentUser!.job.isNotEmpty ? widget.currentUser!.job.split('/')[1] : '';
     selectedJob = widget.currentUser!.job.split('/')[0];
     _controllers[4].text = widget.currentUser!.job;
     annual = widget.currentUser!.annual;

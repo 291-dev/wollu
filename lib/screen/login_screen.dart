@@ -43,13 +43,13 @@ class _LoginScreenState extends State<LoginScreen> {
       return false;
     }
 
-    var tempJob = '';
+    String? tempJob;
     if (job.isNotEmpty) {
       tempJob = '$selectedJob/$job';
     }
 
-    var tempAn = '';
-    if (annual != '연차') {
+    String? tempAn;
+    if (annual.isNotEmpty) {
       tempAn = annual;
     }
 
@@ -58,12 +58,11 @@ class _LoginScreenState extends State<LoginScreen> {
       tempS = sex;
     }
 
-    var tempAge = '';
-    if (age != '연령') {
+    String? tempAge;
+    if (age.isNotEmpty) {
       tempAge = age;
     }
 
-    print('$nickname $salary $week_work $day_work $tempJob $tempAn $tempS $tempAge');
     final success = await callApi(
         nickname!, int.parse(salary!), int.parse(week_work!), int.parse(day_work!), tempJob, tempAn, tempS, tempAge
     );
@@ -235,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
   User? currentUser;
   final _focusNodes = [FocusNode(), FocusNode(), FocusNode(), FocusNode()];
 
-  Future<bool> callApi(String nickname, int salary, int week_work, int day_work, String job, String annual, int sex, String age) async {
+  Future<bool> callApi(String nickname, int salary, int week_work, int day_work, String? job, String? annual, int sex, String? age) async {
     final url = Uri.parse("http://3.35.111.171:80/users/");
     Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -257,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       final jsonData = json.decode(utf8.decode(response.bodyBytes));
       final int statusCode = response.statusCode;
-      if (statusCode < 200 || statusCode > 400) {
+      if (statusCode < 200 || statusCode > 400 || jsonData == null) {
         // Error handling
         setState(() {
           errorMsg =
@@ -265,16 +264,17 @@ class _LoginScreenState extends State<LoginScreen> {
         });
         return false;
       } else {
+        print(jsonData);
         final id = await helper.add(
             jsonData['id'],
             jsonData['nickname'],
             jsonData['salary'],
             jsonData['week_work'],
             jsonData['day_work'],
-            jsonData['job'],
-            jsonData['annual'],
+            jsonData['job'] ?? '',
+            jsonData['annual'] ?? '',
             jsonData['sex'],
-            jsonData['age']);
+            jsonData['age'] ?? '');
         SharedPreferences pref = await SharedPreferences.getInstance();
         pref.setInt('id', id);
         setState(() {
@@ -284,10 +284,10 @@ class _LoginScreenState extends State<LoginScreen> {
               salary: jsonData['salary'],
               week_work: jsonData['week_work'],
               day_work: jsonData['day_work'],
-              job: jsonData['job'],
-              annual: jsonData['annual'],
+              job: jsonData['job']?? '',
+              annual: jsonData['annual']?? '',
               sex: jsonData['sex'],
-              age: jsonData['age']
+              age: jsonData['age']?? ''
           );
         });
         return true;
@@ -295,7 +295,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       setState(() {
         errorMsg =
-        '서버에 접속할 수 없습니다. 인터넷 연결을 확인해주세요. \n 계속 문제가 발생한다면 고객센터로 문의주시기 바랍니다.';
+        e.toString();
       });
       return false;
     }
