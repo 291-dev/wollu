@@ -10,6 +10,7 @@ import 'package:wollu/screen/splash_screen.dart';
 import 'package:wollu/util/app_styles.dart';
 import 'package:wollu/util/db_helper.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'entity/User.dart';
 
@@ -17,12 +18,13 @@ void main() async {
   KakaoSdk.init(
     nativeAppKey: '456c69cd89e100bced18bfefe46ab685'
   );
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     initializeDateFormatting().then((_) => runApp(MyApp()));
   });
-
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatefulWidget {
@@ -87,7 +89,7 @@ class _MyAppState extends State<MyApp> {
               future: SharedPreferences.getInstance(),
               builder: (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
                 if (!snapshot.hasData) {
-                  return const SplashScreen(); // Replace with a loading screen if desired
+                  return const Center(child: CircularProgressIndicator()); // Replace with a loading screen if desired
                 }
                 SharedPreferences prefs = snapshot.data!;
                 bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
@@ -100,7 +102,7 @@ class _MyAppState extends State<MyApp> {
                   });
                 } else {
                   if (currentUser == null) {
-                    return const SplashScreen();
+                    return const Center(child: CircularProgressIndicator());
                   } else {
                     return Main(currentUser: currentUser!);
                   }

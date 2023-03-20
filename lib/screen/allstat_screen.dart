@@ -244,11 +244,525 @@ class _AllStatScreenState extends State<AllStatScreen> {
                       child: Column(
                         children: [
                           // 직종
-                          Container(
-                            width: width,
-                            child: LayoutBuilder(
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                  ),
+                                  builder: (bContext) {
+                                    return Column(
+                                      children: [
+                                        const Gap(40),
+                                        SizedBox(
+                                          height: 20,
+                                          width: AppLayout.getSize(context).width,
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                                            child: Text('1차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                          ),
+                                        ),
+                                        const Gap(28),
+                                        SizedBox(
+                                          height: 260,
+                                          width: AppLayout.getSize(context).width,
+                                          child: ListView(
+                                            scrollDirection: Axis.vertical,
+                                            children: List.generate(14, (index) => Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 30),
+                                              width: AppLayout.getSize(bContext).width,
+                                              height: 260/7,
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(categoryList.job1ByIndex[index], style: fstJob == categoryList.job1ByIndex[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        fstJob = categoryList.job1ByIndex[index];
+                                                        showModalBottomSheet(
+                                                            context: context,
+                                                            shape: const RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                            ),
+                                                            builder: (bbContext) {
+                                                              return Column(
+                                                                children: [
+                                                                  const Gap(40),
+                                                                  SizedBox(
+                                                                    height: 30,
+                                                                    width: AppLayout.getSize(context).width,
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                      children: [
+                                                                        Container(
+                                                                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                          child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                                                        ),
+                                                                        Container(
+                                                                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                          child: TextButton(
+                                                                              onPressed: () {
+                                                                                Navigator.pop(bContext);
+                                                                              },
+                                                                              child: Text(
+                                                                                '이전으로',
+                                                                                style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
+                                                                              )
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ), // 2차직종
+                                                                  const Gap(28),
+                                                                  SizedBox(
+                                                                    height: 260,
+                                                                    width: AppLayout.getSize(context).width,
+                                                                    child: ListView(
+                                                                      scrollDirection: Axis.vertical,
+                                                                      children: List.generate(categoryList.job2ByIndex[fstJob]!.length, (index) => Container(
+                                                                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                        width: AppLayout.getSize(bContext).width,
+                                                                        height: 260/7,
+                                                                        child: Row(
+                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                          children: [
+                                                                            Text(categoryList.job2ByIndex[fstJob]![index], style: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
+                                                                            IconButton(
+                                                                                onPressed: () {
+                                                                                  setState(() {
+                                                                                    sndJob = categoryList.job2ByIndex[fstJob]![index];
+                                                                                  });
+                                                                                  print('$fstJob/$sndJob');
+                                                                                  get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
+                                                                                  Navigator.pop(bbContext);
+                                                                                  Navigator.pop(bContext);
+                                                                                },
+                                                                                icon: sndJob != categoryList.job2ByIndex[fstJob]![index] ? const Icon(Icons.check_circle, color: Colors.grey,) : const Icon(Icons.check_circle, color: Colors.black,))
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              );
+                                                            }
+                                                        );
+                                                      },
+                                                      icon: Icon(Icons.check_circle, color: fstJob == categoryList.job1ByIndex[index] ? Colors.black :Colors.grey,))
+                                                ],
+                                              ),
+                                            )
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  }
+                              );
+                            },
+                            child: Container(
+                              width: width,
+                              child: LayoutBuilder(
+                                  builder: (p0, p1) {
+                                    if (isLoadings[0]) {
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Container(
+                                                height: 20,
+                                                padding: const EdgeInsets.symmetric(horizontal: 4),
+                                                decoration: BoxDecoration(
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.black.withOpacity(0.1),
+                                                        blurRadius: 5.0,
+                                                        spreadRadius: 1.0,
+                                                        offset: const Offset(0,0),
+                                                        blurStyle: BlurStyle.outer
+                                                      )
+                                                    ]
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      dots(sndJob),
+                                                      style: Styles.fInfoStyle.copyWith(fontFamily: 'Pretendard', color: Colors.black),
+                                                    ),
+                                                    const Gap(5),
+                                                    Icon(Icons.arrow_drop_down, color: Styles.blueColor)
+                                                  ],
+                                                ),
+                                              ),
+                                              Text(
+                                                ' 하루에 평균',
+                                                style: Styles.fEnableStyle,
+                                              ),
+                                              Text(
+                                                ' 월루 데이터를 수집중입니다.',
+                                                style: Styles.fEnableStyle,
+                                              )
+                                            ],
+                                          ),
+                                          const Gap(10),
+                                          Container(
+                                              width: width,
+                                              height: 10,
+                                              alignment: Alignment.center,
+                                              child: Tooltip(
+                                                message: '수집중입니다.',
+                                                child: Stack(
+                                                  children: [
+                                                    Positioned(
+                                                      top: 3,
+                                                      child: Container(
+                                                        width: width,
+                                                        height: 4,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(8),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                  offset: const Offset(0, -1.63),
+                                                                  blurRadius: 1.63,
+                                                                  color: Colors.black.withOpacity(0.10)
+                                                              )
+                                                            ],
+                                                            color: const Color(0xFFF3F3F3)
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                      top: 3,
+                                                      child: AnimatedContainer(
+                                                        curve: Curves.easeInOut,
+                                                        width: _trigger ? width * randoms[0] : width * 0.1,
+                                                        height: 4,
+                                                        duration: const Duration(milliseconds: 1000),
+                                                        child: DecoratedBox(
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(8),
+                                                              color: Styles.blueColor
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                      top: 0.5,
+                                                      left: size.width/2 * randoms[0],
+                                                      child: SizedBox(
+                                                        width: 8,
+                                                        height: 8,
+                                                        child: DecoratedBox(
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(5),
+                                                              color: Styles.blueColor
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                          ),
+                                          const Gap(36),
+                                        ],
+                                      );
+                                    } else {
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Container(
+                                                height: 20,
+                                                padding: const EdgeInsets.symmetric(horizontal: 4),
+                                                decoration: BoxDecoration(
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                          color: Colors.black.withOpacity(0.1),
+                                                          blurRadius: 5.0,
+                                                          spreadRadius: 1.0,
+                                                          offset: const Offset(0,0),
+                                                          blurStyle: BlurStyle.outer
+                                                      )
+                                                    ]
+                                                ),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    showModalBottomSheet(
+                                                        context: context,
+                                                        shape: const RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                        ),
+                                                        builder: (bContext) {
+                                                          return Column(
+                                                            children: [
+                                                              const Gap(40),
+                                                              SizedBox(
+                                                                height: 20,
+                                                                width: AppLayout.getSize(context).width,
+                                                                child: Container(
+                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                  child: Text('1차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                                                ),
+                                                              ),
+                                                              const Gap(28),
+                                                              SizedBox(
+                                                                height: 260,
+                                                                width: AppLayout.getSize(context).width,
+                                                                child: ListView(
+                                                                  scrollDirection: Axis.vertical,
+                                                                  children: List.generate(14, (index) => Container(
+                                                                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                    width: AppLayout.getSize(bContext).width,
+                                                                    height: 260/7,
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                      children: [
+                                                                        Text(categoryList.job1ByIndex[index], style: fstJob == categoryList.job1ByIndex[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                        IconButton(
+                                                                            onPressed: () {
+                                                                              fstJob = categoryList.job1ByIndex[index];
+                                                                              showModalBottomSheet(
+                                                                                  context: context,
+                                                                                  shape: const RoundedRectangleBorder(
+                                                                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                                                  ),
+                                                                                  builder: (bbContext) {
+                                                                                    return Column(
+                                                                                      children: [
+                                                                                        const Gap(40),
+                                                                                        SizedBox(
+                                                                                          height: 30,
+                                                                                          width: AppLayout.getSize(context).width,
+                                                                                          child: Row(
+                                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                            children: [
+                                                                                              Container(
+                                                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                                child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                                                                              ),
+                                                                                              Container(
+                                                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                                child: TextButton(
+                                                                                                    onPressed: () {
+                                                                                                      Navigator.pop(bContext);
+                                                                                                    },
+                                                                                                    child: Text(
+                                                                                                      '이전으로',
+                                                                                                      style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
+                                                                                                    )
+                                                                                                ),
+                                                                                              )
+                                                                                            ],
+                                                                                          ),
+                                                                                        ), // 2차직종
+                                                                                        const Gap(28),
+                                                                                        SizedBox(
+                                                                                          height: 260,
+                                                                                          width: AppLayout.getSize(context).width,
+                                                                                          child: ListView(
+                                                                                            scrollDirection: Axis.vertical,
+                                                                                            children: List.generate(categoryList.job2ByIndex[fstJob]!.length, (index) => Container(
+                                                                                              padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                              width: AppLayout.getSize(bContext).width,
+                                                                                              height: 260/7,
+                                                                                              child: Row(
+                                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                children: [
+                                                                                                  Text(categoryList.job2ByIndex[fstJob]![index], style: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
+                                                                                                  IconButton(
+                                                                                                      onPressed: () {
+                                                                                                        setState(() {
+                                                                                                          sndJob = categoryList.job2ByIndex[fstJob]![index];
+                                                                                                        });
+                                                                                                        print('$fstJob/$sndJob');
+                                                                                                        get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
+                                                                                                        Navigator.pop(bbContext);
+                                                                                                        Navigator.pop(bContext);
+                                                                                                      },
+                                                                                                      icon: sndJob != categoryList.job2ByIndex[fstJob]![index] ? const Icon(Icons.check_circle, color: Colors.grey,) : const Icon(Icons.check_circle, color: Colors.black,))
+                                                                                                ],
+                                                                                              ),
+                                                                                            )
+                                                                                            ),
+                                                                                          ),
+                                                                                        )
+                                                                                      ],
+                                                                                    );
+                                                                                  }
+                                                                              );
+                                                                            },
+                                                                            icon: Icon(Icons.check_circle, color: fstJob == categoryList.job1ByIndex[index] ? Colors.black :Colors.grey,))
+                                                                      ],
+                                                                    ),
+                                                                  )
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          );
+                                                        }
+                                                    );
+                                                  },
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        dots(sndJob),
+                                                        style: Styles.fInfoStyle,
+                                                      ),
+                                                      const Gap(5),
+                                                      Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                ' 하루에 평균',
+                                                style: Styles.fEnableStyle,
+                                              ),
+                                                Container(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    ' ${(dataList[0].total/dataList[0].num).toStringAsFixed(0)} ',
+                                                    style: Styles.fTitleStyle.copyWith(color: Styles.blueColor),
+                                                  ),
+                                                ),
+                                              Text(
+                                                '원을 루팡해요.',
+                                                style: Styles.fEnableStyle,
+                                              )
+                                            ],
+                                          ),
+                                          const Gap(10),
+                                          Container(
+                                              width: width,
+                                              height: 10,
+                                              alignment: Alignment.center,
+                                              child: Tooltip(
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0xFF6D7194),
+                                                  borderRadius: BorderRadius.circular(4)
+                                                ),
+                                                message: 'min/max : ${transform(dataList[0].min.toString())} / ${transform(dataList[0].max.toString())}',
+                                                child: Stack(
+                                                  children: [
+                                                    Positioned(
+                                                      top: 3,
+                                                      child: Container(
+                                                        width: width,
+                                                        height: 4,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(8),
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                  offset: const Offset(0, -1.63),
+                                                                  blurRadius: 1.63,
+                                                                  color: Colors.black.withOpacity(0.10)
+                                                              )
+                                                            ],
+                                                            color: const Color(0xFFF3F3F3)
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                      top: 3,
+                                                      child: Container(
+                                                        width: (width-48) * (dataList[0].total/dataList[0].num)/(dataList[0].max-dataList[0].min),
+                                                        height: 4,
+                                                        child: DecoratedBox(
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(8),
+                                                              color: Styles.blueColor
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                      top: 0.5,
+                                                      left: (widget.total > dataList[0].max || widget.total < dataList[0].min) ? widget.total > dataList[0].max ? width - 56 : 8 : (width - 48) * (widget.total/(dataList[0].max-dataList[0].min)) - 8,
+                                                      child: SizedBox(
+                                                        width: 8,
+                                                        height: 8,
+                                                        child: DecoratedBox(
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(5),
+                                                              color: Styles.blueColor
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                          ),
+                                          const Gap(36),
+                                        ],
+                                      );
+                                    }
+                                  },
+                              ),
+                            ),
+                          ),
+                          // 연차
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                  ),
+                                  builder: (bContext) {
+                                    return Column(
+                                      children: [
+                                        const Gap(40),
+                                        LayoutBuilder(
+                                          builder: (bc, bcs) {
+                                            return Flex(
+                                              direction: Axis.vertical,
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: List.generate(8, (index) => Container(
+                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                width: AppLayout.getSize(context).width,
+                                                height: 300/8,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      categoryList.yearByIndex[index+1],
+                                                      style: annuals == categoryList.yearByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            annuals = categoryList.yearByIndex[index+1];
+                                                          });
+                                                          get(1, 'dump', annuals, -7, 'dump');
+                                                          Navigator.pop(bc);
+                                                        },
+                                                        icon: Icon(
+                                                          Icons.check_circle,
+                                                          color: annuals == categoryList.yearByIndex[index+1] ? Colors.black : Colors.grey,))
+                                                  ],
+                                                ),
+                                              )
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  }
+                              );
+                            },
+                            child: Container(
+                              width: width,
+                              child: LayoutBuilder(
                                 builder: (p0, p1) {
-                                  if (isLoadings[0]) {
+                                  if (isLoadings[1]) {
                                     return Column(
                                       children: [
                                         Row(
@@ -259,143 +773,23 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                               decoration: BoxDecoration(
                                                   boxShadow: [
                                                     BoxShadow(
-                                                      color: Colors.black.withOpacity(0.1),
-                                                      blurRadius: 5.0,
-                                                      spreadRadius: 1.0,
-                                                      offset: const Offset(0,0),
-                                                      blurStyle: BlurStyle.outer
+                                                        color: Colors.black.withOpacity(0.1),
+                                                        blurRadius: 5.0,
+                                                        spreadRadius: 1.0,
+                                                        offset: const Offset(0,0),
+                                                        blurStyle: BlurStyle.outer
                                                     )
                                                   ]
                                               ),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  showModalBottomSheet(
-                                                      context: context,
-                                                      shape: const RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                      ),
-                                                      builder: (bContext) {
-                                                        return Column(
-                                                          children: [
-                                                            const Gap(40),
-                                                            SizedBox(
-                                                              height: 20,
-                                                              width: AppLayout.getSize(context).width,
-                                                              child: Container(
-                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                child: Text('1차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
-                                                              ),
-                                                            ),
-                                                            const Gap(28),
-                                                            SizedBox(
-                                                              height: 260,
-                                                              width: AppLayout.getSize(context).width,
-                                                              child: ListView(
-                                                                scrollDirection: Axis.vertical,
-                                                                children: List.generate(14, (index) => Container(
-                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                  width: AppLayout.getSize(bContext).width,
-                                                                  height: 260/7,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: [
-                                                                      Text(categoryList.job1ByIndex[index], style: fstJob == categoryList.job1ByIndex[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                      IconButton(
-                                                                          onPressed: () {
-                                                                            fstJob = categoryList.job1ByIndex[index];
-                                                                            showModalBottomSheet(
-                                                                                context: context,
-                                                                                shape: const RoundedRectangleBorder(
-                                                                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                                                ),
-                                                                                builder: (bbContext) {
-                                                                                  return Column(
-                                                                                    children: [
-                                                                                      const Gap(40),
-                                                                                      SizedBox(
-                                                                                        height: 30,
-                                                                                        width: AppLayout.getSize(context).width,
-                                                                                        child: Row(
-                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                          children: [
-                                                                                            Container(
-                                                                                              padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                              child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
-                                                                                            ),
-                                                                                            Container(
-                                                                                              padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                              child: TextButton(
-                                                                                                  onPressed: () {
-                                                                                                    Navigator.pop(bContext);
-                                                                                                  },
-                                                                                                  child: Text(
-                                                                                                    '이전으로',
-                                                                                                    style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
-                                                                                                  )
-                                                                                              ),
-                                                                                            )
-                                                                                          ],
-                                                                                        ),
-                                                                                      ), // 2차직종
-                                                                                      const Gap(28),
-                                                                                      SizedBox(
-                                                                                        height: 260,
-                                                                                        width: AppLayout.getSize(context).width,
-                                                                                        child: ListView(
-                                                                                          scrollDirection: Axis.vertical,
-                                                                                          children: List.generate(categoryList.job2ByIndex[fstJob]!.length, (index) => Container(
-                                                                                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                            width: AppLayout.getSize(bContext).width,
-                                                                                            height: 260/7,
-                                                                                            child: Row(
-                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                              children: [
-                                                                                                Text(categoryList.job2ByIndex[fstJob]![index], style: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
-                                                                                                IconButton(
-                                                                                                    onPressed: () {
-                                                                                                      setState(() {
-                                                                                                        sndJob = categoryList.job2ByIndex[fstJob]![index];
-                                                                                                      });
-                                                                                                      print('$fstJob/$sndJob');
-                                                                                                      get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
-                                                                                                      Navigator.pop(bbContext);
-                                                                                                      Navigator.pop(bContext);
-                                                                                                    },
-                                                                                                    icon: sndJob != categoryList.job2ByIndex[fstJob]![index] ? const Icon(Icons.check_circle, color: Colors.grey,) : const Icon(Icons.check_circle, color: Colors.black,))
-                                                                                              ],
-                                                                                            ),
-                                                                                          )
-                                                                                          ),
-                                                                                        ),
-                                                                                      )
-                                                                                    ],
-                                                                                  );
-                                                                                }
-                                                                            );
-                                                                          },
-                                                                          icon: Icon(Icons.check_circle, color: fstJob == categoryList.job1ByIndex[index] ? Colors.black :Colors.grey,))
-                                                                    ],
-                                                                  ),
-                                                                )
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        );
-                                                      }
-                                                  );
-                                                },
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      '직종',
-                                                      style: Styles.fInfoStyle.copyWith(fontFamily: 'Pretendard', color: Colors.black),
-                                                    ),
-                                                    const Gap(5),
-                                                    Icon(Icons.arrow_drop_down, color: Styles.blueColor)
-                                                  ],
-                                                ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    dots(annuals),
+                                                    style: Styles.fInfoStyle,
+                                                  ),
+                                                  Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                                ],
                                               ),
                                             ),
                                             Text(
@@ -439,7 +833,7 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                     top: 3,
                                                     child: AnimatedContainer(
                                                       curve: Curves.easeInOut,
-                                                      width: _trigger ? width * randoms[0] : width * 0.1,
+                                                      width: _trigger ? width * randoms[1] : width * 0.1,
                                                       height: 4,
                                                       duration: const Duration(milliseconds: 1000),
                                                       child: DecoratedBox(
@@ -452,10 +846,10 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                   ),
                                                   Positioned(
                                                     top: 0.5,
-                                                    left: size.width/2 * randoms[0],
+                                                    left: size.width/2 * randoms[1],
                                                     child: SizedBox(
-                                                      width: 10,
-                                                      height: 10,
+                                                      width: 8,
+                                                      height: 8,
                                                       child: DecoratedBox(
                                                         decoration: BoxDecoration(
                                                             borderRadius: BorderRadius.circular(5),
@@ -490,148 +884,28 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                     )
                                                   ]
                                               ),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  showModalBottomSheet(
-                                                      context: context,
-                                                      shape: const RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                      ),
-                                                      builder: (bContext) {
-                                                        return Column(
-                                                          children: [
-                                                            const Gap(40),
-                                                            SizedBox(
-                                                              height: 20,
-                                                              width: AppLayout.getSize(context).width,
-                                                              child: Container(
-                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                child: Text('1차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
-                                                              ),
-                                                            ),
-                                                            const Gap(28),
-                                                            SizedBox(
-                                                              height: 260,
-                                                              width: AppLayout.getSize(context).width,
-                                                              child: ListView(
-                                                                scrollDirection: Axis.vertical,
-                                                                children: List.generate(14, (index) => Container(
-                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                  width: AppLayout.getSize(bContext).width,
-                                                                  height: 260/7,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: [
-                                                                      Text(categoryList.job1ByIndex[index], style: fstJob == categoryList.job1ByIndex[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                      IconButton(
-                                                                          onPressed: () {
-                                                                            fstJob = categoryList.job1ByIndex[index];
-                                                                            showModalBottomSheet(
-                                                                                context: context,
-                                                                                shape: const RoundedRectangleBorder(
-                                                                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                                                ),
-                                                                                builder: (bbContext) {
-                                                                                  return Column(
-                                                                                    children: [
-                                                                                      const Gap(40),
-                                                                                      SizedBox(
-                                                                                        height: 30,
-                                                                                        width: AppLayout.getSize(context).width,
-                                                                                        child: Row(
-                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                          children: [
-                                                                                            Container(
-                                                                                              padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                              child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
-                                                                                            ),
-                                                                                            Container(
-                                                                                              padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                              child: TextButton(
-                                                                                                  onPressed: () {
-                                                                                                    Navigator.pop(bContext);
-                                                                                                  },
-                                                                                                  child: Text(
-                                                                                                    '이전으로',
-                                                                                                    style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
-                                                                                                  )
-                                                                                              ),
-                                                                                            )
-                                                                                          ],
-                                                                                        ),
-                                                                                      ), // 2차직종
-                                                                                      const Gap(28),
-                                                                                      SizedBox(
-                                                                                        height: 260,
-                                                                                        width: AppLayout.getSize(context).width,
-                                                                                        child: ListView(
-                                                                                          scrollDirection: Axis.vertical,
-                                                                                          children: List.generate(categoryList.job2ByIndex[fstJob]!.length, (index) => Container(
-                                                                                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                            width: AppLayout.getSize(bContext).width,
-                                                                                            height: 260/7,
-                                                                                            child: Row(
-                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                              children: [
-                                                                                                Text(categoryList.job2ByIndex[fstJob]![index], style: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
-                                                                                                IconButton(
-                                                                                                    onPressed: () {
-                                                                                                      setState(() {
-                                                                                                        sndJob = categoryList.job2ByIndex[fstJob]![index];
-                                                                                                      });
-                                                                                                      print('$fstJob/$sndJob');
-                                                                                                      get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
-                                                                                                      Navigator.pop(bbContext);
-                                                                                                      Navigator.pop(bContext);
-                                                                                                    },
-                                                                                                    icon: sndJob != categoryList.job2ByIndex[fstJob]![index] ? const Icon(Icons.check_circle, color: Colors.grey,) : const Icon(Icons.check_circle, color: Colors.black,))
-                                                                                              ],
-                                                                                            ),
-                                                                                          )
-                                                                                          ),
-                                                                                        ),
-                                                                                      )
-                                                                                    ],
-                                                                                  );
-                                                                                }
-                                                                            );
-                                                                          },
-                                                                          icon: Icon(Icons.check_circle, color: fstJob == categoryList.job1ByIndex[index] ? Colors.black :Colors.grey,))
-                                                                    ],
-                                                                  ),
-                                                                )
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        );
-                                                      }
-                                                  );
-                                                },
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      dots(sndJob),
-                                                      style: Styles.fInfoStyle,
-                                                    ),
-                                                    const Gap(5),
-                                                    Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
-                                                  ],
-                                                ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    dataList[1].name,
+                                                    style: Styles.fInfoStyle,
+                                                  ),
+                                                  Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                                ],
                                               ),
                                             ),
                                             Text(
                                               ' 하루에 평균',
                                               style: Styles.fEnableStyle,
                                             ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  ' ${(dataList[0].total/dataList[0].num).toStringAsFixed(0)} ',
-                                                  style: Styles.fTitleStyle.copyWith(color: Styles.blueColor),
-                                                ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                ' ${(dataList[1].total/dataList[1].num).toStringAsFixed(0)} ',
+                                                style: Styles.fTitleStyle.copyWith(color: Styles.blueColor),
                                               ),
+                                            ),
                                             Text(
                                               '원을 루팡해요.',
                                               style: Styles.fEnableStyle,
@@ -645,10 +919,10 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                             alignment: Alignment.center,
                                             child: Tooltip(
                                               decoration: BoxDecoration(
-                                                color: const Color(0xFF6D7194),
-                                                borderRadius: BorderRadius.circular(4)
+                                                  color: const Color(0xFF6D7194),
+                                                  borderRadius: BorderRadius.circular(4)
                                               ),
-                                              message: 'min/max : ${transform(dataList[0].min.toString())} / ${transform(dataList[0].max.toString())}',
+                                              message: 'min/max : ${transform(dataList[1].min.toString())} / ${transform(dataList[1].max.toString())}',
                                               child: Stack(
                                                 children: [
                                                   Positioned(
@@ -672,7 +946,7 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                   Positioned(
                                                     top: 3,
                                                     child: Container(
-                                                      width: (width-48) * (dataList[0].total/dataList[0].num)/(dataList[0].max-dataList[0].min),
+                                                      width: (width-48) * (dataList[1].total/dataList[1].num)/(dataList[1].max-dataList[1].min),
                                                       height: 4,
                                                       child: DecoratedBox(
                                                         decoration: BoxDecoration(
@@ -684,10 +958,10 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                   ),
                                                   Positioned(
                                                     top: 0.5,
-                                                    left: widget.total < dataList[0].min ? 0 : (width - 48) * (widget.total/(dataList[0].max-dataList[0].min)) - 24,
+                                                    left: (widget.total > dataList[1].max || widget.total < dataList[1].min) ? widget.total > dataList[1].max ? width - 56 : 8 : (width - 48) * (widget.total/(dataList[1].max-dataList[1].min)) - 8,
                                                     child: SizedBox(
-                                                      width: 10,
-                                                      height: 10,
+                                                      width: 8,
+                                                      height: 8,
                                                       child: DecoratedBox(
                                                         decoration: BoxDecoration(
                                                             borderRadius: BorderRadius.circular(5),
@@ -705,568 +979,189 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                     );
                                   }
                                 },
-                            ),
-                          ),
-                          // 연차
-                          Container(
-                            width: width,
-                            child: LayoutBuilder(
-                              builder: (p0, p1) {
-                                if (isLoadings[1]) {
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            height: 20,
-                                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                                            decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors.black.withOpacity(0.1),
-                                                      blurRadius: 5.0,
-                                                      spreadRadius: 1.0,
-                                                      offset: const Offset(0,0),
-                                                      blurStyle: BlurStyle.outer
-                                                  )
-                                                ]
-                                            ),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                    context: context,
-                                                    shape: const RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                    ),
-                                                    builder: (bContext) {
-                                                      return Column(
-                                                        children: [
-                                                          const Gap(40),
-                                                          LayoutBuilder(
-                                                            builder: (bc, bcs) {
-                                                              return Flex(
-                                                                direction: Axis.vertical,
-                                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                mainAxisSize: MainAxisSize.max,
-                                                                children: List.generate(8, (index) => Container(
-                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                  width: AppLayout.getSize(context).width,
-                                                                  height: 300/8,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                        categoryList.yearByIndex[index+1],
-                                                                        style: annuals == categoryList.yearByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                      IconButton(
-                                                                          onPressed: () {
-                                                                            setState(() {
-                                                                              annuals = categoryList.yearByIndex[index+1];
-                                                                            });
-                                                                            get(1, 'dump', annuals, -7, 'dump');
-                                                                            Navigator.pop(bc);
-                                                                          },
-                                                                          icon: Icon(
-                                                                            Icons.check_circle,
-                                                                            color: annuals == categoryList.yearByIndex[index+1] ? Colors.black : Colors.grey,))
-                                                                    ],
-                                                                  ),
-                                                                )
-                                                                ),
-                                                              );
-                                                            },
-                                                          )
-                                                        ],
-                                                      );
-                                                    }
-                                                );
-                                              },
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    '연차',
-                                                    style: Styles.fInfoStyle,
-                                                  ),
-                                                  Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            ' 하루에 평균',
-                                            style: Styles.fEnableStyle,
-                                          ),
-                                          Text(
-                                            ' 월루 데이터를 수집중입니다.',
-                                            style: Styles.fEnableStyle,
-                                          )
-                                        ],
-                                      ),
-                                      const Gap(10),
-                                      Container(
-                                          width: width,
-                                          height: 10,
-                                          alignment: Alignment.center,
-                                          child: Tooltip(
-                                            message: '수집중입니다.',
-                                            child: Stack(
-                                              children: [
-                                                Positioned(
-                                                  top: 3,
-                                                  child: Container(
-                                                    width: width,
-                                                    height: 4,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                              offset: const Offset(0, -1.63),
-                                                              blurRadius: 1.63,
-                                                              color: Colors.black.withOpacity(0.10)
-                                                          )
-                                                        ],
-                                                        color: const Color(0xFFF3F3F3)
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 3,
-                                                  child: AnimatedContainer(
-                                                    curve: Curves.easeInOut,
-                                                    width: _trigger ? width * randoms[1] : width * 0.1,
-                                                    height: 4,
-                                                    duration: const Duration(milliseconds: 1000),
-                                                    child: DecoratedBox(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(8),
-                                                          color: Styles.blueColor
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 0.5,
-                                                  left: size.width/2 * randoms[1],
-                                                  child: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: DecoratedBox(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color: Styles.blueColor
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                      ),
-                                      const Gap(36),
-                                    ],
-                                  );
-                                } else {
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            height: 20,
-                                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                                            decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors.black.withOpacity(0.1),
-                                                      blurRadius: 5.0,
-                                                      spreadRadius: 1.0,
-                                                      offset: const Offset(0,0),
-                                                      blurStyle: BlurStyle.outer
-                                                  )
-                                                ]
-                                            ),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                    context: context,
-                                                    shape: const RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                    ),
-                                                    builder: (bContext) {
-                                                      return Column(
-                                                        children: [
-                                                          const Gap(40),
-                                                          LayoutBuilder(
-                                                            builder: (bc, bcs) {
-                                                              return Flex(
-                                                                direction: Axis.vertical,
-                                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                mainAxisSize: MainAxisSize.max,
-                                                                children: List.generate(8, (index) => Container(
-                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                  width: AppLayout.getSize(context).width,
-                                                                  height: 300/8,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                        categoryList.yearByIndex[index+1],
-                                                                        style: annuals == categoryList.yearByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                      IconButton(
-                                                                          onPressed: () {
-                                                                            setState(() {
-                                                                              annuals = categoryList.yearByIndex[index+1];
-                                                                            });
-                                                                            get(1, 'dump', annuals, -7, 'dump');
-                                                                            Navigator.pop(bc);
-                                                                          },
-                                                                          icon: Icon(
-                                                                            Icons.check_circle,
-                                                                            color: annuals == categoryList.yearByIndex[index+1] ? Colors.black : Colors.grey,))
-                                                                    ],
-                                                                  ),
-                                                                )
-                                                                ),
-                                                              );
-                                                            },
-                                                          )
-                                                        ],
-                                                      );
-                                                    }
-                                                );
-                                              },
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    dataList[1].name,
-                                                    style: Styles.fInfoStyle,
-                                                  ),
-                                                  Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            ' 하루에 평균',
-                                            style: Styles.fEnableStyle,
-                                          ),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              ' ${(dataList[1].total/dataList[1].num).toStringAsFixed(0)} ',
-                                              style: Styles.fTitleStyle.copyWith(color: Styles.blueColor),
-                                            ),
-                                          ),
-                                          Text(
-                                            '원을 루팡해요.',
-                                            style: Styles.fEnableStyle,
-                                          )
-                                        ],
-                                      ),
-                                      const Gap(10),
-                                      Container(
-                                          width: width,
-                                          height: 10,
-                                          alignment: Alignment.center,
-                                          child: Tooltip(
-                                            decoration: BoxDecoration(
-                                                color: const Color(0xFF6D7194),
-                                                borderRadius: BorderRadius.circular(4)
-                                            ),
-                                            message: 'min/max : ${transform(dataList[1].min.toString())} / ${transform(dataList[1].max.toString())}',
-                                            child: Stack(
-                                              children: [
-                                                Positioned(
-                                                  top: 3,
-                                                  child: Container(
-                                                    width: width,
-                                                    height: 4,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                              offset: const Offset(0, -1.63),
-                                                              blurRadius: 1.63,
-                                                              color: Colors.black.withOpacity(0.10)
-                                                          )
-                                                        ],
-                                                        color: const Color(0xFFF3F3F3)
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 3,
-                                                  child: Container(
-                                                    width: (width-48) * (dataList[1].total/dataList[1].num)/(dataList[1].max-dataList[1].min),
-                                                    height: 4,
-                                                    child: DecoratedBox(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(8),
-                                                          color: Styles.blueColor
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 0.5,
-                                                  left: widget.total < dataList[1].min ? 0 : (width - 48) * (widget.total/(dataList[1].max-dataList[1].min)) - 24,
-                                                  child: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: DecoratedBox(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color: Styles.blueColor
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                      ),
-                                      const Gap(36),
-                                    ],
-                                  );
-                                }
-                              },
+                              ),
                             ),
                           ),
                           // 성별
-                          Container(
-                            width: width,
-                            child: LayoutBuilder(
-                              builder: (p0, p1) {
-                                if (isLoadings[2]) {
-                                  return Column(
-                                    children: [
-                                      Row(
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                  ),
+                                  builder: (bContext) {
+                                    return SizedBox(
+                                      height: 179,
+                                      child: Column(
                                         children: [
-                                          Container(
-                                            height: 20,
-                                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                                            decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors.black.withOpacity(0.1),
-                                                      blurRadius: 5.0,
-                                                      spreadRadius: 1.0,
-                                                      offset: const Offset(0,0),
-                                                      blurStyle: BlurStyle.outer
-                                                  )
-                                                ]
-                                            ),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                    context: context,
-                                                    shape: const RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                    ),
-                                                    builder: (bContext) {
-                                                      return SizedBox(
-                                                        height: 179,
-                                                        child: Column(
-                                                          children: [
-                                                            const Gap(40),
-                                                            LayoutBuilder(
-                                                              builder: (bc, bcs) {
-                                                                return Flex(
-                                                                  direction: Axis.vertical,
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                  mainAxisSize: MainAxisSize.min,
-                                                                  children: List.generate(3, (index) => Container(
-                                                                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                    width: AppLayout.getSize(context).width,
-                                                                    height: 100/3,
-                                                                    child: Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          categoryList.sexByIndex[index+1],
-                                                                          style: sexs == index+1 ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                        IconButton(
-                                                                            onPressed: () {
-                                                                              setState(() {
-                                                                                sexs = index+1;
-                                                                              });
-                                                                              get(2, 'dump', 'dump', sexs, 'dump');
-                                                                              Navigator.pop(bc);
-                                                                            },
-                                                                            icon: Icon(
-                                                                              Icons.check_circle,
-                                                                              color: sexs == index+1 ? Colors.black : Colors.grey,))
-                                                                      ],
-                                                                    ),
-                                                                  )
-                                                                  ),
-                                                                );
-                                                              },
-                                                            )
-                                                          ],
-                                                        ),
-                                                      );
-                                                    }
-                                                );
-                                              },
+                                          const Gap(40),
+                                          LayoutBuilder(
+                                            builder: (bc, bcs) {
+                                              return Flex(
+                                                direction: Axis.vertical,
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: List.generate(3, (index) => Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                  width: AppLayout.getSize(context).width,
+                                                  height: 100/3,
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        categoryList.sexByIndex[index+1],
+                                                        style: sexs == index+1 ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                      IconButton(
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              sexs = index+1;
+                                                            });
+                                                            get(2, 'dump', 'dump', sexs, 'dump');
+                                                            Navigator.pop(bc);
+                                                          },
+                                                          icon: Icon(
+                                                            Icons.check_circle,
+                                                            color: sexs == index+1 ? Colors.black : Colors.grey,))
+                                                    ],
+                                                  ),
+                                                )
+                                                ),
+                                              );
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  }
+                              );
+                            },
+                            child: Container(
+                              width: width,
+                              child: LayoutBuilder(
+                                builder: (p0, p1) {
+                                  if (isLoadings[2]) {
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: 20,
+                                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.black.withOpacity(0.1),
+                                                        blurRadius: 5.0,
+                                                        spreadRadius: 1.0,
+                                                        offset: const Offset(0,0),
+                                                        blurStyle: BlurStyle.outer
+                                                    )
+                                                  ]
+                                              ),
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Text(
-                                                    '성별',
+                                                    dots(categoryList.sexByIndex[sexs]),
                                                     style: Styles.fInfoStyle,
                                                   ),
                                                   Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
                                                 ],
                                               ),
                                             ),
-                                          ),
-                                          Text(
-                                            ' 하루에 평균',
-                                            style: Styles.fEnableStyle,
-                                          ),
-                                          Text(
-                                            ' 월루 데이터를 수집중입니다.',
-                                            style: Styles.fEnableStyle,
-                                          )
-                                        ],
-                                      ),
-                                      const Gap(10),
-                                      Container(
-                                          width: width,
-                                          height: 10,
-                                          alignment: Alignment.center,
-                                          child: Tooltip(
-                                            message: '수집중입니다.',
-                                            child: Stack(
-                                              children: [
-                                                Positioned(
-                                                  top: 3,
-                                                  child: Container(
-                                                    width: width,
-                                                    height: 4,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                              offset: const Offset(0, -1.63),
-                                                              blurRadius: 1.63,
-                                                              color: Colors.black.withOpacity(0.10)
-                                                          )
-                                                        ],
-                                                        color: const Color(0xFFF3F3F3)
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 3,
-                                                  child: AnimatedContainer(
-                                                    curve: Curves.easeInOut,
-                                                    width: _trigger ? width * randoms[2] : width * 0.1,
-                                                    height: 4,
-                                                    duration: const Duration(milliseconds: 1000),
-                                                    child: DecoratedBox(
+                                            Text(
+                                              ' 하루에 평균',
+                                              style: Styles.fEnableStyle,
+                                            ),
+                                            Text(
+                                              ' 월루 데이터를 수집중입니다.',
+                                              style: Styles.fEnableStyle,
+                                            )
+                                          ],
+                                        ),
+                                        const Gap(10),
+                                        Container(
+                                            width: width,
+                                            height: 10,
+                                            alignment: Alignment.center,
+                                            child: Tooltip(
+                                              message: '수집중입니다.',
+                                              child: Stack(
+                                                children: [
+                                                  Positioned(
+                                                    top: 3,
+                                                    child: Container(
+                                                      width: width,
+                                                      height: 4,
                                                       decoration: BoxDecoration(
                                                           borderRadius: BorderRadius.circular(8),
-                                                          color: Styles.blueColor
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 0.5,
-                                                  left: size.width/2 * randoms[2],
-                                                  child: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: DecoratedBox(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color: Styles.blueColor
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                      ),
-                                      const Gap(36),
-                                    ],
-                                  );
-                                } else {
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            height: 20,
-                                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                                            decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors.black.withOpacity(0.1),
-                                                      blurRadius: 5.0,
-                                                      spreadRadius: 1.0,
-                                                      offset: const Offset(0,0),
-                                                      blurStyle: BlurStyle.outer
-                                                  )
-                                                ]
-                                            ),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                    context: context,
-                                                    shape: const RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                    ),
-                                                    builder: (bContext) {
-                                                      return SizedBox(
-                                                        height: 179,
-                                                        child: Column(
-                                                          children: [
-                                                            const Gap(40),
-                                                            LayoutBuilder(
-                                                              builder: (bc, bcs) {
-                                                                return Flex(
-                                                                  direction: Axis.vertical,
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                  mainAxisSize: MainAxisSize.min,
-                                                                  children: List.generate(3, (index) => Container(
-                                                                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                    width: AppLayout.getSize(context).width,
-                                                                    height: 100/3,
-                                                                    child: Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          categoryList.sexByIndex[index+1],
-                                                                          style: sexs == index+1 ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                        IconButton(
-                                                                            onPressed: () {
-                                                                              setState(() {
-                                                                                sexs = index+1;
-                                                                              });
-                                                                              get(2, 'dump', 'dump', sexs, 'dump');
-                                                                              Navigator.pop(bc);
-                                                                            },
-                                                                            icon: Icon(
-                                                                              Icons.check_circle,
-                                                                              color: sexs == index+1 ? Colors.black : Colors.grey,))
-                                                                      ],
-                                                                    ),
-                                                                  )
-                                                                  ),
-                                                                );
-                                                              },
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                                offset: const Offset(0, -1.63),
+                                                                blurRadius: 1.63,
+                                                                color: Colors.black.withOpacity(0.10)
                                                             )
                                                           ],
+                                                          color: const Color(0xFFF3F3F3)
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    top: 3,
+                                                    child: AnimatedContainer(
+                                                      curve: Curves.easeInOut,
+                                                      width: _trigger ? width * randoms[2] : width * 0.1,
+                                                      height: 4,
+                                                      duration: const Duration(milliseconds: 1000),
+                                                      child: DecoratedBox(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(8),
+                                                            color: Styles.blueColor
                                                         ),
-                                                      );
-                                                    }
-                                                );
-                                              },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    top: 0.5,
+                                                    left: size.width/2 * randoms[2],
+                                                    child: SizedBox(
+                                                      width: 8,
+                                                      height: 8,
+                                                      child: DecoratedBox(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                            color: Styles.blueColor
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                        ),
+                                        const Gap(36),
+                                      ],
+                                    );
+                                  } else {
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: 20,
+                                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.black.withOpacity(0.1),
+                                                        blurRadius: 5.0,
+                                                        spreadRadius: 1.0,
+                                                        offset: const Offset(0,0),
+                                                        blurStyle: BlurStyle.outer
+                                                    )
+                                                  ]
+                                              ),
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
@@ -1278,323 +1173,271 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                 ],
                                               ),
                                             ),
-                                          ),
-                                          Text(
-                                            ' 하루에 평균',
-                                            style: Styles.fEnableStyle,
-                                          ),
-                                          Container(
+                                            Text(
+                                              ' 하루에 평균',
+                                              style: Styles.fEnableStyle,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                ' ${(dataList[2].total/dataList[2].num).toStringAsFixed(0)} ',
+                                                style: Styles.fTitleStyle.copyWith(color: Styles.blueColor),
+                                              ),
+                                            ),
+                                            Text(
+                                              '원을 루팡해요.',
+                                              style: Styles.fEnableStyle,
+                                            )
+                                          ],
+                                        ),
+                                        const Gap(10),
+                                        Container(
+                                            width: width,
+                                            height: 10,
                                             alignment: Alignment.center,
-                                            child: Text(
-                                              ' ${(dataList[2].total/dataList[2].num).toStringAsFixed(0)} ',
-                                              style: Styles.fTitleStyle.copyWith(color: Styles.blueColor),
-                                            ),
-                                          ),
-                                          Text(
-                                            '원을 루팡해요.',
-                                            style: Styles.fEnableStyle,
-                                          )
-                                        ],
-                                      ),
-                                      const Gap(10),
-                                      Container(
-                                          width: width,
-                                          height: 10,
-                                          alignment: Alignment.center,
-                                          child: Tooltip(
-                                            decoration: BoxDecoration(
-                                                color: const Color(0xFF6D7194),
-                                                borderRadius: BorderRadius.circular(4)
-                                            ),
-                                            message: 'min/max : ${transform(dataList[2].min.toString())} / ${transform(dataList[2].max.toString())}',
-                                            child: Stack(
-                                              children: [
-                                                Positioned(
-                                                  top: 3,
-                                                  child: Container(
-                                                    width: width,
-                                                    height: 4,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                              offset: const Offset(0, -1.63),
-                                                              blurRadius: 1.63,
-                                                              color: Colors.black.withOpacity(0.10)
-                                                          )
-                                                        ],
-                                                        color: const Color(0xFFF3F3F3)
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 3,
-                                                  child: Container(
-                                                    width: (width-48) * (dataList[2].total/dataList[2].num)/(dataList[2].max-dataList[2].min),
-                                                    height: 4,
-                                                    child: DecoratedBox(
+                                            child: Tooltip(
+                                              decoration: BoxDecoration(
+                                                  color: const Color(0xFF6D7194),
+                                                  borderRadius: BorderRadius.circular(4)
+                                              ),
+                                              message: 'min/max : ${transform(dataList[2].min.toString())} / ${transform(dataList[2].max.toString())}',
+                                              child: Stack(
+                                                children: [
+                                                  Positioned(
+                                                    top: 3,
+                                                    child: Container(
+                                                      width: width,
+                                                      height: 4,
                                                       decoration: BoxDecoration(
                                                           borderRadius: BorderRadius.circular(8),
-                                                          color: Styles.blueColor
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                                offset: const Offset(0, -1.63),
+                                                                blurRadius: 1.63,
+                                                                color: Colors.black.withOpacity(0.10)
+                                                            )
+                                                          ],
+                                                          color: const Color(0xFFF3F3F3)
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                Positioned(
-                                                  top: 0.5,
-                                                  left: widget.total < dataList[2].min ? 0 : (width - 48) * (widget.total/(dataList[2].max-dataList[2].min)) - 24,
-                                                  child: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: DecoratedBox(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color: Styles.blueColor
+                                                  Positioned(
+                                                    top: 3,
+                                                    child: Container(
+                                                      width: (width-48) * (dataList[2].total/dataList[2].num)/(dataList[2].max-dataList[2].min),
+                                                      height: 4,
+                                                      child: DecoratedBox(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(8),
+                                                            color: Styles.blueColor
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                      ),
-                                      const Gap(36),
-                                    ],
-                                  );
-                                }
-                              },
+                                                  Positioned(
+                                                    top: 0.5,
+                                                    left: (widget.total > dataList[2].max || widget.total < dataList[2].min) ? widget.total > dataList[2].max ? width - 56 : 8 : (width - 48) * (widget.total/(dataList[2].max-dataList[2].min)) - 8,
+                                                    child: SizedBox(
+                                                      width: 8,
+                                                      height: 8,
+                                                      child: DecoratedBox(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                            color: Styles.blueColor
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                        ),
+                                        const Gap(36),
+                                      ],
+                                    );
+                                  }
+                                },
+                              ),
                             ),
                           ),
                           // 연령
-                          Container(
-                            width: width,
-                            child: LayoutBuilder(
-                              builder: (p0, p1) {
-                                if (isLoadings[3]) {
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            height: 20,
-                                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                                            decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors.black.withOpacity(0.1),
-                                                      blurRadius: 5.0,
-                                                      spreadRadius: 1.0,
-                                                      offset: const Offset(0,0),
-                                                      blurStyle: BlurStyle.outer
-                                                  )
-                                                ]
-                                            ),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                    context: context,
-                                                    shape: const RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                    ),
-                                                    builder: (bContext) {
-                                                      return Column(
-                                                        children: [
-                                                          const Gap(40),
-                                                          LayoutBuilder(
-                                                            builder: (bc, bcs) {
-                                                              return Flex(
-                                                                direction: Axis.vertical,
-                                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                mainAxisSize: MainAxisSize.max,
-                                                                children: List.generate(8, (index) => Container(
-                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                  width: AppLayout.getSize(context).width,
-                                                                  height: 300/8,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                        categoryList.ageByIndex[index+1],
-                                                                        style: ages == categoryList.ageByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                      IconButton(
-                                                                          onPressed: () {
-                                                                            setState(() {
-                                                                              ages = categoryList.ageByIndex[index+1];
-                                                                            });
-                                                                            get(3, 'dump', 'dump', -7, ages);
-                                                                            Navigator.pop(bc);
-                                                                          },
-                                                                          icon: Icon(
-                                                                            Icons.check_circle,
-                                                                            color: ages == categoryList.ageByIndex[index+1] ? Colors.black : Colors.grey,)
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                )
-                                                                ),
-                                                              );
-                                                            },
-                                                          )
-                                                        ],
-                                                      );
-                                                    }
-                                                );
-                                              },
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                  ),
+                                  builder: (bContext) {
+                                    return Column(
+                                      children: [
+                                        const Gap(40),
+                                        LayoutBuilder(
+                                          builder: (bc, bcs) {
+                                            return Flex(
+                                              direction: Axis.vertical,
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: List.generate(8, (index) => Container(
+                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                width: AppLayout.getSize(context).width,
+                                                height: 300/8,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      categoryList.ageByIndex[index+1],
+                                                      style: ages == categoryList.ageByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            ages = categoryList.ageByIndex[index+1];
+                                                          });
+                                                          get(3, 'dump', 'dump', -7, ages);
+                                                          Navigator.pop(bc);
+                                                        },
+                                                        icon: Icon(
+                                                          Icons.check_circle,
+                                                          color: ages == categoryList.ageByIndex[index+1] ? Colors.black : Colors.grey,)
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  }
+                              );
+                            },
+                            child: Container(
+                              width: width,
+                              child: LayoutBuilder(
+                                builder: (p0, p1) {
+                                  if (isLoadings[3]) {
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: 20,
+                                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.black.withOpacity(0.1),
+                                                        blurRadius: 5.0,
+                                                        spreadRadius: 1.0,
+                                                        offset: const Offset(0,0),
+                                                        blurStyle: BlurStyle.outer
+                                                    )
+                                                  ]
+                                              ),
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Text(
-                                                    '연령',
+                                                    dots(ages),
                                                     style: Styles.fInfoStyle,
                                                   ),
                                                   Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
                                                 ],
                                               ),
                                             ),
-                                          ),
-                                          Text(
-                                            ' 하루에 평균',
-                                            style: Styles.fEnableStyle,
-                                          ),
-                                          Text(
-                                            ' 월루 데이터를 수집중입니다.',
-                                            style: Styles.fEnableStyle,
-                                          )
-                                        ],
-                                      ),
-                                      const Gap(10),
-                                      Container(
-                                          width: width,
-                                          height: 10,
-                                          alignment: Alignment.center,
-                                          child: Tooltip(
-                                            message: '수집중입니다.',
-                                            child: Stack(
-                                              children: [
-                                                Positioned(
-                                                  top: 3,
-                                                  child: Container(
-                                                    width: width,
-                                                    height: 4,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                              offset: const Offset(0, -1.63),
-                                                              blurRadius: 1.63,
-                                                              color: Colors.black.withOpacity(0.10)
-                                                          )
-                                                        ],
-                                                        color: const Color(0xFFF3F3F3)
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 3,
-                                                  child: AnimatedContainer(
-                                                    curve: Curves.easeInOut,
-                                                    width: _trigger ? width * randoms[3] : width * 0.1,
-                                                    height: 4,
-                                                    duration: const Duration(milliseconds: 1000),
-                                                    child: DecoratedBox(
+                                            Text(
+                                              ' 하루에 평균',
+                                              style: Styles.fEnableStyle,
+                                            ),
+                                            Text(
+                                              ' 월루 데이터를 수집중입니다.',
+                                              style: Styles.fEnableStyle,
+                                            )
+                                          ],
+                                        ),
+                                        const Gap(10),
+                                        Container(
+                                            width: width,
+                                            height: 10,
+                                            alignment: Alignment.center,
+                                            child: Tooltip(
+                                              message: '수집중입니다.',
+                                              child: Stack(
+                                                children: [
+                                                  Positioned(
+                                                    top: 3,
+                                                    child: Container(
+                                                      width: width,
+                                                      height: 4,
                                                       decoration: BoxDecoration(
                                                           borderRadius: BorderRadius.circular(8),
-                                                          color: Styles.blueColor
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                                offset: const Offset(0, -1.63),
+                                                                blurRadius: 1.63,
+                                                                color: Colors.black.withOpacity(0.10)
+                                                            )
+                                                          ],
+                                                          color: const Color(0xFFF3F3F3)
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                Positioned(
-                                                  top: 0.5,
-                                                  left: size.width/2 * randoms[3],
-                                                  child: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: DecoratedBox(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color: Styles.blueColor
+                                                  Positioned(
+                                                    top: 3,
+                                                    child: AnimatedContainer(
+                                                      curve: Curves.easeInOut,
+                                                      width: _trigger ? width * randoms[3] : width * 0.1,
+                                                      height: 4,
+                                                      duration: const Duration(milliseconds: 1000),
+                                                      child: DecoratedBox(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(8),
+                                                            color: Styles.blueColor
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                      ),
-                                      const Gap(36),
-                                    ],
-                                  );
-                                } else {
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            height: 20,
-                                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                                            decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors.black.withOpacity(0.1),
-                                                      blurRadius: 5.0,
-                                                      spreadRadius: 1.0,
-                                                      offset: const Offset(0,0),
-                                                      blurStyle: BlurStyle.outer
-                                                  )
-                                                ]
-                                            ),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                    context: context,
-                                                    shape: const RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                  Positioned(
+                                                    top: 0.5,
+                                                    left: size.width/2 * randoms[3],
+                                                    child: SizedBox(
+                                                      width: 8,
+                                                      height: 8,
+                                                      child: DecoratedBox(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                            color: Styles.blueColor
+                                                        ),
+                                                      ),
                                                     ),
-                                                    builder: (bContext) {
-                                                      return Column(
-                                                        children: [
-                                                          const Gap(40),
-                                                          LayoutBuilder(
-                                                            builder: (bc, bcs) {
-                                                              return Flex(
-                                                                direction: Axis.vertical,
-                                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                mainAxisSize: MainAxisSize.max,
-                                                                children: List.generate(8, (index) => Container(
-                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                  width: AppLayout.getSize(context).width,
-                                                                  height: 300/8,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                        categoryList.ageByIndex[index+1],
-                                                                        style: ages == categoryList.ageByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                      IconButton(
-                                                                          onPressed: () {
-                                                                            setState(() {
-                                                                              ages = categoryList.ageByIndex[index+1];
-                                                                            });
-                                                                            get(3, 'dump', 'dump', -7, ages);
-                                                                            Navigator.pop(bc);
-                                                                          },
-                                                                          icon: Icon(
-                                                                            Icons.check_circle,
-                                                                            color: ages == categoryList.ageByIndex[index+1] ? Colors.black : Colors.grey,)
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                )
-                                                                ),
-                                                              );
-                                                            },
-                                                          )
-                                                        ],
-                                                      );
-                                                    }
-                                                );
-                                              },
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                        ),
+                                        const Gap(36),
+                                      ],
+                                    );
+                                  } else {
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: 20,
+                                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.black.withOpacity(0.1),
+                                                        blurRadius: 5.0,
+                                                        spreadRadius: 1.0,
+                                                        offset: const Offset(0,0),
+                                                        blurStyle: BlurStyle.outer
+                                                    )
+                                                  ]
+                                              ),
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
@@ -1606,119 +1449,119 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                 ],
                                               ),
                                             ),
-                                          ),
-                                          Text(
-                                            ' 하루에 평균',
-                                            style: Styles.fEnableStyle,
-                                          ),
-                                          Container(
+                                            Text(
+                                              ' 하루에 평균',
+                                              style: Styles.fEnableStyle,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                ' ${(dataList[3].total/dataList[3].num).toStringAsFixed(0)} ',
+                                                style: Styles.fTitleStyle.copyWith(color: Styles.blueColor),
+                                              ),
+                                            ),
+                                            Text(
+                                              '원을 루팡해요.',
+                                              style: Styles.fEnableStyle,
+                                            )
+                                          ],
+                                        ),
+                                        const Gap(10),
+                                        Container(
+                                            width: width,
+                                            height: 10,
                                             alignment: Alignment.center,
-                                            child: Text(
-                                              ' ${(dataList[3].total/dataList[3].num).toStringAsFixed(0)} ',
-                                              style: Styles.fTitleStyle.copyWith(color: Styles.blueColor),
-                                            ),
-                                          ),
-                                          Text(
-                                            '원을 루팡해요.',
-                                            style: Styles.fEnableStyle,
-                                          )
-                                        ],
-                                      ),
-                                      const Gap(10),
-                                      Container(
-                                          width: width,
-                                          height: 10,
-                                          alignment: Alignment.center,
-                                          child: Tooltip(
-                                            decoration: BoxDecoration(
-                                                color: const Color(0xFF6D7194),
-                                                borderRadius: BorderRadius.circular(4)
-                                            ),
-                                            message: 'min/max : ${transform(dataList[3].min.toString())} / ${transform(dataList[3].max.toString())}',
-                                            child: Stack(
-                                              children: [
-                                                Positioned(
-                                                  top: 3,
-                                                  child: Container(
-                                                    width: width,
-                                                    height: 4,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                              offset: const Offset(0, -1.63),
-                                                              blurRadius: 1.63,
-                                                              color: Colors.black.withOpacity(0.10)
-                                                          )
-                                                        ],
-                                                        color: const Color(0xFFF3F3F3)
-                                                    ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 3,
-                                                  child: Container(
-                                                    width: (width-48) * (dataList[3].total/dataList[3].num)/(dataList[3].max-dataList[3].min),
-                                                    height: 4,
-                                                    child: DecoratedBox(
+                                            child: Tooltip(
+                                              decoration: BoxDecoration(
+                                                  color: const Color(0xFF6D7194),
+                                                  borderRadius: BorderRadius.circular(4)
+                                              ),
+                                              message: 'min/max : ${transform(dataList[3].min.toString())} / ${transform(dataList[3].max.toString())}',
+                                              child: Stack(
+                                                children: [
+                                                  Positioned(
+                                                    top: 3,
+                                                    child: Container(
+                                                      width: width,
+                                                      height: 4,
                                                       decoration: BoxDecoration(
                                                           borderRadius: BorderRadius.circular(8),
-                                                          color: Styles.blueColor
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                                offset: const Offset(0, -1.63),
+                                                                blurRadius: 1.63,
+                                                                color: Colors.black.withOpacity(0.10)
+                                                            )
+                                                          ],
+                                                          color: const Color(0xFFF3F3F3)
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                Positioned(
-                                                  top: 0.5,
-                                                  left: widget.total < dataList[3].min ? 0 : (width - 48) * (widget.total/(dataList[3].max-dataList[3].min)) - 24,
-                                                  child: SizedBox(
-                                                    width: 10,
-                                                    height: 10,
-                                                    child: DecoratedBox(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color: Styles.blueColor
+                                                  Positioned(
+                                                    top: 3,
+                                                    child: Container(
+                                                      width: (width-48) * (dataList[3].total/dataList[3].num)/(dataList[3].max-dataList[3].min),
+                                                      height: 4,
+                                                      child: DecoratedBox(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(8),
+                                                            color: Styles.blueColor
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                      ),
-                                      const Gap(36),
-                                    ],
-                                  );
-                                }
-                              },
+                                                  Positioned(
+                                                    top: 0.5,
+                                                    left: (widget.total > dataList[3].max || widget.total < dataList[3].min) ? widget.total > dataList[3].max ? width - 56 : 8 : (width - 48) * (widget.total/(dataList[3].max-dataList[3].min)) - 8,
+                                                    child: SizedBox(
+                                                      width: 8,
+                                                      height: 8,
+                                                      child: DecoratedBox(
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                            color: Styles.blueColor
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                        ),
+                                        const Gap(36),
+                                      ],
+                                    );
+                                  }
+                                },
+                              ),
                             ),
                           ),
                           // Bottom button
-                          Container(
-                            width: width,
-                            height: 141,
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  bottom: 0,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Styles.blueGrey
-                                    ),
-                                    width: size.width > 430 ? 430 : width - 48,
-                                    height: 43,
-                                    child: TextButton(
-                                      child: Text('월루 랭킹보기', style: Styles.fTitleStyle.copyWith(color: Styles.blueColor, fontSize: 16),),
-                                      onPressed: () {
-
-                                      },
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+                          // Container(
+                          //   width: width,
+                          //   height: 141,
+                          //   child: Stack(
+                          //     children: [
+                          //       Positioned(
+                          //         bottom: 0,
+                          //         child: Container(
+                          //           decoration: BoxDecoration(
+                          //               borderRadius: BorderRadius.circular(8),
+                          //               color: Styles.blueGrey
+                          //           ),
+                          //           width: size.width > 430 ? 430 : width - 48,
+                          //           height: 43,
+                          //           child: TextButton(
+                          //             child: Text('월루 랭킹보기', style: Styles.fTitleStyle.copyWith(color: Styles.blueColor, fontSize: 16),),
+                          //             onPressed: () {
+                          //
+                          //             },
+                          //           ),
+                          //         ),
+                          //       )
+                          //     ],
+                          //   ),
+                          // ),
                         ],
                       ),
                     )

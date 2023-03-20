@@ -121,7 +121,7 @@ class _StatScreenState extends State<StatScreen> {
                                 Navigator.pop(context);
                               },
                               icon: Image.asset(
-                                'assets/home.png',
+                                'assets/x4home.png',
                                 width: 24,
                                 fit: BoxFit.fitWidth,
                               ),
@@ -186,8 +186,8 @@ class _StatScreenState extends State<StatScreen> {
                                   titleCentered: true,
                                   titleTextFormatter: (date, locale) => DateFormat.MMMM(locale).format(date),
                                   titleTextStyle: Styles.fTitleStyle.copyWith(fontSize: 16, color: Styles.blueColor),
-                                  leftChevronIcon: Image.asset('assets/calLeftBtn.png'),
-                                  rightChevronIcon: Image.asset('assets/calRightBtn.png'),
+                                  leftChevronIcon: Image.asset('assets/calLeftx4.png', width: 18,),
+                                  rightChevronIcon: Image.asset('assets/calRightx4.png', width: 18,),
                                 ),
                                 daysOfWeekHeight: 62,
                                 startingDayOfWeek: StartingDayOfWeek.monday,

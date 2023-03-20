@@ -301,7 +301,7 @@ class _SetScreenState extends State<SetScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      width: 327,
+                      width: size.width,
                       alignment: Alignment.centerLeft,
                       child: Text(
                         '내 정보 수정하기',
@@ -311,7 +311,7 @@ class _SetScreenState extends State<SetScreen> {
                     const Gap(20),
                     // 닉네임
                     SizedBox(
-                      width: 327,
+                      width: size.width,
                       height: 42,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
@@ -356,7 +356,7 @@ class _SetScreenState extends State<SetScreen> {
                     const Gap(12),
                     // 월급
                     SizedBox(
-                      width: 327,
+                      width: size.width,
                       height: 42,
                       child: DecoratedBox(
                         decoration: BoxDecoration(
@@ -407,7 +407,7 @@ class _SetScreenState extends State<SetScreen> {
                     const Gap(6),
                     // 원
                     SizedBox(
-                      width: 327,
+                      width: size.width,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -422,7 +422,7 @@ class _SetScreenState extends State<SetScreen> {
                       children: [
                         // 일주일 근무일
                         SizedBox(
-                          width: 327,
+                          width: size.width,
                           height: 42,
                           child: DecoratedBox(
                             decoration: BoxDecoration(
@@ -443,9 +443,9 @@ class _SetScreenState extends State<SetScreen> {
                               ],
                               textAlign: TextAlign.end,
                               decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.all(8),
+                                  contentPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 14, right: 14),
                                   suffixText: week_work!.isEmpty ? '' : '일',
-                                  prefixText: '  일주일 근무 일',
+                                  prefixText: '일주일 근무 일',
                                   prefixStyle: week_work!.isEmpty ? Styles.titleStyle.copyWith(color: Styles.blueColor, fontSize: 14) : Styles.titleStyle.copyWith(color: Colors.grey, fontSize: 14),
                                   enabledBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -468,7 +468,7 @@ class _SetScreenState extends State<SetScreen> {
                         const Gap(15),
                         // 하루 근무시간
                         SizedBox(
-                          width: 327,
+                          width: size.width,
                           height: 42,
                           child: DecoratedBox(
                             decoration: BoxDecoration(
@@ -489,9 +489,9 @@ class _SetScreenState extends State<SetScreen> {
                               ],
                               textAlign: TextAlign.end,
                               decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.all(8),
+                                  contentPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 14, right: 14),
                                   suffixText: day_work!.isEmpty ? '' : '시간',
-                                  prefixText: '  하루 근무 시간',
+                                  prefixText: '하루 근무 시간',
                                   prefixStyle: day_work!.isEmpty ? Styles.titleStyle.copyWith(color: Styles.blueColor, fontSize: 14) : Styles.titleStyle.copyWith(color: Colors.grey, fontSize: 14),
                                   enabledBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -522,7 +522,7 @@ class _SetScreenState extends State<SetScreen> {
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.white
                           ),
-                          width: 327,
+                          width: size.width,
                           height: 42,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -662,7 +662,7 @@ class _SetScreenState extends State<SetScreen> {
                               borderRadius: BorderRadius.circular(8),
                               color: Colors.white
                           ),
-                          width: 327,
+                          width: size.width,
                           height: 42,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -742,7 +742,7 @@ class _SetScreenState extends State<SetScreen> {
                         ),  // 연차
                         const Gap(15),
                         SizedBox(
-                          width: 327,
+                          width: size.width,
                           child: Row(
                             children: [
                               Container(
@@ -750,7 +750,7 @@ class _SetScreenState extends State<SetScreen> {
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.white
                                 ),
-                                width: 159,
+                                width: (size.width-48-9)/2,
                                 height: 42,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -826,7 +826,7 @@ class _SetScreenState extends State<SetScreen> {
                                     borderRadius: BorderRadius.circular(8),
                                     color: Colors.white
                                 ),
-                                width: 159,
+                                width: (size.width-48-9)/2,
                                 height: 42,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -922,7 +922,7 @@ class _SetScreenState extends State<SetScreen> {
                                       borderRadius: BorderRadius.circular(8),
                                       color: Styles.blueColor
                                   ),
-                                  width: 327,
+                                  width: size.width,
                                   height: 43,
                                   child: TextButton(
                                     onPressed: () {

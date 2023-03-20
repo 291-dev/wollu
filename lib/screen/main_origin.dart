@@ -602,6 +602,7 @@ class _MainState extends State<Main> {
                           onPressed: () {
                             save().then((success) => {
                               if (success) {
+                                notificationTimer?.cancel(),
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => ResultScreen(currentUser: widget.currentUser,))

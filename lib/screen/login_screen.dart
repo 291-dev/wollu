@@ -219,8 +219,8 @@ class _LoginScreenState extends State<LoginScreen> {
   var offset = 0.0;
   String? nickname;
   String? salary;
-  String? week_work;
-  String? day_work;
+  String? week_work = "5";
+  String? day_work = "8";
   String job = '';
   String annual = '';
   var sex = 0;
@@ -257,7 +257,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       final jsonData = json.decode(utf8.decode(response.bodyBytes));
       final int statusCode = response.statusCode;
-      if (statusCode < 200 || statusCode > 400 || jsonData == null) {
+      if (statusCode < 200 || statusCode > 400) {
         // Error handling
         setState(() {
           errorMsg =
@@ -714,6 +714,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               color: Colors.white
                                           ),
                                           child: TextFormField(
+                                            initialValue: "5",
                                             focusNode: _focusNodes[2],
                                             onChanged: (value) {
                                               week_work = value;
@@ -724,10 +725,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                             keyboardType: TextInputType.number,
                                             inputFormatters: [
                                               FilteringTextInputFormatter.digitsOnly,
+                                              FilteringTextInputFormatter(RegExp('^[1-7]{1}'), allow: true)
                                             ],
                                             textAlign: TextAlign.end,
                                             decoration: InputDecoration(
-                                                contentPadding: const EdgeInsets.all(8),
+                                                contentPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 14, right: 14),
                                                 suffixText: '일    ',
                                                 prefixText: '일주일 근무 일',
                                                 prefixStyle: Styles.titleStyle.copyWith(color: Styles.blueColor),
@@ -759,6 +761,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               color: Colors.white
                                           ),
                                           child: TextFormField(
+                                            initialValue: "8",
                                             focusNode: _focusNodes[3],
                                             onChanged: (value) {
                                               day_work = value;
@@ -769,10 +772,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                             keyboardType: TextInputType.number,
                                             inputFormatters: [
                                               FilteringTextInputFormatter.digitsOnly,
+                                              FilteringTextInputFormatter(RegExp('^[1-9]{1}\$|^[1]{1}[0-9]{1}\$|^[2]{1}[0-4]{1}\$'), allow: true)
                                             ],
                                             textAlign: TextAlign.end,
                                             decoration: InputDecoration(
-                                                contentPadding: const EdgeInsets.all(8),
+                                                contentPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 14, right: 14),
                                                 suffixText: '시간',
                                                 prefixText: '하루 근무시간',
                                                 prefixStyle: Styles.titleStyle.copyWith(color: Styles.blueColor),
@@ -1009,7 +1013,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                                                     Navigator.pop(bbContext);
                                                                                                     Navigator.pop(bContext);
                                                                                                   },
-                                                                                                  icon: job != categoryList.job2ByIndex[selectedJob]![index] ? const Icon(Icons.check_circle, color: Colors.grey,) : const Icon(Icons.check_circle, color: Colors.black,))
+                                                                                                  icon: job != categoryList.job2ByIndex[selectedJob]![index] ? Image.asset('assets/check.png') : Image.asset('assets/checkon.png'))
                                                                                             ],
                                                                                           ),
                                                                                         )
@@ -1022,7 +1026,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                             }
                                                                         );
                                                                       },
-                                                                      icon: Icon(Icons.check_circle, color: selectedJob == categoryList.job1ByIndex[index] ? Colors.black :Colors.grey,))
+                                                                      icon: selectedJob == categoryList.job1ByIndex[index] ? Image.asset('assets/checkon.png') : Image.asset('assets/check.png'))
                                                                 ],
                                                               ),
                                                             )
@@ -1095,9 +1099,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                           });
                                                                           Navigator.pop(bc);
                                                                         },
-                                                                        icon: Icon(
-                                                                          Icons.check_circle,
-                                                                          color: annual == categoryList.yearByIndex[index+1] ? Colors.black : Colors.grey,))
+                                                                        icon: annual == categoryList.yearByIndex[index+1] ? Image.asset('assets/checkon.png') : Image.asset('assets/check.png')
+                                                                    )
                                                                   ],
                                                                 ),
                                                               )
@@ -1185,9 +1188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                               });
                                                                               Navigator.pop(bc);
                                                                             },
-                                                                            icon: Icon(
-                                                                              Icons.check_circle,
-                                                                              color: sex == index+1 ? Colors.black : Colors.grey,))
+                                                                            icon: sex == index+1 ? Image.asset('assets/checkon.png') : Image.asset('assets/check.png'))
                                                                       ],
                                                                     ),
                                                                   )
@@ -1261,9 +1262,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                               });
                                                                               Navigator.pop(bc);
                                                                             },
-                                                                            icon: Icon(
-                                                                              Icons.check_circle,
-                                                                              color: age == categoryList.ageByIndex[index+1] ? Colors.black : Colors.grey,)
+                                                                            icon: age == categoryList.ageByIndex[index+1] ? Image.asset('assets/checkon.png') : Image.asset('assets/check.png')
                                                                         )
                                                                       ],
                                                                     ),
@@ -1345,11 +1344,11 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Styles.blueGrey,
         onPressed: () {
           if (_focusNodes[0].hasFocus) {
-            _focusNodes[0].unfocus();
+            _focusNodes[1].requestFocus();
           } else if (_focusNodes[1].hasFocus) {
-            _focusNodes[1].unfocus();
+            _focusNodes[2].requestFocus();
           } else if (_focusNodes[2].hasFocus) {
-            _focusNodes[2].unfocus();
+            _focusNodes[3].requestFocus();
           } else if (_focusNodes[3].hasFocus) {
             _focusNodes[3].unfocus();
           }
