@@ -25,7 +25,7 @@ class Wollu(models.Model):
     turnover = models.IntegerField(null=True)
 
 class Stats(models.Model):
-    category = models.CharField(max_length=30)
+    category = models.CharField(max_length=30, null=True)
     min_wollu = models.IntegerField()
     max_wollu = models.IntegerField()
     total_wollu = models.IntegerField()
