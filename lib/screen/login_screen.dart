@@ -335,7 +335,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       }
       setState(() {
-        offset = _scrollController.offset;
+        offset = _scrollController.offset < 0 ? 0 : _scrollController.offset;
         print(offset);
       });
       // check().then((isExistUser) => {
