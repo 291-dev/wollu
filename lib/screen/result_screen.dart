@@ -371,7 +371,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             alignment: Alignment.centerRight,
                             child: IconButton(
                               alignment: Alignment.centerRight,
-                              icon: Image.asset('assets/share.png'),
+                              icon: Image.asset('assets/share.png', width: 24, height: 24, isAntiAlias: true,),
                               onPressed: () {
                                 showDialog(
                                     context: context,

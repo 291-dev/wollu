@@ -242,19 +242,19 @@ class _FinishScreenState extends State<FinishScreen> {
                                     children: [
                                       IconButton(onPressed: () {
                                         share.shareOnKakao();
-                                      }, icon: Image.asset('assets/kakao.png')),
+                                      }, icon: Image.asset('assets/kakaox4.png')),
                                       IconButton(onPressed: () {
                                         share.shareOnFacebook();
-                                      }, icon: SvgPicture.asset('assets/facebook.svg')),
+                                      }, icon: Image.asset('assets/facex4.png')),
                                       IconButton(onPressed: () {
                                         share.shareOnTwitter();
-                                      }, icon: SvgPicture.asset('assets/twitter.svg')),
+                                      }, icon: Image.asset('assets/twx4.png')),
                                       IconButton(onPressed: () async {
                                         share.shareOnInstagram();
-                                      }, icon: Image.asset('assets/insta.png')),
+                                      }, icon: Image.asset('assets/instax4.png')),
                                       IconButton(onPressed: () {
                                         share.shareSMS();
-                                      }, icon: SvgPicture.asset('assets/link.svg'))
+                                      }, icon: Image.asset('assets/linkx4.png'))
                                     ],
                                   ),
                                 )

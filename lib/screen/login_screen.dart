@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:gap/gap.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wollu/util/app_layout.dart';
@@ -25,6 +26,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   CategoryList categoryList = CategoryList();
+  var isVisible = true;
   Future<bool> validate() async {
     if (nickname == null || nickname!.isEmpty) {
       errorMsg = '닉네임은 필수항목입니다 !';
@@ -323,6 +325,15 @@ class _LoginScreenState extends State<LoginScreen> {
     // TODO: implement initState
     super.initState();
     _scrollController.addListener(() {
+      if (_scrollController.position.maxScrollExtent <= _scrollController.offset) {
+        setState(() {
+          isVisible = false;
+        });
+      } else {
+        setState(() {
+          isVisible = true;
+        });
+      }
       setState(() {
         offset = _scrollController.offset;
         print(offset);
@@ -443,7 +454,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               maxLengthEnforcement: MaxLengthEnforcement.enforced,
                                               inputFormatters: [
                                                 FilteringTextInputFormatter(
-                                                  RegExp('[a-z A-Z ㄱ-ㅎ|가-힣|·|：]'),
+                                                  RegExp(r'[a-z|A-Z|0-9|ㄱ-ㅎ|ㅏ-ㅣ|가-힣|ᆞ|ᆢ|ㆍ|ᆢ|ᄀᆞ|ᄂᆞ|ᄃᆞ|ᄅᆞ|ᄆᆞ|ᄇᆞ|ᄉᆞ|ᄋᆞ|ᄌᆞ|ᄎᆞ|ᄏᆞ|ᄐᆞ|ᄑᆞ|ᄒᆞ]'),
                                                   allow: true,
                                                 )
                                               ],
@@ -926,12 +937,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 ),
                                                 builder: (BuildContext bContext) {
                                                   return SizedBox(
-                                                    height: 390,
+                                                    height: 382,
                                                     child: Column(
                                                       children: [
                                                         const Gap(40),
                                                         SizedBox(
-                                                          height: 20,
+                                                          height: 29,
                                                           width: AppLayout.getSize(context).width,
                                                           child: Container(
                                                             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -939,8 +950,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           ),
                                                         ),
                                                         const Gap(28),
-                                                        SizedBox(
-                                                          height: 260,
+                                                        Container(
                                                           width: AppLayout.getSize(context).width,
                                                           child: ListView(
                                                             scrollDirection: Axis.vertical,
@@ -961,13 +971,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                               borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
                                                                             ),
                                                                             builder: (BuildContext bbContext) {
-                                                                              return SizedBox(
-                                                                                height: 390,
+                                                                              return Container(
+                                                                                height: 260,
                                                                                 child: Column(
                                                                                   children: [
                                                                                     const Gap(40),
                                                                                     SizedBox(
-                                                                                      height: 30,
+                                                                                      height: 29,
                                                                                       width: AppLayout.getSize(context).width,
                                                                                       child: Row(
                                                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1026,7 +1036,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                             }
                                                                         );
                                                                       },
-                                                                      icon: selectedJob == categoryList.job1ByIndex[index] ? Image.asset('assets/checkon.png') : Image.asset('assets/check.png'))
+                                                                      icon: selectedJob == categoryList.job1ByIndex[index] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
                                                                 ],
                                                               ),
                                                             )
@@ -1043,7 +1053,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(job == '' ? '업종/직무' : job, style: job == '' ? Styles.fTextStyle.copyWith(color: Colors.grey) : Styles.fTextStyle.copyWith(color: Colors.black)),
-                                              Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                              Image.asset(
+                                                  width: 9,
+                                                  height: 8,
+                                                  'assets/downx4.png'
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -1129,7 +1143,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       )
                                                   )
                                               ),
-                                              Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                              Image.asset(
+                                                  width: 9,
+                                                  height: 8,
+                                                  'assets/downx4.png'
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -1188,7 +1206,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                               });
                                                                               Navigator.pop(bc);
                                                                             },
-                                                                            icon: sex == index+1 ? Image.asset('assets/checkon.png') : Image.asset('assets/check.png'))
+                                                                            icon: sex == index+1 ? Image.asset(
+                                                                                'assets/checkon.png',
+                                                                                width: 16,
+                                                                                height: 16
+                                                                            ) :
+                                                                            Image.asset(
+                                                                                'assets/check.png',
+                                                                                width: 16,
+                                                                                height: 16
+                                                                            )
+                                                                        )
                                                                       ],
                                                                     ),
                                                                   )
@@ -1206,7 +1234,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Text(categoryList.sexByIndex[sex], style: sex != 0 ? Styles.fTextStyle.copyWith(color: Colors.black) :Styles.fTextStyle.copyWith(color: Colors.grey),),
-                                                  Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                                  Image.asset(
+                                                      width: 9,
+                                                      height: 8,
+                                                      'assets/downx4.png'
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -1292,7 +1324,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           )
                                                       )
                                                   ),
-                                                  Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                                  Image.asset(
+                                                      width: 9,
+                                                      height: 8,
+                                                      'assets/downx4.png'
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -1339,21 +1375,36 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton.small(
-        elevation: 0,
-        backgroundColor: Styles.blueGrey,
-        onPressed: () {
-          if (_focusNodes[0].hasFocus) {
-            _focusNodes[1].requestFocus();
-          } else if (_focusNodes[1].hasFocus) {
-            _focusNodes[2].requestFocus();
-          } else if (_focusNodes[2].hasFocus) {
-            _focusNodes[3].requestFocus();
-          } else if (_focusNodes[3].hasFocus) {
-            _focusNodes[3].unfocus();
-          }
-        },
-        child: Image.asset('assets/down_arrow.png',
+      floatingActionButton: Visibility(
+        visible: isVisible,
+        child: FloatingActionButton.small(
+          elevation: 0,
+          backgroundColor: Styles.blueGrey,
+          onPressed: () {
+            if (_scrollController.offset < 833) {
+              _scrollController.animateTo(834, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+            } else if (_scrollController.offset < 833*2) {
+              _scrollController.animateTo(833*2+1, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+            } else if (_scrollController.offset < 833*3) {
+              _scrollController.animateTo(833*3+1, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+            } else if (_scrollController.offset < 833*4) {
+              _scrollController.animateTo(833*4+1, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+            }
+            if (_focusNodes[0].hasFocus) {
+              _focusNodes[1].requestFocus();
+            } else if (_focusNodes[1].hasFocus) {
+              _focusNodes[2].requestFocus();
+            } else if (_focusNodes[2].hasFocus) {
+              _focusNodes[3].requestFocus();
+            } else if (_focusNodes[3].hasFocus) {
+              _focusNodes[3].unfocus();
+            }
+          },
+          child: Image.asset(
+            width: 24,
+            height: 24,
+            'assets/down_arrowx4.png',
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

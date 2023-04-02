@@ -127,7 +127,7 @@ class CategoryViewState extends State<CategoryView> {
                             right: -12,
                             child: IconButton(
                               alignment: Alignment.center,
-                              icon: played ? Image.asset('assets/stopx4.png', width: 21,) : Image.asset('assets/playx4.png', width: 21,),
+                              icon: played ? Image.asset('assets/stopx4.png', width: 21, height: 21, isAntiAlias: true,) : Image.asset('assets/playx4.png', width: 21, height: 21, isAntiAlias: true,),
                               padding: const EdgeInsets.symmetric(horizontal: 4),
                               onPressed: () {
                                 widget.onTap!();

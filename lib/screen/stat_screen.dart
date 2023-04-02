@@ -130,7 +130,7 @@ class _StatScreenState extends State<StatScreen> {
                           const Gap(6),
                           Container(
                             width: size.width > 430 ? 430 : size.width,
-                            height: 104,
+                            height: 108,
                             padding: const EdgeInsets.all(24),
                             decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -186,14 +186,15 @@ class _StatScreenState extends State<StatScreen> {
                                   titleCentered: true,
                                   titleTextFormatter: (date, locale) => DateFormat.MMMM(locale).format(date),
                                   titleTextStyle: Styles.fTitleStyle.copyWith(fontSize: 16, color: Styles.blueColor),
-                                  leftChevronIcon: Image.asset('assets/calLeftx4.png', width: 18,),
-                                  rightChevronIcon: Image.asset('assets/calRightx4.png', width: 18,),
+                                  leftChevronIcon: Image.asset('assets/calLeftx4.png', width: 18, height: 18, isAntiAlias: true),
+                                  rightChevronIcon: Image.asset('assets/calRightx4.png', width: 18, height: 18, isAntiAlias: true),
                                 ),
-                                daysOfWeekHeight: 62,
+                                rowHeight: 54,
+                                daysOfWeekHeight: 68,
                                 startingDayOfWeek: StartingDayOfWeek.monday,
                                 daysOfWeekStyle: DaysOfWeekStyle(
-                                    weekdayStyle: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500),
-                                    weekendStyle: Styles.fTextStyle.copyWith(fontWeight: FontWeight.w500)
+                                    weekdayStyle: Styles.fInfoStyle.copyWith(fontWeight: FontWeight.w500),
+                                    weekendStyle: Styles.fInfoStyle.copyWith(fontWeight: FontWeight.w500)
                                 ),
                                 calendarBuilders: CalendarBuilders(
                                   defaultBuilder: (context, day, focusedDay) {
@@ -240,7 +241,7 @@ class _StatScreenState extends State<StatScreen> {
                                               style: Styles.fTitleStyle.copyWith(color: Colors.white, fontWeight: FontWeight.w500),
                                             ),
                                           ),
-                                          const Gap(4),
+                                          const Gap(5.14),
                                           Text(
                                               transform(wolluByMonth[day.month-1].wollus[day.day-1].time.toString()),
                                               style: TextStyle(
