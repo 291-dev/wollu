@@ -8,6 +8,7 @@ import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
@@ -42,7 +43,7 @@ class Main extends StatefulWidget {
   _MainState createState() => _MainState();
 }
 
-class _MainState extends State<Main> {
+class _MainState extends State<Main> with WidgetsBindingObserver {
   // TotalTime
   var _totalTime = 0;
   // Timer to gathering each category's time
@@ -226,7 +227,13 @@ class _MainState extends State<Main> {
     }
     _contents = List.generate(1, (index) {
       return DragAndDropList(
-          children: _list
+          children: _list,
+          contentsWhenEmpty: Column(
+            children: [
+              const Gap(20),
+              Center(child: Text("카테고리를 추가해주세요.", style: Styles.fEnableStyle.copyWith(color: Styles.grey03),),),
+            ],
+          )
       );
     });
   }
@@ -299,17 +306,32 @@ class _MainState extends State<Main> {
     // Get pref and selected categories data
     getPref();
     super.initState();
-
-    notificationTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      if (isRun) {
-        LocalNotification.notification(categories[latest].name, _views[latest].category.getTime());
-      }
-    });
+    WidgetsBinding.instance.addObserver(this);
   }
 
+  var message = "";
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        notificationTimer!.cancel();
+        break;
+      case AppLifecycleState.inactive:
+        break;
+      case AppLifecycleState.paused:
+        notificationTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
+          if (isRun) {
+            LocalNotification.notification(categories[latest].name, _views[latest].category.getTime());
+          }
+        });
+        break;
+      case AppLifecycleState.detached:
+        break;
+    }
   }
   
   @override
@@ -318,9 +340,8 @@ class _MainState extends State<Main> {
     timer?.cancel();
     notificationTimer?.cancel();
     super.dispose();
+    WidgetsBinding.instance.addObserver(this);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -476,12 +497,10 @@ class _MainState extends State<Main> {
                     children: _contents,
                     onItemReorder: _onItemReorder,
                     onListReorder: (a, b) {},
-                    // lastItemTargetHeight: 42,
-                    // listDividerOnLastChild: true,
-                    // listDivider: Container(height: 1,decoration: BoxDecoration(color: Styles.blueColor),),
                     lastListTargetSize: 0,
                     horizontalAlignment: MainAxisAlignment.center,
                     verticalAlignment: CrossAxisAlignment.center,
+                    contentsWhenEmpty: Center(child: Text("카테고리를 추가해주세요."),),
                   ),
                 ),
                 const Gap(10),
@@ -513,71 +532,72 @@ class _MainState extends State<Main> {
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
                             ),
                             builder: (BuildContext bContext) {
-                              return Column(
-                                children: [
-                                  const Gap(40),
-                                  StatefulBuilder(
-                                    builder: (BuildContext bc, StateSetter bottomState) {
-                                      return Container(
-                                        height: 250,
-                                        child: ListView(
-                                          children: List.generate(8, (index) => Container(
-                                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                                            width: AppLayout.getSize(context).width,
-                                            height: 300/8,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: <Widget>[
-                                                Text(
-                                                  categories[index].name,
-                                                  style: selected[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                IconButton(
-                                                    onPressed: () {
-                                                      bottomState(() {
-                                                        setState(() {
-                                                          selected[index] = !selected[index];
-                                                          if (selected[index]) {
-                                                            setPref(index, true);
-                                                            _list.add(
-                                                                _itemList[index]
-                                                            );
-                                                          } else {
-                                                            setPref(index, false);
-                                                            _list.remove(
-                                                                _itemList[index]
-                                                            );
-                                                          }
+                              return SizedBox(
+                                height: 467,
+                                child: Column(
+                                  children: [
+                                    const Gap(50),
+                                    StatefulBuilder(
+                                      builder: (BuildContext bc, StateSetter bottomState) {
+                                        return Container(
+                                          height: 20*15,
+                                          child: ListView(
+                                            children: List.generate(8, (index) => Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 30),
+                                              width: AppLayout.getSize(context).width,
+                                              height: 300/8,
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: <Widget>[
+                                                  Text(
+                                                    categories[index].name,
+                                                    style: selected[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        bottomState(() {
+                                                          setState(() {
+                                                            selected[index] = !selected[index];
+                                                            if (selected[index]) {
+                                                              setPref(index, true);
+                                                              _list.add(
+                                                                  _itemList[index]
+                                                              );
+                                                            } else {
+                                                              setPref(index, false);
+                                                              _list.remove(
+                                                                  _itemList[index]
+                                                              );
+                                                            }
+                                                          });
                                                         });
-                                                      });
-                                                    },
-                                                    icon: Icon(
-                                                      Icons.check_circle,
-                                                      color: selected[index] ? Colors.black : Colors.grey,)
-                                                )
-                                              ],
+                                                      },
+                                                      icon: selected[index] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png')
+                                                  )
+                                                ],
+                                              ),
+                                            )
                                             ),
-                                          )
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  const Gap(34),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Styles.blueColor
-                                    ),
-                                    width: size.width - 60,
-                                    height: 42,
-                                    child: TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(bContext);
+                                        );
                                       },
-                                      child: Text('적용하기', style: Styles.fTextStyle.copyWith(fontSize: 16, color: Styles.blueGrey),),
                                     ),
-                                  )
-                                ],
+                                    const Gap(34),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          color: Styles.blueColor
+                                      ),
+                                      width: size.width - 60,
+                                      height: 43,
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(bContext);
+                                        },
+                                        child: Text('적용하기', style: Styles.fTextStyle.copyWith(fontSize: 16, color: Styles.blueGrey),),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               );
                             }
                         );
@@ -602,6 +622,7 @@ class _MainState extends State<Main> {
                           onPressed: () {
                             save().then((success) => {
                               if (success) {
+                                notificationTimer?.cancel(),
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => ResultScreen(currentUser: widget.currentUser,))

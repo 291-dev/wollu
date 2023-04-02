@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:gap/gap.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wollu/util/app_layout.dart';
@@ -25,6 +26,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   CategoryList categoryList = CategoryList();
+  var isVisible = true;
   Future<bool> validate() async {
     if (nickname == null || nickname!.isEmpty) {
       errorMsg = '닉네임은 필수항목입니다 !';
@@ -43,13 +45,13 @@ class _LoginScreenState extends State<LoginScreen> {
       return false;
     }
 
-    var tempJob = '';
+    String? tempJob;
     if (job.isNotEmpty) {
       tempJob = '$selectedJob/$job';
     }
 
-    var tempAn = '';
-    if (annual != '연차') {
+    String? tempAn;
+    if (annual.isNotEmpty) {
       tempAn = annual;
     }
 
@@ -58,12 +60,11 @@ class _LoginScreenState extends State<LoginScreen> {
       tempS = sex;
     }
 
-    var tempAge = '';
-    if (age != '연령') {
+    String? tempAge;
+    if (age.isNotEmpty) {
       tempAge = age;
     }
 
-    print('$nickname $salary $week_work $day_work $tempJob $tempAn $tempS $tempAge');
     final success = await callApi(
         nickname!, int.parse(salary!), int.parse(week_work!), int.parse(day_work!), tempJob, tempAn, tempS, tempAge
     );
@@ -219,8 +220,8 @@ class _LoginScreenState extends State<LoginScreen> {
   var offset = 0.0;
   String? nickname;
   String? salary;
-  String? week_work;
-  String? day_work;
+  String? week_work = "5";
+  String? day_work = "8";
   String job = '';
   String annual = '';
   var sex = 0;
@@ -235,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen> {
   User? currentUser;
   final _focusNodes = [FocusNode(), FocusNode(), FocusNode(), FocusNode()];
 
-  Future<bool> callApi(String nickname, int salary, int week_work, int day_work, String job, String annual, int sex, String age) async {
+  Future<bool> callApi(String nickname, int salary, int week_work, int day_work, String? job, String? annual, int sex, String? age) async {
     final url = Uri.parse("http://3.35.111.171:80/users/");
     Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -265,16 +266,17 @@ class _LoginScreenState extends State<LoginScreen> {
         });
         return false;
       } else {
+        print(jsonData);
         final id = await helper.add(
             jsonData['id'],
             jsonData['nickname'],
             jsonData['salary'],
             jsonData['week_work'],
             jsonData['day_work'],
-            jsonData['job'],
-            jsonData['annual'],
+            jsonData['job'] ?? '',
+            jsonData['annual'] ?? '',
             jsonData['sex'],
-            jsonData['age']);
+            jsonData['age'] ?? '');
         SharedPreferences pref = await SharedPreferences.getInstance();
         pref.setInt('id', id);
         setState(() {
@@ -284,10 +286,10 @@ class _LoginScreenState extends State<LoginScreen> {
               salary: jsonData['salary'],
               week_work: jsonData['week_work'],
               day_work: jsonData['day_work'],
-              job: jsonData['job'],
-              annual: jsonData['annual'],
+              job: jsonData['job']?? '',
+              annual: jsonData['annual']?? '',
               sex: jsonData['sex'],
-              age: jsonData['age']
+              age: jsonData['age']?? ''
           );
         });
         return true;
@@ -295,7 +297,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       setState(() {
         errorMsg =
-        '서버에 접속할 수 없습니다. 인터넷 연결을 확인해주세요. \n 계속 문제가 발생한다면 고객센터로 문의주시기 바랍니다.';
+        e.toString();
       });
       return false;
     }
@@ -323,6 +325,15 @@ class _LoginScreenState extends State<LoginScreen> {
     // TODO: implement initState
     super.initState();
     _scrollController.addListener(() {
+      if (_scrollController.position.maxScrollExtent <= _scrollController.offset) {
+        setState(() {
+          isVisible = false;
+        });
+      } else {
+        setState(() {
+          isVisible = true;
+        });
+      }
       setState(() {
         offset = _scrollController.offset;
         print(offset);
@@ -443,7 +454,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               maxLengthEnforcement: MaxLengthEnforcement.enforced,
                                               inputFormatters: [
                                                 FilteringTextInputFormatter(
-                                                  RegExp('[a-z A-Z ㄱ-ㅎ|가-힣|·|：]'),
+                                                  RegExp(r'[a-z|A-Z|0-9|ㄱ-ㅎ|ㅏ-ㅣ|가-힣|ᆞ|ᆢ|ㆍ|ᆢ|ᄀᆞ|ᄂᆞ|ᄃᆞ|ᄅᆞ|ᄆᆞ|ᄇᆞ|ᄉᆞ|ᄋᆞ|ᄌᆞ|ᄎᆞ|ᄏᆞ|ᄐᆞ|ᄑᆞ|ᄒᆞ]'),
                                                   allow: true,
                                                 )
                                               ],
@@ -714,6 +725,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               color: Colors.white
                                           ),
                                           child: TextFormField(
+                                            initialValue: "5",
                                             focusNode: _focusNodes[2],
                                             onChanged: (value) {
                                               week_work = value;
@@ -724,10 +736,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                             keyboardType: TextInputType.number,
                                             inputFormatters: [
                                               FilteringTextInputFormatter.digitsOnly,
+                                              FilteringTextInputFormatter(RegExp('^[1-7]{1}'), allow: true)
                                             ],
                                             textAlign: TextAlign.end,
                                             decoration: InputDecoration(
-                                                contentPadding: const EdgeInsets.all(8),
+                                                contentPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 14, right: 14),
                                                 suffixText: '일    ',
                                                 prefixText: '일주일 근무 일',
                                                 prefixStyle: Styles.titleStyle.copyWith(color: Styles.blueColor),
@@ -759,6 +772,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               color: Colors.white
                                           ),
                                           child: TextFormField(
+                                            initialValue: "8",
                                             focusNode: _focusNodes[3],
                                             onChanged: (value) {
                                               day_work = value;
@@ -769,10 +783,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                             keyboardType: TextInputType.number,
                                             inputFormatters: [
                                               FilteringTextInputFormatter.digitsOnly,
+                                              FilteringTextInputFormatter(RegExp('^[1-9]{1}\$|^[1]{1}[0-9]{1}\$|^[2]{1}[0-4]{1}\$'), allow: true)
                                             ],
                                             textAlign: TextAlign.end,
                                             decoration: InputDecoration(
-                                                contentPadding: const EdgeInsets.all(8),
+                                                contentPadding: const EdgeInsets.only(top: 8, bottom: 8, left: 14, right: 14),
                                                 suffixText: '시간',
                                                 prefixText: '하루 근무시간',
                                                 prefixStyle: Styles.titleStyle.copyWith(color: Styles.blueColor),
@@ -922,12 +937,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 ),
                                                 builder: (BuildContext bContext) {
                                                   return SizedBox(
-                                                    height: 390,
+                                                    height: 382,
                                                     child: Column(
                                                       children: [
                                                         const Gap(40),
                                                         SizedBox(
-                                                          height: 20,
+                                                          height: 29,
                                                           width: AppLayout.getSize(context).width,
                                                           child: Container(
                                                             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -935,8 +950,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           ),
                                                         ),
                                                         const Gap(28),
-                                                        SizedBox(
-                                                          height: 260,
+                                                        Container(
                                                           width: AppLayout.getSize(context).width,
                                                           child: ListView(
                                                             scrollDirection: Axis.vertical,
@@ -957,13 +971,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                               borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
                                                                             ),
                                                                             builder: (BuildContext bbContext) {
-                                                                              return SizedBox(
-                                                                                height: 390,
+                                                                              return Container(
+                                                                                height: 260,
                                                                                 child: Column(
                                                                                   children: [
                                                                                     const Gap(40),
                                                                                     SizedBox(
-                                                                                      height: 30,
+                                                                                      height: 29,
                                                                                       width: AppLayout.getSize(context).width,
                                                                                       child: Row(
                                                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1009,7 +1023,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                                                     Navigator.pop(bbContext);
                                                                                                     Navigator.pop(bContext);
                                                                                                   },
-                                                                                                  icon: job != categoryList.job2ByIndex[selectedJob]![index] ? const Icon(Icons.check_circle, color: Colors.grey,) : const Icon(Icons.check_circle, color: Colors.black,))
+                                                                                                  icon: job != categoryList.job2ByIndex[selectedJob]![index] ? Image.asset('assets/check.png') : Image.asset('assets/checkon.png'))
                                                                                             ],
                                                                                           ),
                                                                                         )
@@ -1022,7 +1036,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                             }
                                                                         );
                                                                       },
-                                                                      icon: Icon(Icons.check_circle, color: selectedJob == categoryList.job1ByIndex[index] ? Colors.black :Colors.grey,))
+                                                                      icon: selectedJob == categoryList.job1ByIndex[index] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
                                                                 ],
                                                               ),
                                                             )
@@ -1039,7 +1053,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(job == '' ? '업종/직무' : job, style: job == '' ? Styles.fTextStyle.copyWith(color: Colors.grey) : Styles.fTextStyle.copyWith(color: Colors.black)),
-                                              Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                              Image.asset(
+                                                  width: 9,
+                                                  height: 8,
+                                                  'assets/downx4.png'
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -1095,9 +1113,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                           });
                                                                           Navigator.pop(bc);
                                                                         },
-                                                                        icon: Icon(
-                                                                          Icons.check_circle,
-                                                                          color: annual == categoryList.yearByIndex[index+1] ? Colors.black : Colors.grey,))
+                                                                        icon: annual == categoryList.yearByIndex[index+1] ? Image.asset('assets/checkon.png') : Image.asset('assets/check.png')
+                                                                    )
                                                                   ],
                                                                 ),
                                                               )
@@ -1126,7 +1143,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       )
                                                   )
                                               ),
-                                              Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                              Image.asset(
+                                                  width: 9,
+                                                  height: 8,
+                                                  'assets/downx4.png'
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -1185,9 +1206,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                               });
                                                                               Navigator.pop(bc);
                                                                             },
-                                                                            icon: Icon(
-                                                                              Icons.check_circle,
-                                                                              color: sex == index+1 ? Colors.black : Colors.grey,))
+                                                                            icon: sex == index+1 ? Image.asset(
+                                                                                'assets/checkon.png',
+                                                                                width: 16,
+                                                                                height: 16
+                                                                            ) :
+                                                                            Image.asset(
+                                                                                'assets/check.png',
+                                                                                width: 16,
+                                                                                height: 16
+                                                                            )
+                                                                        )
                                                                       ],
                                                                     ),
                                                                   )
@@ -1205,7 +1234,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Text(categoryList.sexByIndex[sex], style: sex != 0 ? Styles.fTextStyle.copyWith(color: Colors.black) :Styles.fTextStyle.copyWith(color: Colors.grey),),
-                                                  Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                                  Image.asset(
+                                                      width: 9,
+                                                      height: 8,
+                                                      'assets/downx4.png'
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -1261,9 +1294,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                               });
                                                                               Navigator.pop(bc);
                                                                             },
-                                                                            icon: Icon(
-                                                                              Icons.check_circle,
-                                                                              color: age == categoryList.ageByIndex[index+1] ? Colors.black : Colors.grey,)
+                                                                            icon: age == categoryList.ageByIndex[index+1] ? Image.asset('assets/checkon.png') : Image.asset('assets/check.png')
                                                                         )
                                                                       ],
                                                                     ),
@@ -1293,7 +1324,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           )
                                                       )
                                                   ),
-                                                  Icon(Icons.arrow_drop_down, color: Styles.blueColor,)
+                                                  Image.asset(
+                                                      width: 9,
+                                                      height: 8,
+                                                      'assets/downx4.png'
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -1340,21 +1375,36 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton.small(
-        elevation: 0,
-        backgroundColor: Styles.blueGrey,
-        onPressed: () {
-          if (_focusNodes[0].hasFocus) {
-            _focusNodes[0].unfocus();
-          } else if (_focusNodes[1].hasFocus) {
-            _focusNodes[1].unfocus();
-          } else if (_focusNodes[2].hasFocus) {
-            _focusNodes[2].unfocus();
-          } else if (_focusNodes[3].hasFocus) {
-            _focusNodes[3].unfocus();
-          }
-        },
-        child: Image.asset('assets/down_arrow.png',
+      floatingActionButton: Visibility(
+        visible: isVisible,
+        child: FloatingActionButton.small(
+          elevation: 0,
+          backgroundColor: Styles.blueGrey,
+          onPressed: () {
+            if (_scrollController.offset < 833) {
+              _scrollController.animateTo(834, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+            } else if (_scrollController.offset < 833*2) {
+              _scrollController.animateTo(833*2+1, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+            } else if (_scrollController.offset < 833*3) {
+              _scrollController.animateTo(833*3+1, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+            } else if (_scrollController.offset < 833*4) {
+              _scrollController.animateTo(833*4+1, duration: const Duration(milliseconds: 500), curve: Curves.fastLinearToSlowEaseIn);
+            }
+            if (_focusNodes[0].hasFocus) {
+              _focusNodes[1].requestFocus();
+            } else if (_focusNodes[1].hasFocus) {
+              _focusNodes[2].requestFocus();
+            } else if (_focusNodes[2].hasFocus) {
+              _focusNodes[3].requestFocus();
+            } else if (_focusNodes[3].hasFocus) {
+              _focusNodes[3].unfocus();
+            }
+          },
+          child: Image.asset(
+            width: 24,
+            height: 24,
+            'assets/down_arrowx4.png',
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

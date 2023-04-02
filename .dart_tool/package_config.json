@@ -2,6 +2,12 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "archive",
+      "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/archive-3.3.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "args",
       "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.3.1",
       "packageUri": "lib/",
@@ -60,6 +66,12 @@
       "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.14"
+    },
+    {
+      "name": "csslib",
+      "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/csslib-0.17.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "cupertino_icons",
@@ -146,6 +158,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_native_splash",
+      "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_native_splash-2.2.17",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "flutter_social_content_share",
       "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_social_content_share-1.0.2",
       "packageUri": "lib/",
@@ -188,6 +206,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "html",
+      "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/html-0.15.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "http",
       "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.5",
       "packageUri": "lib/",
@@ -198,6 +222,12 @@
       "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "image",
+      "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/image-4.0.15",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
     },
     {
       "name": "intl",
@@ -494,6 +524,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "universal_io",
+      "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/universal_io-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.2",
       "packageUri": "lib/",
@@ -518,13 +554,19 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "yaml",
+      "rootUri": "file:///Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/yaml-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "wollu",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-03-01T13:59:24.990555Z",
+  "generated": "2023-04-02T14:47:15.458834Z",
   "generator": "pub",
   "generatorVersion": "2.18.6"
 }

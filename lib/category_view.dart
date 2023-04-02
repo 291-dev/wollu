@@ -127,7 +127,7 @@ class CategoryViewState extends State<CategoryView> {
                             right: -12,
                             child: IconButton(
                               alignment: Alignment.center,
-                              icon: played ? SvgPicture.asset('assets/stop.svg') : SvgPicture.asset('assets/play.svg'),
+                              icon: played ? Image.asset('assets/stopx4.png', width: 21, height: 21, isAntiAlias: true,) : Image.asset('assets/playx4.png', width: 21, height: 21, isAntiAlias: true,),
                               padding: const EdgeInsets.symmetric(horizontal: 4),
                               onPressed: () {
                                 widget.onTap!();
@@ -137,7 +137,7 @@ class CategoryViewState extends State<CategoryView> {
                                     played = widget.category.played;
 
                                     if (played) {
-                                      timer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+                                      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
                                         setState(() {
                                           time++;
                                           widget.category.setTime(time);
