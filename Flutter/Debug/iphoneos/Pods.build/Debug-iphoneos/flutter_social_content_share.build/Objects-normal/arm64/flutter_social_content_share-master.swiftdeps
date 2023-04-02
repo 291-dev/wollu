@@ -1,0 +1,7 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "9de2d9288607f6ae4a7ea10e496aaa2bc0f3367860c2b98013c3e5f4482825cf"
+build_start_time: [1677676853, 569159984]
+build_end_time: [1677676853, 595973014]
+inputs:
+  ? "/Users/kimkangjik/Downloads/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_social_content_share-1.0.2/ios/Classes/SwiftFlutterSocialContentSharePlugin.swift"
+  : !private [1677676664, 400955438]
