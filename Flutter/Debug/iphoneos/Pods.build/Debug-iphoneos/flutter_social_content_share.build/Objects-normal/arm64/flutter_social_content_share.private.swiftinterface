@@ -1,0 +1,28 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name flutter_social_content_share
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import FBSDKShareKit
+import Flutter
+import MessageUI
+import Photos
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+@_exported import flutter_social_content_share
+@objc @_inheritsConvenienceInitializers public class SwiftFlutterSocialContentSharePlugin : ObjectiveC.NSObject, Flutter.FlutterPlugin, FBSDKShareKit.SharingDelegate {
+  @objc public func sharer(_ sharer: FBSDKShareKit.Sharing, didCompleteWithResults results: [Swift.String : Any])
+  @objc public func sharer(_ sharer: FBSDKShareKit.Sharing, didFailWithError error: Swift.Error)
+  @objc public func sharerDidCancel(_ sharer: FBSDKShareKit.Sharing)
+  @objc public static func register(with registrar: Flutter.FlutterPluginRegistrar)
+  @objc public func handle(_ call: Flutter.FlutterMethodCall, result: @escaping Flutter.FlutterResult)
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension flutter_social_content_share.SwiftFlutterSocialContentSharePlugin : MessageUI.MFMessageComposeViewControllerDelegate {
+  @objc dynamic public func messageComposeViewController(_ controller: MessageUI.MFMessageComposeViewController, didFinishWith result: MessageUI.MessageComposeResult)
+}
+extension flutter_social_content_share.SwiftFlutterSocialContentSharePlugin : MessageUI.MFMailComposeViewControllerDelegate {
+  @objc dynamic public func mailComposeController(_ controller: MessageUI.MFMailComposeViewController, didFinishWith result: MessageUI.MFMailComposeResult, error: Swift.Error?)
+}

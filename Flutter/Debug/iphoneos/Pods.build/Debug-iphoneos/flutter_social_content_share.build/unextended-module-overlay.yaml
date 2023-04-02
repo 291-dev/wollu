@@ -1,0 +1,14 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/kimkangjik/Desktop/wollu_ios_build/Flutter/Debug/iphoneos/Debug-iphoneos/flutter_social_content_share/flutter_social_content_share.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/kimkangjik/Desktop/wollu_ios_build/Flutter/Debug/iphoneos/Pods.build/Debug-iphoneos/flutter_social_content_share.build/unextended-module.modulemap",
+    }]
+  }]
+}
