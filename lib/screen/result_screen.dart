@@ -388,7 +388,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                         content: Container(
                                           height: 86,
                                           alignment: Alignment.topCenter,
-                                          padding: const EdgeInsets.only(left: 45, right: 45, top: 6),
+                                          padding: const EdgeInsets.only(left: 35, right: 35, top: 6),
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [

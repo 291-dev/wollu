@@ -82,7 +82,7 @@ class ShareManager {
   shareOnFacebook() async {
     String? result = await FlutterSocialContentShare.share(
         type: ShareType.facebookWithoutImage,
-        url: "https://wollu.me",
+        url: 'https://wollu.me',
         quote: "captions"
     );
     print(result);
