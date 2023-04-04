@@ -305,11 +305,6 @@ class _MainState extends State<Main> with WidgetsBindingObserver {
     getPref();
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    notificationTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      if (isRun) {
-        LocalNotification.notification(categories[latest].name, _views[latest].category.getTime());
-      }
-    });
   }
 
   var message = "";
