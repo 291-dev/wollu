@@ -37,6 +37,15 @@
 		<string>2026184997588579</string>
 		<key>FacebookDisplayName</key>
 		<string>Wollu</string>
+		<key>CFBundleURLTypes</key>
+            <array>
+                <dict>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>2026184997588579</string>
+                    </array>
+                </dict>
+            </array>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>

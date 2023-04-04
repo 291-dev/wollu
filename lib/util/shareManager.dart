@@ -11,17 +11,17 @@ class ShareManager {
 
   shareOnTwitter() async {
     SocialShare.shareTwitter(
-      "회사에서 나는 어떤 루팡일까?",
+      '회사에서 나는 어떤 루팡일까?',
       hashtags: [
-        "월루",
-        "월급",
-        "루팡",
-        "사장님돈내꺼",
-        "개꿀",
-        "꽁돈"
+        '월루',
+        '월급',
+        '루팡',
+        '사장님돈내꺼',
+        '개꿀',
+        '꽁돈'
       ],
       url: "https://wollu.me",
-      trailingText: "월루 체험하기",
+      trailingText: '월루 체험하기',
     ).then((data) {
       print(data);
     });
