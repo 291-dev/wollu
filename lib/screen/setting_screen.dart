@@ -197,13 +197,13 @@ class _SetScreenState extends State<SetScreen> {
       return;
     }
 
-    var tempJob = ' ';
+    String? tempJob;
     if (job.isNotEmpty) {
       tempJob = '$selectedJob/$job';
     }
 
-    var tempAn = ' ';
-    if (annual != '연차') {
+    String? tempAn;
+    if (annual.isNotEmpty) {
       tempAn = annual;
     }
 
@@ -212,8 +212,8 @@ class _SetScreenState extends State<SetScreen> {
       tempS = sex;
     }
 
-    var tempAge = ' ';
-    if (age != '연령') {
+    String? tempAge;
+    if (age.isNotEmpty) {
       tempAge = age;
     }
 
@@ -229,7 +229,7 @@ class _SetScreenState extends State<SetScreen> {
     }
     return newStr;
   }
-  void callApi(String nickname, int salary, int week_work, int day_work, String job, String annual, int sex, String age) async {
+  void callApi(String nickname, int salary, int week_work, int day_work, String? job, String? annual, int sex, String? age) async {
     final url = Uri.parse("http://3.35.111.171:80/users/${widget.currentUser!.id}/");
     Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -253,8 +253,8 @@ class _SetScreenState extends State<SetScreen> {
       // Error handling
     } else {
       print(jsonData);
-      await helper.updateUser(jsonData['id'], jsonData['nickname'], jsonData['salary'], jsonData['week_work'], jsonData['day_work'], jsonData['job'],
-          jsonData['annual'], jsonData['sex'], jsonData['age']);
+      await helper.updateUser(jsonData['id'], jsonData['nickname'], jsonData['salary'], jsonData['week_work'], jsonData['day_work'], jsonData['job']?? '',
+          jsonData['annual']?? '', jsonData['sex'], jsonData['age']?? '');
     }
   }
 
@@ -450,6 +450,7 @@ class _SetScreenState extends State<SetScreen> {
                               keyboardType: TextInputType.number,
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
+                                FilteringTextInputFormatter(RegExp('^[1-7]{1}'), allow: true)
                               ],
                               textAlign: TextAlign.end,
                               decoration: InputDecoration(
@@ -487,7 +488,7 @@ class _SetScreenState extends State<SetScreen> {
                             ),
                             child: TextFormField(
                               controller: _controllers[3],
-                              textInputAction: TextInputAction.next,
+                              textInputAction: TextInputAction.done,
                               style: Styles.fEnableStyle,
                               onChanged: (value) {
                                 day_work = value;
@@ -498,6 +499,7 @@ class _SetScreenState extends State<SetScreen> {
                               keyboardType: TextInputType.number,
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
+                                FilteringTextInputFormatter(RegExp('^[1-9]{1}\$|^[1]{1}[0-9]{1}\$|^[2]{1}[0-4]{1}\$'), allow: true)
                               ],
                               textAlign: TextAlign.end,
                               decoration: InputDecoration(
@@ -638,7 +640,7 @@ class _SetScreenState extends State<SetScreen> {
                                                                                       Navigator.pop(bbContext);
                                                                                       Navigator.pop(bContext);
                                                                                     },
-                                                                                    icon: job != categoryList.job2ByIndex[selectedJob]![index] ? const Icon(Icons.check_circle, color: Colors.grey,) : const Icon(Icons.check_circle, color: Colors.black,))
+                                                                                    icon: job != categoryList.job2ByIndex[selectedJob]![index] ? Image.asset('assets/checkOff.png') : Image.asset('assets/checkOn.png'))
                                                                               ],
                                                                             ),
                                                                           )
@@ -652,7 +654,7 @@ class _SetScreenState extends State<SetScreen> {
                                                               }
                                                           );
                                                         },
-                                                        icon: Icon(Icons.check_circle, color: selectedJob == categoryList.job1ByIndex[index] ? Colors.black : Colors.grey,))
+                                                        icon: selectedJob == categoryList.job1ByIndex[index] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
                                                   ],
                                                 ),
                                               )
@@ -715,7 +717,7 @@ class _SetScreenState extends State<SetScreen> {
                                                 children: List.generate(8, (index) => Container(
                                                   padding: const EdgeInsets.symmetric(horizontal: 30),
                                                   width: AppLayout.getSize(context).width,
-                                                  height: 260/7,
+                                                  height: 300/8,
                                                   child: Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
@@ -729,9 +731,7 @@ class _SetScreenState extends State<SetScreen> {
                                                             });
                                                             Navigator.pop(bc);
                                                           },
-                                                          icon: Icon(
-                                                            Icons.check_circle,
-                                                            color: annual == categoryList.yearByIndex[index+1] ? Colors.black : Colors.grey,))
+                                                          icon: annual == categoryList.yearByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
                                                     ],
                                                   ),
                                                 )
@@ -824,9 +824,7 @@ class _SetScreenState extends State<SetScreen> {
                                                                   });
                                                                   Navigator.pop(bc);
                                                                 },
-                                                                icon: Icon(
-                                                                  Icons.check_circle,
-                                                                  color: sex == index+1 ? Colors.black : Colors.grey,))
+                                                                icon: sex == index+1 ? Image.asset('assets/checkOn.png' ,width: 21, height: 21,) : Image.asset('assets/checkOff.png',width: 21, height: 21,))
                                                           ],
                                                         ),
                                                       )
@@ -877,7 +875,7 @@ class _SetScreenState extends State<SetScreen> {
                                         ),
                                         builder: (BuildContext bContext) {
                                           return SizedBox(
-                                            height: 374,
+                                            height: 372,
                                             child: Column(
                                               children: [
                                                 const Gap(40),
@@ -904,9 +902,7 @@ class _SetScreenState extends State<SetScreen> {
                                                                   });
                                                                   Navigator.pop(bc);
                                                                 },
-                                                                icon: Icon(
-                                                                  Icons.check_circle,
-                                                                  color: age == categoryList.ageByIndex[index+1] ? Colors.black : Colors.grey,)
+                                                                icon: age == categoryList.ageByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png')
                                                             )
                                                           ],
                                                         ),

@@ -250,7 +250,11 @@ class _FinishScreenState extends State<FinishScreen> {
                                         share.shareOnTwitter();
                                       }, icon: Image.asset('assets/twx4.png')),
                                       IconButton(onPressed: () async {
-                                        share.shareOnInstagram();
+                                        share.shareOnInstagram().then((value) {
+                                          if (value != null) {
+                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value)));
+                                          }
+                                        });
                                       }, icon: Image.asset('assets/instax4.png')),
                                       IconButton(onPressed: () {
                                         share.shareSMS();

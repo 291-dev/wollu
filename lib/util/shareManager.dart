@@ -88,11 +88,10 @@ class ShareManager {
     print(result);
   }
 
-  shareOnInstagram() async {
-    String? result = await FlutterSocialContentShare.share(
+  Future<String?> shareOnInstagram() async {
+    return await FlutterSocialContentShare.share(
         type: ShareType.instagramWithImageUrl,
         imageUrl:
         "https://wollu-img.s3.ap-northeast-2.amazonaws.com/wollu.png");
-    print(result);
   }
 }

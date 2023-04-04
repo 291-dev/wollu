@@ -942,7 +942,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       children: [
                                                         const Gap(40),
                                                         SizedBox(
-                                                          height: 29,
+                                                          height: 19,
                                                           width: AppLayout.getSize(context).width,
                                                           child: Container(
                                                             padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -950,7 +950,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           ),
                                                         ),
                                                         const Gap(28),
-                                                        Container(
+                                                        SizedBox(
+                                                          height: 260,
                                                           width: AppLayout.getSize(context).width,
                                                           child: ListView(
                                                             scrollDirection: Axis.vertical,
@@ -971,13 +972,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                               borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
                                                                             ),
                                                                             builder: (BuildContext bbContext) {
-                                                                              return Container(
-                                                                                height: 260,
+                                                                              return SizedBox(
+                                                                                height: (20*(categoryList.job2ByIndex[selectedJob]!.length*2-1)) + 135 > 395 ? 395 : (20*(categoryList.job2ByIndex[selectedJob]!.length*2-1)) + 135,
                                                                                 child: Column(
                                                                                   children: [
                                                                                     const Gap(40),
                                                                                     SizedBox(
-                                                                                      height: 29,
                                                                                       width: AppLayout.getSize(context).width,
                                                                                       child: Row(
                                                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1003,14 +1003,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                                     ), // 2차직종
                                                                                     const Gap(28),
                                                                                     SizedBox(
-                                                                                      height: 260,
+                                                                                      height: (20*(categoryList.job2ByIndex[selectedJob]!.length*2-1)) > 260 ? 260 : (20*(categoryList.job2ByIndex[selectedJob]!.length*2-1)),
                                                                                       width: AppLayout.getSize(context).width,
                                                                                       child: ListView(
                                                                                         scrollDirection: Axis.vertical,
                                                                                         children: List.generate(categoryList.job2ByIndex[selectedJob]!.length, (index) => Container(
                                                                                           padding: const EdgeInsets.symmetric(horizontal: 30),
                                                                                           width: AppLayout.getSize(bContext).width,
-                                                                                          height: 260/7,
+                                                                                          height: (20*(categoryList.job2ByIndex[selectedJob]!.length*2-1))/categoryList.job2ByIndex[selectedJob]!.length.toDouble(),
                                                                                           child: Row(
                                                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                             children: [
@@ -1023,7 +1023,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                                                     Navigator.pop(bbContext);
                                                                                                     Navigator.pop(bContext);
                                                                                                   },
-                                                                                                  icon: job != categoryList.job2ByIndex[selectedJob]![index] ? Image.asset('assets/check.png') : Image.asset('assets/checkon.png'))
+                                                                                                  icon: job != categoryList.job2ByIndex[selectedJob]![index] ? Image.asset('assets/checkOff.png') : Image.asset('assets/checkOn.png'))
                                                                                             ],
                                                                                           ),
                                                                                         )
@@ -1042,7 +1042,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                             )
                                                             ),
                                                           ),
-                                                        )
+                                                        ),
+                                                        const Gap(33),
                                                       ],
                                                     ),
                                                   );
@@ -1113,7 +1114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                           });
                                                                           Navigator.pop(bc);
                                                                         },
-                                                                        icon: annual == categoryList.yearByIndex[index+1] ? Image.asset('assets/checkon.png') : Image.asset('assets/check.png')
+                                                                        icon: annual == categoryList.yearByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png')
                                                                     )
                                                                   ],
                                                                 ),
@@ -1206,16 +1207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                               });
                                                                               Navigator.pop(bc);
                                                                             },
-                                                                            icon: sex == index+1 ? Image.asset(
-                                                                                'assets/checkon.png',
-                                                                                width: 16,
-                                                                                height: 16
-                                                                            ) :
-                                                                            Image.asset(
-                                                                                'assets/check.png',
-                                                                                width: 16,
-                                                                                height: 16
-                                                                            )
+                                                                            icon: sex == index+1 ? Image.asset('assets/checkOn.png', width: 21, height: 21,) : Image.asset('assets/checkOff.png', width: 21, height: 21)
                                                                         )
                                                                       ],
                                                                     ),
@@ -1294,7 +1286,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                               });
                                                                               Navigator.pop(bc);
                                                                             },
-                                                                            icon: age == categoryList.ageByIndex[index+1] ? Image.asset('assets/checkon.png') : Image.asset('assets/check.png')
+                                                                            icon: age == categoryList.ageByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png')
                                                                         )
                                                                       ],
                                                                     ),
