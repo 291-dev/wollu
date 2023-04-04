@@ -1673,7 +1673,7 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                             Positioned(
                                               top: 1.63,
                                               child: Container(
-                                                width: (width-48) * (dataList[3].total/dataList[3].num)/(dataList[3].max-dataList[3].min),
+                                                width: dataList[3].max == 0 ? 0 : (width-48) * (dataList[3].total/dataList[3].num)/(dataList[3].max-dataList[3].min),
                                                 height: 4,
                                                 child: DecoratedBox(
                                                   decoration: BoxDecoration(

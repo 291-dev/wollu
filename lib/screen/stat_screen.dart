@@ -12,6 +12,7 @@ import 'package:wollu/util/app_styles.dart';
 import 'package:http/http.dart' as http;
 
 import '../entity/User.dart';
+import 'main_origin.dart';
 
 class StatScreen extends StatefulWidget {
   User currentUser;
@@ -118,7 +119,9 @@ class _StatScreenState extends State<StatScreen> {
                             alignment: Alignment.centerRight,
                             child: IconButton(
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Main(
+                                  currentUser: widget.currentUser,
+                                )), (route) => false);
                               },
                               icon: Image.asset(
                                 'assets/x4home.png',
