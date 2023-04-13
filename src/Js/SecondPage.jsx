@@ -9,7 +9,10 @@ import '../CssUtil/TextStyle.css';
 import '../CssUtil/Spaces.css';
 import '../CssUtil/Utils.css'
 import React, {useState} from 'react';
+import {useRef,useEffect} from 'react';
 import { BrowserView, MobileView } from "react-device-detect";
+import { useHref } from "react-router-dom";
+
 export default function SecondPage(salaryInfo) {
     const onNickNameChange = (e) => {
       // replace string
@@ -57,7 +60,7 @@ export default function SecondPage(salaryInfo) {
 
     var window_width = window.innerWidth;
     var window_height = window.innerHeight;
-  
+    
     if (window_width < 375){
       window_width = 375;
     }
@@ -139,7 +142,7 @@ export default function SecondPage(salaryInfo) {
     const InputTextField = styled.input`
       font-family: "pretendard_light";
       font-size: ${pretendard_font_size}px;
-      color: var(--gray01-color);
+      color: var(--main-color);
       border-color: #FFFFFF;
       line-height: 145%;
       border-radius: 4px;
@@ -167,7 +170,7 @@ export default function SecondPage(salaryInfo) {
     const InputTextField2 = styled.input`
         font-family: "pretendard_light";
         font-size: ${pretendard_font_size}px;
-        color: var(--gray01-color);
+        color: var(--main-color);
         border-color: #FFFFFF;
         line-height: 145%;
         border-radius: 4px;
@@ -193,7 +196,7 @@ export default function SecondPage(salaryInfo) {
     const InputTextField3 = styled.input`
       font-family: "pretendard_light";
       font-size: ${pretendard_font_size}px;
-      color: var(--gray01-color);
+      color: var(--main-color);
       border-color: #FFFFFF;
       line-height: 145%;
       border-radius: 4px;
@@ -221,8 +224,9 @@ export default function SecondPage(salaryInfo) {
         event.preventDefault();
       }
     }
-
+    
     return (
+      <React.StrictMode>
       <Background>
         <Card>
           <UpperImage src={GetSalaryView_MainImage}/>
@@ -231,7 +235,7 @@ export default function SecondPage(salaryInfo) {
             <TextMarginTop/>
             <TextInRow>
               <TextStyleInlineFront>저</TextStyleInlineFront>
-              <InputTextField placeholder="000" onChange={onNickNameChange}></InputTextField>
+              <InputTextField placeholder="000" onChange={onNickNameChange} ></InputTextField>
               <TextStyleInlineBack>은/는</TextStyleInlineBack>
             </TextInRow>
             <TextMarginTop/>
@@ -249,5 +253,6 @@ export default function SecondPage(salaryInfo) {
           </TextBox>
         </Card>
       </Background>
+      </React.StrictMode>
     );
   }
