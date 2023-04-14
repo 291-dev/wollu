@@ -15,8 +15,9 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'entity/User.dart';
 
 void main() async {
+  // 456c69cd89e100bced18bfefe46ab685
   KakaoSdk.init(
-    nativeAppKey: '456c69cd89e100bced18bfefe46ab685'
+    nativeAppKey: 'd95d45040edbf0fd22632bea99b6c8f3'
   );
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:wollu/util/shareManager.dart';
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 
 import '../entity/User.dart';
 import 'finish_screen.dart';
@@ -388,19 +389,25 @@ class _ResultScreenState extends State<ResultScreen> {
                                         content: Container(
                                           height: 86,
                                           alignment: Alignment.topCenter,
-                                          padding: const EdgeInsets.only(left: 35, right: 35, top: 6),
+                                          padding: EdgeInsets.only(
+                                              left: defaultTargetPlatform != TargetPlatform.iOS ? 35 : 89,
+                                              right: defaultTargetPlatform != TargetPlatform.iOS ? 35 : 89,
+                                              top: 6
+                                          ),
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               IconButton(onPressed: () {
                                                 share.shareOnKakao();
                                               }, icon: Image.asset('assets/kakaox4.png')),
-                                              IconButton(onPressed: () {
-                                                share.shareOnFacebook();
-                                              }, icon: Image.asset('assets/facex4.png')),
-                                              IconButton(onPressed: () {
-                                                share.shareOnTwitter();
-                                              }, icon: Image.asset('assets/twx4.png')),
+                                              if (defaultTargetPlatform != TargetPlatform.iOS) ... [
+                                                IconButton(onPressed: () {
+                                                  share.shareOnFacebook();
+                                                }, icon: Image.asset('assets/facex4.png')),
+                                                IconButton(onPressed: () {
+                                                  share.shareOnTwitter();
+                                                }, icon: Image.asset('assets/twx4.png')),
+                                              ],
                                               IconButton(onPressed: () async {
                                                 share.shareOnInstagram().then((value) {
                                                   if (value != null) {

@@ -1193,7 +1193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                   children: List.generate(3, (index) => Container(
                                                                     padding: const EdgeInsets.symmetric(horizontal: 30),
                                                                     width: AppLayout.getSize(context).width,
-                                                                    height: 100/3,
+                                                                    height: 260/7,
                                                                     child: Row(
                                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                       children: [

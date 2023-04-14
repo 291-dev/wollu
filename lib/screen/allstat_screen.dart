@@ -133,7 +133,7 @@ class _AllStatScreenState extends State<AllStatScreen> {
     if (s.length < 6) {
       return s;
     } else {
-      return '${s.substring(0, 5)}...';
+      return '${s.substring(0, 6)}...';
     }
   }
 
@@ -189,13 +189,12 @@ class _AllStatScreenState extends State<AllStatScreen> {
                               width: width,
                               alignment: Alignment.centerRight,
                               child: IconButton(
+                                  iconSize: 39,
                                 onPressed: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => Main(currentUser: widget.currentUser)));
                                 },
                                 icon: Image.asset(
-                                  'assets/home.png',
-                                  width: 24,
-                                  height: 24,
+                                  'assets/homex4.png',
                                 ),
                               ),
                             ),
@@ -282,87 +281,185 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                                 padding: const EdgeInsets.symmetric(horizontal: 30),
                                                                 width: AppLayout.getSize(bContext).width,
                                                                 height: 260/7,
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Text(categoryList.job1ByIndex[index], style: fstJob == categoryList.job1ByIndex[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                    IconButton(
-                                                                        onPressed: () {
-                                                                          fstJob = categoryList.job1ByIndex[index];
-                                                                          showModalBottomSheet(
-                                                                              context: context,
-                                                                              shape: const RoundedRectangleBorder(
-                                                                                borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                                              ),
-                                                                              builder: (bbContext) {
-                                                                                return SizedBox(
-                                                                                  height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135 > 395 ? 395 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135,
-                                                                                  child: Column(
+                                                                child: GestureDetector(
+                                                                  onTap: () {
+                                                                    fstJob = categoryList.job1ByIndex[index];
+                                                                    showModalBottomSheet(
+                                                                        context: context,
+                                                                        shape: const RoundedRectangleBorder(
+                                                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                                        ),
+                                                                        builder: (bbContext) {
+                                                                          return SizedBox(
+                                                                            height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135 > 395 ? 395 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135,
+                                                                            child: Column(
+                                                                              children: [
+                                                                                const Gap(40),
+                                                                                SizedBox(
+                                                                                  width: AppLayout.getSize(context).width,
+                                                                                  child: Row(
+                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                     children: [
-                                                                                      const Gap(40),
-                                                                                      SizedBox(
-                                                                                        width: AppLayout.getSize(context).width,
-                                                                                        child: Row(
-                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                          children: [
-                                                                                            Container(
-                                                                                              padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                              child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
-                                                                                            ),
-                                                                                            Container(
-                                                                                              padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                              child: TextButton(
-                                                                                                  onPressed: () {
-                                                                                                    Navigator.pop(bContext);
-                                                                                                  },
-                                                                                                  child: Text(
-                                                                                                    '이전으로',
-                                                                                                    style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
-                                                                                                  )
-                                                                                              ),
+                                                                                      Container(
+                                                                                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                        child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                                                                      ),
+                                                                                      Container(
+                                                                                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                        child: TextButton(
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(bContext);
+                                                                                            },
+                                                                                            child: Text(
+                                                                                              '이전으로',
+                                                                                              style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
                                                                                             )
-                                                                                          ],
-                                                                                        ),
-                                                                                      ), // 2차직종
-                                                                                      const Gap(14),
-                                                                                      SizedBox(
-                                                                                        height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) > 260 ? 260 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)),
-                                                                                        width: AppLayout.getSize(context).width,
-                                                                                        child: ListView(
-                                                                                          scrollDirection: Axis.vertical,
-                                                                                          children: List.generate(categoryList.job2ByIndex[fstJob]!.length, (index) => Container(
-                                                                                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                            width: AppLayout.getSize(bContext).width,
-                                                                                            height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1))/categoryList.job2ByIndex[fstJob]!.length.toDouble(),
-                                                                                            child: Row(
-                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                              children: [
-                                                                                                Text(categoryList.job2ByIndex[fstJob]![index], style: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
-                                                                                                IconButton(
-                                                                                                    onPressed: () {
-                                                                                                      setState(() {
-                                                                                                        sndJob = categoryList.job2ByIndex[fstJob]![index];
-                                                                                                      });
-                                                                                                      print('$fstJob/$sndJob');
-                                                                                                      get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
-                                                                                                      Navigator.pop(bbContext);
-                                                                                                      Navigator.pop(bContext);
-                                                                                                    },
-                                                                                                    icon: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Image.asset('assets/checkOff.png') : Image.asset('assets/checkOn.png'))
-                                                                                              ],
-                                                                                            ),
-                                                                                          )
-                                                                                          ),
                                                                                         ),
                                                                                       )
                                                                                     ],
                                                                                   ),
-                                                                                );
-                                                                              }
+                                                                                ), // 2차직종
+                                                                                const Gap(14),
+                                                                                SizedBox(
+                                                                                  height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) > 260 ? 260 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)),
+                                                                                  width: AppLayout.getSize(context).width,
+                                                                                  child: ListView(
+                                                                                    scrollDirection: Axis.vertical,
+                                                                                    children: List.generate(categoryList.job2ByIndex[fstJob]!.length, (index) => Container(
+                                                                                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                      width: AppLayout.getSize(bContext).width,
+                                                                                      height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1))/categoryList.job2ByIndex[fstJob]!.length.toDouble(),
+                                                                                      child: GestureDetector(
+                                                                                        onTap: () {
+                                                                                          setState(() {
+                                                                                            sndJob = categoryList.job2ByIndex[fstJob]![index];
+                                                                                          });
+                                                                                          print('$fstJob/$sndJob');
+                                                                                          get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
+                                                                                          Navigator.pop(bbContext);
+                                                                                          Navigator.pop(bContext);
+                                                                                        },
+                                                                                        child: Row(
+                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                          children: [
+                                                                                            Text(categoryList.job2ByIndex[fstJob]![index], style: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
+                                                                                            IconButton(
+                                                                                                onPressed: () {
+                                                                                                  setState(() {
+                                                                                                    sndJob = categoryList.job2ByIndex[fstJob]![index];
+                                                                                                  });
+                                                                                                  print('$fstJob/$sndJob');
+                                                                                                  get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
+                                                                                                  Navigator.pop(bbContext);
+                                                                                                  Navigator.pop(bContext);
+                                                                                                },
+                                                                                                icon: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Image.asset('assets/checkOff.png') : Image.asset('assets/checkOn.png'))
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                    )
+                                                                                    ),
+                                                                                  ),
+                                                                                )
+                                                                              ],
+                                                                            ),
                                                                           );
-                                                                        },
-                                                                        icon: fstJob == categoryList.job1ByIndex[index] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
-                                                                  ],
+                                                                        }
+                                                                    );
+                                                                  },
+                                                                  child: Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                    children: [
+                                                                      Text(categoryList.job1ByIndex[index], style: fstJob == categoryList.job1ByIndex[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                      IconButton(
+                                                                          onPressed: () {
+                                                                            fstJob = categoryList.job1ByIndex[index];
+                                                                            showModalBottomSheet(
+                                                                                context: context,
+                                                                                shape: const RoundedRectangleBorder(
+                                                                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                                                ),
+                                                                                builder: (bbContext) {
+                                                                                  return SizedBox(
+                                                                                    height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135 > 395 ? 395 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135,
+                                                                                    child: Column(
+                                                                                      children: [
+                                                                                        const Gap(40),
+                                                                                        SizedBox(
+                                                                                          width: AppLayout.getSize(context).width,
+                                                                                          child: Row(
+                                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                            children: [
+                                                                                              Container(
+                                                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                                child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                                                                              ),
+                                                                                              Container(
+                                                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                                child: TextButton(
+                                                                                                    onPressed: () {
+                                                                                                      Navigator.pop(bContext);
+                                                                                                    },
+                                                                                                    child: Text(
+                                                                                                      '이전으로',
+                                                                                                      style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
+                                                                                                    )
+                                                                                                ),
+                                                                                              )
+                                                                                            ],
+                                                                                          ),
+                                                                                        ), // 2차직종
+                                                                                        const Gap(14),
+                                                                                        SizedBox(
+                                                                                          height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) > 260 ? 260 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)),
+                                                                                          width: AppLayout.getSize(context).width,
+                                                                                          child: ListView(
+                                                                                            scrollDirection: Axis.vertical,
+                                                                                            children: List.generate(categoryList.job2ByIndex[fstJob]!.length, (index) => Container(
+                                                                                              padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                              width: AppLayout.getSize(bContext).width,
+                                                                                              height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1))/categoryList.job2ByIndex[fstJob]!.length.toDouble(),
+                                                                                              child: GestureDetector(
+                                                                                                onTap: () {
+                                                                                                  setState(() {
+                                                                                                    sndJob = categoryList.job2ByIndex[fstJob]![index];
+                                                                                                  });
+                                                                                                  print('$fstJob/$sndJob');
+                                                                                                  get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
+                                                                                                  Navigator.pop(bbContext);
+                                                                                                  Navigator.pop(bContext);
+                                                                                                },
+                                                                                                child: Row(
+                                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                  children: [
+                                                                                                    Text(categoryList.job2ByIndex[fstJob]![index], style: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
+                                                                                                    IconButton(
+                                                                                                        onPressed: () {
+                                                                                                          setState(() {
+                                                                                                            sndJob = categoryList.job2ByIndex[fstJob]![index];
+                                                                                                          });
+                                                                                                          print('$fstJob/$sndJob');
+                                                                                                          get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
+                                                                                                          Navigator.pop(bbContext);
+                                                                                                          Navigator.pop(bContext);
+                                                                                                        },
+                                                                                                        icon: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Image.asset('assets/checkOff.png') : Image.asset('assets/checkOn.png'))
+                                                                                                  ],
+                                                                                                ),
+                                                                                              ),
+                                                                                            )
+                                                                                            ),
+                                                                                          ),
+                                                                                        )
+                                                                                      ],
+                                                                                    ),
+                                                                                  );
+                                                                                }
+                                                                            );
+                                                                          },
+                                                                          icon: fstJob == categoryList.job1ByIndex[index] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               )
                                                               ),
@@ -526,87 +623,185 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                                   padding: const EdgeInsets.symmetric(horizontal: 30),
                                                                   width: AppLayout.getSize(bContext).width,
                                                                   height: 260/7,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: [
-                                                                      Text(categoryList.job1ByIndex[index], style: fstJob == categoryList.job1ByIndex[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                      IconButton(
-                                                                          onPressed: () {
-                                                                            fstJob = categoryList.job1ByIndex[index];
-                                                                            showModalBottomSheet(
-                                                                                context: context,
-                                                                                shape: const RoundedRectangleBorder(
-                                                                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-                                                                                ),
-                                                                                builder: (bbContext) {
-                                                                                  return SizedBox(
-                                                                                    height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135 > 395 ? 395 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135,
-                                                                                    child: Column(
+                                                                  child: GestureDetector(
+                                                                    onTap: () {
+                                                                      fstJob = categoryList.job1ByIndex[index];
+                                                                      showModalBottomSheet(
+                                                                          context: context,
+                                                                          shape: const RoundedRectangleBorder(
+                                                                            borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                                          ),
+                                                                          builder: (bbContext) {
+                                                                            return SizedBox(
+                                                                              height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135 > 395 ? 395 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135,
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  const Gap(40),
+                                                                                  SizedBox(
+                                                                                    width: AppLayout.getSize(context).width,
+                                                                                    child: Row(
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                       children: [
-                                                                                        const Gap(40),
-                                                                                        SizedBox(
-                                                                                          width: AppLayout.getSize(context).width,
-                                                                                          child: Row(
-                                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                            children: [
-                                                                                              Container(
-                                                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                                child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
-                                                                                              ),
-                                                                                              Container(
-                                                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                                child: TextButton(
-                                                                                                    onPressed: () {
-                                                                                                      Navigator.pop(bContext);
-                                                                                                    },
-                                                                                                    child: Text(
-                                                                                                      '이전으로',
-                                                                                                      style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
-                                                                                                    )
-                                                                                                ),
+                                                                                        Container(
+                                                                                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                          child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                                                                        ),
+                                                                                        Container(
+                                                                                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                          child: TextButton(
+                                                                                              onPressed: () {
+                                                                                                Navigator.pop(bContext);
+                                                                                              },
+                                                                                              child: Text(
+                                                                                                '이전으로',
+                                                                                                style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
                                                                                               )
-                                                                                            ],
-                                                                                          ),
-                                                                                        ), // 2차직종
-                                                                                        const Gap(14),
-                                                                                        SizedBox(
-                                                                                          height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) > 260 ? 260 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)),
-                                                                                          width: AppLayout.getSize(context).width,
-                                                                                          child: ListView(
-                                                                                            scrollDirection: Axis.vertical,
-                                                                                            children: List.generate(categoryList.job2ByIndex[fstJob]!.length, (index) => Container(
-                                                                                              padding: const EdgeInsets.symmetric(horizontal: 30),
-                                                                                              width: AppLayout.getSize(bContext).width,
-                                                                                              height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1))/categoryList.job2ByIndex[fstJob]!.length.toDouble(),
-                                                                                              child: Row(
-                                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                                children: [
-                                                                                                  Text(categoryList.job2ByIndex[fstJob]![index], style: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
-                                                                                                  IconButton(
-                                                                                                      onPressed: () {
-                                                                                                        setState(() {
-                                                                                                          sndJob = categoryList.job2ByIndex[fstJob]![index];
-                                                                                                        });
-                                                                                                        print('$fstJob/$sndJob');
-                                                                                                        get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
-                                                                                                        Navigator.pop(bbContext);
-                                                                                                        Navigator.pop(bContext);
-                                                                                                      },
-                                                                                                      icon: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Image.asset('assets/checkOff.png') : Image.asset('assets/checkOn.png'))
-                                                                                                ],
-                                                                                              ),
-                                                                                            )
-                                                                                            ),
                                                                                           ),
                                                                                         )
                                                                                       ],
                                                                                     ),
-                                                                                  );
-                                                                                }
+                                                                                  ), // 2차직종
+                                                                                  const Gap(14),
+                                                                                  SizedBox(
+                                                                                    height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) > 260 ? 260 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)),
+                                                                                    width: AppLayout.getSize(context).width,
+                                                                                    child: ListView(
+                                                                                      scrollDirection: Axis.vertical,
+                                                                                      children: List.generate(categoryList.job2ByIndex[fstJob]!.length, (index) => Container(
+                                                                                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                        width: AppLayout.getSize(bContext).width,
+                                                                                        height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1))/categoryList.job2ByIndex[fstJob]!.length.toDouble(),
+                                                                                        child: GestureDetector(
+                                                                                          onTap: () {
+                                                                                            setState(() {
+                                                                                              sndJob = categoryList.job2ByIndex[fstJob]![index];
+                                                                                            });
+                                                                                            print('$fstJob/$sndJob');
+                                                                                            get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
+                                                                                            Navigator.pop(bbContext);
+                                                                                            Navigator.pop(bContext);
+                                                                                          },
+                                                                                          child: Row(
+                                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                            children: [
+                                                                                              Text(categoryList.job2ByIndex[fstJob]![index], style: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
+                                                                                              IconButton(
+                                                                                                  onPressed: () {
+                                                                                                    setState(() {
+                                                                                                      sndJob = categoryList.job2ByIndex[fstJob]![index];
+                                                                                                    });
+                                                                                                    print('$fstJob/$sndJob');
+                                                                                                    get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
+                                                                                                    Navigator.pop(bbContext);
+                                                                                                    Navigator.pop(bContext);
+                                                                                                  },
+                                                                                                  icon: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Image.asset('assets/checkOff.png') : Image.asset('assets/checkOn.png'))
+                                                                                            ],
+                                                                                          ),
+                                                                                        ),
+                                                                                      )
+                                                                                      ),
+                                                                                    ),
+                                                                                  )
+                                                                                ],
+                                                                              ),
                                                                             );
-                                                                          },
-                                                                          icon: fstJob == categoryList.job1ByIndex[index] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
-                                                                    ],
+                                                                          }
+                                                                      );
+                                                                    },
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                      children: [
+                                                                        Text(categoryList.job1ByIndex[index], style: fstJob == categoryList.job1ByIndex[index] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                        IconButton(
+                                                                            onPressed: () {
+                                                                              fstJob = categoryList.job1ByIndex[index];
+                                                                              showModalBottomSheet(
+                                                                                  context: context,
+                                                                                  shape: const RoundedRectangleBorder(
+                                                                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+                                                                                  ),
+                                                                                  builder: (bbContext) {
+                                                                                    return SizedBox(
+                                                                                      height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135 > 395 ? 395 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) + 135,
+                                                                                      child: Column(
+                                                                                        children: [
+                                                                                          const Gap(40),
+                                                                                          SizedBox(
+                                                                                            width: AppLayout.getSize(context).width,
+                                                                                            child: Row(
+                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                              children: [
+                                                                                                Container(
+                                                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                                  child: Text('2차 직종', style: Styles.fTitleStyle.copyWith(fontSize: 16),),
+                                                                                                ),
+                                                                                                Container(
+                                                                                                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                                  child: TextButton(
+                                                                                                      onPressed: () {
+                                                                                                        Navigator.pop(bContext);
+                                                                                                      },
+                                                                                                      child: Text(
+                                                                                                        '이전으로',
+                                                                                                        style: Styles.fInfoStyle.copyWith(color: Styles.grey03),
+                                                                                                      )
+                                                                                                  ),
+                                                                                                )
+                                                                                              ],
+                                                                                            ),
+                                                                                          ), // 2차직종
+                                                                                          const Gap(14),
+                                                                                          SizedBox(
+                                                                                            height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)) > 260 ? 260 : (20*(categoryList.job2ByIndex[fstJob]!.length*2-1)),
+                                                                                            width: AppLayout.getSize(context).width,
+                                                                                            child: ListView(
+                                                                                              scrollDirection: Axis.vertical,
+                                                                                              children: List.generate(categoryList.job2ByIndex[fstJob]!.length, (index) => Container(
+                                                                                                padding: const EdgeInsets.symmetric(horizontal: 30),
+                                                                                                width: AppLayout.getSize(bContext).width,
+                                                                                                height: (20*(categoryList.job2ByIndex[fstJob]!.length*2-1))/categoryList.job2ByIndex[fstJob]!.length.toDouble(),
+                                                                                                child: GestureDetector(
+                                                                                                  onTap: () {
+                                                                                                    setState(() {
+                                                                                                      sndJob = categoryList.job2ByIndex[fstJob]![index];
+                                                                                                    });
+                                                                                                    print('$fstJob/$sndJob');
+                                                                                                    get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
+                                                                                                    Navigator.pop(bbContext);
+                                                                                                    Navigator.pop(bContext);
+                                                                                                  },
+                                                                                                  child: Row(
+                                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                    children: [
+                                                                                                      Text(categoryList.job2ByIndex[fstJob]![index], style: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Styles.titleStyle.copyWith(color: Colors.grey):Styles.titleStyle.copyWith(color: Colors.black)),
+                                                                                                      IconButton(
+                                                                                                          onPressed: () {
+                                                                                                            setState(() {
+                                                                                                              sndJob = categoryList.job2ByIndex[fstJob]![index];
+                                                                                                            });
+                                                                                                            print('$fstJob/$sndJob');
+                                                                                                            get(0, '$fstJob/$sndJob', 'dump', -7, 'dump');
+                                                                                                            Navigator.pop(bbContext);
+                                                                                                            Navigator.pop(bContext);
+                                                                                                          },
+                                                                                                          icon: sndJob != categoryList.job2ByIndex[fstJob]![index] ? Image.asset('assets/checkOff.png') : Image.asset('assets/checkOn.png'))
+                                                                                                    ],
+                                                                                                  ),
+                                                                                                ),
+                                                                                              )
+                                                                                              ),
+                                                                                            ),
+                                                                                          )
+                                                                                        ],
+                                                                                      ),
+                                                                                    );
+                                                                                  }
+                                                                              );
+                                                                            },
+                                                                            icon: fstJob == categoryList.job1ByIndex[index] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 )
                                                                 ),
@@ -748,22 +943,31 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                                   padding: const EdgeInsets.symmetric(horizontal: 30),
                                                                   width: AppLayout.getSize(context).width,
                                                                   height: 300/8,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                        categoryList.yearByIndex[index+1],
-                                                                        style: annuals == categoryList.yearByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                      IconButton(
-                                                                          onPressed: () {
-                                                                            setState(() {
-                                                                              annuals = categoryList.yearByIndex[index+1];
-                                                                            });
-                                                                            get(1, 'dump', annuals, -7, 'dump');
-                                                                            Navigator.pop(bc);
-                                                                          },
-                                                                          icon: annuals == categoryList.yearByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
-                                                                    ],
+                                                                  child: GestureDetector(
+                                                                    onTap: () {
+                                                                      setState(() {
+                                                                        annuals = categoryList.yearByIndex[index+1];
+                                                                      });
+                                                                      get(1, 'dump', annuals, -7, 'dump');
+                                                                      Navigator.pop(bc);
+                                                                    },
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                      children: [
+                                                                        Text(
+                                                                          categoryList.yearByIndex[index+1],
+                                                                          style: annuals == categoryList.yearByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                        IconButton(
+                                                                            onPressed: () {
+                                                                              setState(() {
+                                                                                annuals = categoryList.yearByIndex[index+1];
+                                                                              });
+                                                                              get(1, 'dump', annuals, -7, 'dump');
+                                                                              Navigator.pop(bc);
+                                                                            },
+                                                                            icon: annuals == categoryList.yearByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 )
                                                                 ),
@@ -906,22 +1110,31 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                                   padding: const EdgeInsets.symmetric(horizontal: 30),
                                                                   width: AppLayout.getSize(context).width,
                                                                   height: 300/8,
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                        categoryList.yearByIndex[index+1],
-                                                                        style: annuals == categoryList.yearByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                      IconButton(
-                                                                          onPressed: () {
-                                                                            setState(() {
-                                                                              annuals = categoryList.yearByIndex[index+1];
-                                                                            });
-                                                                            get(1, 'dump', annuals, -7, 'dump');
-                                                                            Navigator.pop(bc);
-                                                                          },
-                                                                          icon: annuals == categoryList.yearByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
-                                                                    ],
+                                                                  child: GestureDetector(
+                                                                    onTap: () {
+                                                                      setState(() {
+                                                                        annuals = categoryList.yearByIndex[index+1];
+                                                                      });
+                                                                      get(1, 'dump', annuals, -7, 'dump');
+                                                                      Navigator.pop(bc);
+                                                                    },
+                                                                    child: Row(
+                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                      children: [
+                                                                        Text(
+                                                                          categoryList.yearByIndex[index+1],
+                                                                          style: annuals == categoryList.yearByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                        IconButton(
+                                                                            onPressed: () {
+                                                                              setState(() {
+                                                                                annuals = categoryList.yearByIndex[index+1];
+                                                                              });
+                                                                              get(1, 'dump', annuals, -7, 'dump');
+                                                                              Navigator.pop(bc);
+                                                                            },
+                                                                            icon: annuals == categoryList.yearByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 )
                                                                 ),
@@ -1091,23 +1304,32 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                                   children: List.generate(3, (index) => Container(
                                                                     padding: const EdgeInsets.symmetric(horizontal: 30),
                                                                     width: AppLayout.getSize(context).width,
-                                                                    height: 100/3,
-                                                                    child: Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          categoryList.sexByIndex[index+1],
-                                                                          style: sexs == index+1 ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                        IconButton(
-                                                                            onPressed: () {
-                                                                              setState(() {
-                                                                                sexs = index+1;
-                                                                              });
-                                                                              get(2, 'dump', 'dump', sexs, 'dump');
-                                                                              Navigator.pop(bc);
-                                                                            },
-                                                                            icon: sexs == index+1 ? Image.asset('assets/checkOn.png', width: 21, height: 21,) : Image.asset('assets/checkOff.png', width: 21, height: 21))
-                                                                      ],
+                                                                    height: 260/7,
+                                                                    child: GestureDetector(
+                                                                      onTap: () {
+                                                                        setState(() {
+                                                                          sexs = index+1;
+                                                                        });
+                                                                        get(2, 'dump', 'dump', sexs, 'dump');
+                                                                        Navigator.pop(bc);
+                                                                      },
+                                                                      child: Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            categoryList.sexByIndex[index+1],
+                                                                            style: sexs == index+1 ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                          IconButton(
+                                                                              onPressed: () {
+                                                                                setState(() {
+                                                                                  sexs = index+1;
+                                                                                });
+                                                                                get(2, 'dump', 'dump', sexs, 'dump');
+                                                                                Navigator.pop(bc);
+                                                                              },
+                                                                              icon: sexs == index+1 ? Image.asset('assets/checkOn.png', width: 21, height: 21,) : Image.asset('assets/checkOff.png', width: 21, height: 21))
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   )
                                                                   ),
@@ -1249,23 +1471,32 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                                   children: List.generate(3, (index) => Container(
                                                                     padding: const EdgeInsets.symmetric(horizontal: 30),
                                                                     width: AppLayout.getSize(context).width,
-                                                                    height: 100/3,
-                                                                    child: Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          categoryList.sexByIndex[index+1],
-                                                                          style: sexs == index+1 ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                        IconButton(
-                                                                            onPressed: () {
-                                                                              setState(() {
-                                                                                sexs = index+1;
-                                                                              });
-                                                                              get(2, 'dump', 'dump', sexs, 'dump');
-                                                                              Navigator.pop(bc);
-                                                                            },
-                                                                            icon: sexs == index+1 ? Image.asset('assets/checkOn.png', width: 21, height: 21,) : Image.asset('assets/checkOff.png', width: 21, height: 21))
-                                                                      ],
+                                                                    height: 260/7,
+                                                                    child: GestureDetector(
+                                                                      onTap: () {
+                                                                        setState(() {
+                                                                          sexs = index+1;
+                                                                        });
+                                                                        get(2, 'dump', 'dump', sexs, 'dump');
+                                                                        Navigator.pop(bc);
+                                                                      },
+                                                                      child: Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            categoryList.sexByIndex[index+1],
+                                                                            style: sexs == index+1 ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                          IconButton(
+                                                                              onPressed: () {
+                                                                                setState(() {
+                                                                                  sexs = index+1;
+                                                                                });
+                                                                                get(2, 'dump', 'dump', sexs, 'dump');
+                                                                                Navigator.pop(bc);
+                                                                              },
+                                                                              icon: sexs == index+1 ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png'))
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   )
                                                                   ),
@@ -1422,23 +1653,32 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                                     padding: const EdgeInsets.symmetric(horizontal: 30),
                                                                     width: AppLayout.getSize(context).width,
                                                                     height: 300/8,
-                                                                    child: Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          categoryList.ageByIndex[index+1],
-                                                                          style: ages == categoryList.ageByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                        IconButton(
-                                                                            onPressed: () {
-                                                                              setState(() {
-                                                                                ages = categoryList.ageByIndex[index+1];
-                                                                              });
-                                                                              get(3, 'dump', 'dump', -7, ages);
-                                                                              Navigator.pop(bc);
-                                                                            },
-                                                                            icon: ages == categoryList.ageByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png')
-                                                                        )
-                                                                      ],
+                                                                    child: GestureDetector(
+                                                                      onTap: () {
+                                                                        setState(() {
+                                                                          ages = categoryList.ageByIndex[index+1];
+                                                                        });
+                                                                        get(3, 'dump', 'dump', -7, ages);
+                                                                        Navigator.pop(bc);
+                                                                      },
+                                                                      child: Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            categoryList.ageByIndex[index+1],
+                                                                            style: ages == categoryList.ageByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                          IconButton(
+                                                                              onPressed: () {
+                                                                                setState(() {
+                                                                                  ages = categoryList.ageByIndex[index+1];
+                                                                                });
+                                                                                get(3, 'dump', 'dump', -7, ages);
+                                                                                Navigator.pop(bc);
+                                                                              },
+                                                                              icon: ages == categoryList.ageByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png')
+                                                                          )
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   )
                                                                   ),
@@ -1581,23 +1821,32 @@ class _AllStatScreenState extends State<AllStatScreen> {
                                                                     padding: const EdgeInsets.symmetric(horizontal: 30),
                                                                     width: AppLayout.getSize(context).width,
                                                                     height: 300/8,
-                                                                    child: Row(
-                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                      children: [
-                                                                        Text(
-                                                                          categoryList.ageByIndex[index+1],
-                                                                          style: ages == categoryList.ageByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
-                                                                        IconButton(
-                                                                            onPressed: () {
-                                                                              setState(() {
-                                                                                ages = categoryList.ageByIndex[index+1];
-                                                                              });
-                                                                              get(3, 'dump', 'dump', -7, ages);
-                                                                              Navigator.pop(bc);
-                                                                            },
-                                                                            icon: ages == categoryList.ageByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png')
-                                                                        )
-                                                                      ],
+                                                                    child: GestureDetector(
+                                                                      onTap: () {
+                                                                        setState(() {
+                                                                          ages = categoryList.ageByIndex[index+1];
+                                                                        });
+                                                                        get(3, 'dump', 'dump', -7, ages);
+                                                                        Navigator.pop(bc);
+                                                                      },
+                                                                      child: Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            categoryList.ageByIndex[index+1],
+                                                                            style: ages == categoryList.ageByIndex[index+1] ? Styles.titleStyle.copyWith(color: Colors.black) : Styles.titleStyle.copyWith(color: Colors.grey),),
+                                                                          IconButton(
+                                                                              onPressed: () {
+                                                                                setState(() {
+                                                                                  ages = categoryList.ageByIndex[index+1];
+                                                                                });
+                                                                                get(3, 'dump', 'dump', -7, ages);
+                                                                                Navigator.pop(bc);
+                                                                              },
+                                                                              icon: ages == categoryList.ageByIndex[index+1] ? Image.asset('assets/checkOn.png') : Image.asset('assets/checkOff.png')
+                                                                          )
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   )
                                                                   ),

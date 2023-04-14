@@ -118,19 +118,17 @@ class _StatScreenState extends State<StatScreen> {
                             width: size.width > 430 ? 430 : size.width,
                             alignment: Alignment.centerRight,
                             child: IconButton(
+                              iconSize: 39,
                               onPressed: () {
                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Main(
                                   currentUser: widget.currentUser,
                                 )), (route) => false);
                               },
                               icon: Image.asset(
-                                'assets/x4home.png',
-                                width: 24,
-                                fit: BoxFit.fitWidth,
+                                'assets/homex4.png',
                               ),
                             ),
                           ),
-                          const Gap(6),
                           Container(
                             width: size.width > 430 ? 430 : size.width,
                             height: 108,

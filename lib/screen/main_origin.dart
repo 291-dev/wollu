@@ -450,12 +450,13 @@ class _MainState extends State<Main> with WidgetsBindingObserver {
                         Visibility(
                           visible: isRunOnce,
                           child: Positioned(
-                            top: 265,
-                            width: 85,
-                            height: 85,
+                            top: 260,
+                            width: 87.5,
+                            height: 87.5,
                             child: IconButton(
                               icon: Image.asset(
-                                isRun ? 'assets/stopBtn.png' : 'assets/play.png',
+                                isRun ? 'assets/bstopx4.png' : 'assets/bplayx4.png',
+                                isAntiAlias: true,
                               ),
                               onPressed: isRun ? () {
                                 setState(() {

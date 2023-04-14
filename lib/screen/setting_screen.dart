@@ -456,6 +456,7 @@ class _SetScreenState extends State<SetScreen> {
                               decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.only(top: 12, bottom: 10, left: 14, right: 14),
                                   suffixText: week_work!.isEmpty ? '' : '일',
+                                  suffixStyle: Styles.titleStyle.copyWith(color: Colors.grey, fontSize: 14),
                                   prefixText: '일주일 근무 일',
                                   prefixStyle: week_work!.isEmpty ? Styles.titleStyle.copyWith(color: Styles.blueColor, fontSize: 14) : Styles.titleStyle.copyWith(color: Colors.grey, fontSize: 14),
                                   enabledBorder: const OutlineInputBorder(
@@ -810,7 +811,7 @@ class _SetScreenState extends State<SetScreen> {
                                                       children: List.generate(3, (index) => Container(
                                                         padding: const EdgeInsets.symmetric(horizontal: 30),
                                                         width: AppLayout.getSize(context).width,
-                                                        height: 100/3,
+                                                        height: 260/7,
                                                         child: Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -84,26 +85,24 @@ class _FinishScreenState extends State<FinishScreen> {
                             Positioned(
                               left: -12,
                               child: IconButton(
+                                iconSize: 45,
                                   onPressed: () {
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => StatScreen(currentUser: widget.currentUser)));
                                   },
                                   icon: Image.asset(
-                                    'assets/x4chart.png',
-                                    width: 24,
-                                    height: 24,
+                                    'assets/statx4.png',
                                   )
                               ),
                             ),
                             Positioned(
                               right: -12,
                               child: IconButton(
+                                iconSize: 45,
                                 onPressed: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => Main(currentUser: widget.currentUser)));
                                 },
                                 icon: Image.asset(
-                                  'assets/x4home.png',
-                                  width: 24,
-                                  height: 24,
+                                  'assets/homex4.png',
                                 ),
                               ),
                             ),
@@ -243,12 +242,14 @@ class _FinishScreenState extends State<FinishScreen> {
                                       IconButton(onPressed: () {
                                         share.shareOnKakao();
                                       }, icon: Image.asset('assets/kakaox4.png')),
-                                      IconButton(onPressed: () {
-                                        share.shareOnFacebook();
-                                      }, icon: Image.asset('assets/facex4.png')),
-                                      IconButton(onPressed: () {
-                                        share.shareOnTwitter();
-                                      }, icon: Image.asset('assets/twx4.png')),
+                                      if (defaultTargetPlatform != TargetPlatform.iOS) ... [
+                                        IconButton(onPressed: () {
+                                          share.shareOnFacebook();
+                                        }, icon: Image.asset('assets/facex4.png')),
+                                        IconButton(onPressed: () {
+                                          share.shareOnTwitter();
+                                        }, icon: Image.asset('assets/twx4.png')),
+                                      ],
                                       IconButton(onPressed: () async {
                                         share.shareOnInstagram().then((value) {
                                           if (value != null) {
