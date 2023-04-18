@@ -77,6 +77,11 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    bundle {
+      language {
+                enableSplit = false
+       }
+    }
 }
 
 flutter {
