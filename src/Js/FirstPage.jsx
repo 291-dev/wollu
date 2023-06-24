@@ -53,7 +53,7 @@ export default function FirstPage() {
   return (
     <Background>
       <Contents>
-        <WolluIntroText>사장님 돈은 제가 가져갑니다</WolluIntroText>
+        <WolluIntroText>사장님 돈은 제가 가져갑니다!</WolluIntroText>
         <WolluMainImage src={WolluTextImage}/>
         <BottomContent>
           <TeamLogo src={MainView_291LogoImage}></TeamLogo>
