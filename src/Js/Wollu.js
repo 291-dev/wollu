@@ -442,6 +442,7 @@ function Wollu() {
       {fourth}
       <PageDivider/>
       <FifthPage/>
+      <p>Contact me : liver.atease@icloud.com, Kangjik Kim, +82 010-9373-8524</p>
       <AD/>
       </div>
     </SCROLL_OUTER>
