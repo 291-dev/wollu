@@ -25,7 +25,7 @@ export default function AppDownloadView() {
     width: ${window_width}px;
     height:${window_height}px;
     background-color: #E3E4EC;
-    //display:flex;
+    display:flex;
     justify-content: center;
     align-items: center;
     display:none;
@@ -172,7 +172,7 @@ export default function AppDownloadView() {
               <TeamLogo src={WebDownloadViewTeamLogo}/>
             <TeamText>team.이구하나</TeamText>
             </BottomUpPart>
-            <TeamIntroText>우리 팀은 29살에 모인 팀이라서 이구하나입니다.</TeamIntroText>
+            <TeamIntroText>우리 팀은 29살에 모인 팀이라서 이구하나입니다.\n Contact Me: 김강직, liver.atease@icloud.com</TeamIntroText>
           </BottomPart>
         </AppDownloadViewInner>
       </AppDownloadViewBackground>
