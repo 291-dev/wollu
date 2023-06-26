@@ -27,7 +27,7 @@ export default function AppDownloadView() {
     background-color: #E3E4EC;
     justify-content: center;
     align-items: center;
-    display:flex;ß
+    display:flex;
   `;
   const AppDownloadViewInner = styled.div`
     width: max-content;
